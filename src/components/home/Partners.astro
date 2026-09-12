@@ -1,0 +1,21 @@
+---
+import type { CollectionEntry } from 'astro:content';
+interface Props { content: CollectionEntry<'homepage'>['data']['partners']; }
+const { content } = Astro.props;
+---
+<section class="partners shell" aria-labelledby="partners-heading">
+  <h2 class="eyebrow" id="partners-heading">{content.heading}</h2>
+  <ul class="partner-grid">
+    {content.items.map((logo) => <li><img {...logo} loading="lazy" decoding="async" class:list={[logo.width / logo.height < 1.8 && 'portrait-logo']} /></li>)}
+  </ul>
+</section>
+<style>
+  .partners { padding-block: 56px 64px; border-bottom: 1px solid var(--color-line); }
+  h2 { justify-content: center; color: var(--color-muted); font-size: 10px; margin-bottom: 38px; }
+  .partner-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); align-items: center; gap: 26px 32px; list-style: none; margin: 0; padding: 0; }
+  li { display: flex; align-items: center; justify-content: center; height: 56px; }
+  img { width: auto; max-width: 108px; height: auto; max-height: 38px; object-fit: contain; filter: brightness(0) invert(0.22); }
+  img.portrait-logo { max-width: 70px; max-height: 50px; }
+  @media (max-width: 1023px) { .partner-grid { gap: 22px; } img { max-width: 78px; max-height: 32px; } }
+  @media (max-width: 767px) { .partners { padding-block: 42px; } .partner-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; } img { max-width: 64px; max-height: 30px; } img.portrait-logo { max-height: 43px; max-width: 55px; } }
+</style>

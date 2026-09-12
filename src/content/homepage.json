@@ -1,0 +1,94 @@
+[
+  {
+    "id": "en",
+    "todo": "TODO: Approve English draft copy, service descriptions, project selection and service tags, and team biographies before German translation. No project results or metrics are claimed.",
+    "draftLabel": "Draft copy · for review",
+    "hero": {
+      "eyebrow": "Digital studio · Bremen",
+      "heading": "Digital ideas.",
+      "emphasis": "Made useful.",
+      "subline": "Websites, smarter workflows, and apps. We turn your next idea into something that works for you.",
+      "primary": { "label": "Let’s talk about your idea", "href": "/termin" },
+      "secondary": { "label": "Send us a message", "href": "#calendly" },
+      "note": "A small team. A direct conversation.",
+      "image": { "src": "/images/team/consultation-1280.webp", "width": 1280, "height": 724, "alt": "Marcel discussing a website with a client at a desk" },
+      "imageCaption": "Good work starts with a conversation.",
+      "imageNote": "From the first idea, together.",
+      "scrollLabel": "A little further, a lot more possible"
+    },
+    "services": {
+      "eyebrow": "What we do",
+      "heading": "Your next step.",
+      "emphasis": "Our expertise.",
+      "description": "Four ways to make digital work better for your business.",
+      "items": [
+        { "id": "web", "number": "01", "name": "Websites, Webshops & Web-Apps", "description": "A clear online presence. A better shopping experience. A web app built around your business.", "icon": "web", "accent": "blue", "tags": ["Websites", "E-commerce", "Web apps"] },
+        { "id": "workflows", "number": "02", "name": "Workflows & KI", "description": "Connect your tools, simplify routine tasks, and put AI to practical use.", "icon": "workflow", "accent": "red", "tags": ["Automation", "AI", "Integrations"] },
+        { "id": "crm", "number": "03", "name": "CRM", "description": "Your customers, your data, your overview. Bring it all together in a CRM and clear dashboards.", "icon": "crm", "accent": "orange", "tags": ["Customer management", "Dashboards"] },
+        { "id": "mobile", "number": "04", "name": "Mobile apps", "description": "Useful, intuitive experiences that put your business in your customers’ hands.", "icon": "mobile", "accent": "purple", "tags": ["iOS", "Android", "App design"] }
+      ]
+    },
+    "work": {
+      "eyebrow": "Selected work",
+      "heading": "A few ideas,",
+      "emphasis": "out in the world.",
+      "description": "A first look at projects from the Amphora portfolio.",
+      "expandLabel": "Project details",
+      "collapseLabel": "Close details",
+      "placeholder": "Project summary to follow. Selection and service tags are provisional.",
+      "items": [
+        { "id": "cords", "name": "Cord’s Café", "category": "Coffee, ceramics & everyday favourites", "image": { "src": "/images/work/cords-cafe-hero-700.webp", "width": 700, "height": 318, "alt": "Cord’s Café webshop displaying a collection of ceramic cups" }, "services": ["web"], "description": "A preview of the Cord’s Café online shop. Full project story to follow.", "todo": "TODO: Confirm case selection, summary and service assignment." },
+        { "id": "evltn", "name": "EVLTN Martial Arts", "category": "Movement, discipline & community", "image": { "src": "/images/work/evltn-martial-arts-hero-700.webp", "width": 700, "height": 341, "alt": "EVLTN Martial Arts website with dark styling and a martial artist" }, "services": ["web"], "description": "A preview of the EVLTN Martial Arts website. Full project story to follow.", "todo": "TODO: Confirm case selection, summary and service assignment." },
+        { "id": "grechows", "name": "Grechow’s Beauty", "category": "A personal approach to beauty", "image": { "src": "/images/work/grechows-beauty-hero-700.webp", "width": 700, "height": 963, "alt": "Grechow’s Beauty website with treatment photography and a light layout" }, "services": ["web"], "description": "A preview of the Grechow’s Beauty website. Full project story to follow.", "todo": "TODO: Confirm case selection, summary and service assignment." },
+        { "id": "nordostsee", "name": "Nord-Ostsee Logistik", "category": "Connecting businesses on the move", "image": { "src": "/images/work/nord-ostsee-logistik-hero-700.webp", "width": 700, "height": 365, "alt": "Nord-Ostsee Logistik website showing a warehouse and transport enquiry interface" }, "services": ["web"], "description": "A preview of the Nord-Ostsee Logistik website. Full project story to follow.", "todo": "TODO: Confirm case selection, summary and service assignment." }
+      ]
+    },
+    "partners": {
+      "heading": "In good company",
+      "items": [
+        { "src": "/images/partners/uni-bremen.webp", "alt": "Universität Bremen", "width": 320, "height": 115 },
+        { "src": "/images/partners/clockwise-wordmark.svg", "alt": "Clockwise", "width": 205, "height": 26 },
+        { "src": "/images/partners/cords-cafe.webp", "alt": "Cord’s Café", "width": 320, "height": 193 },
+        { "src": "/images/partners/evltn-martial-arts.webp", "alt": "EVLTN Martial Arts", "width": 320, "height": 173 },
+        { "src": "/images/partners/nord-ostsee-logistik.webp", "alt": "Nord-Ostsee Logistik", "width": 320, "height": 106 },
+        { "src": "/images/partners/remco.webp", "alt": "Remco", "width": 320, "height": 71 },
+        { "src": "/images/partners/clickless.webp", "alt": "Clickless", "width": 320, "height": 86 },
+        { "src": "/images/partners/bremer-stadtmusikanten.webp", "alt": "Bremer Stadtmusikanten", "width": 320, "height": 320 },
+        { "src": "/images/partners/grechows-beauty.webp", "alt": "Grechow’s Beauty", "width": 320, "height": 320 },
+        { "src": "/images/partners/life-lounge-bar.webp", "alt": "Life Lounge & Bar", "width": 320, "height": 395 },
+        { "src": "/images/partners/oxzy.webp", "alt": "Oxzy", "width": 320, "height": 64 },
+        { "src": "/images/partners/antik-vehrs.webp", "alt": "Vehrs Antik", "width": 320, "height": 77 },
+        { "src": "/images/partners/therapie-praxis-mueller.webp", "alt": "Therapie Praxis Müller", "width": 320, "height": 126 },
+        { "src": "/images/partners/wia.webp", "alt": "WIA", "width": 720, "height": 265 }
+      ]
+    },
+    "team": {
+      "eyebrow": "The people behind Amphora",
+      "heading": "Small team.",
+      "emphasis": "Personal by design.",
+      "description": "Meet Salam and Marcel. Your direct contacts, from the first conversation to the details that make it work.",
+      "note": "Based in Bremen. Happy to meet you.",
+      "items": [
+        { "id": "salam", "name": "Salam Rouabhia", "role": "Co-founder", "description": "A little more about Salam and his work — coming soon.", "imageAlt": "Portrait of Salam Rouabhia, co-founder of Amphora", "todo": "TODO: Amphora to supply Salam’s short biography and confirm role wording." },
+        { "id": "marcel", "name": "Marcel Henning", "role": "Co-founder", "description": "A little more about Marcel and his work — coming soon.", "imageAlt": "Portrait of Marcel Henning, co-founder of Amphora", "todo": "TODO: Amphora to supply Marcel’s short biography and confirm role wording." }
+      ]
+    },
+    "contact": {
+      "eyebrow": "Let’s make something useful",
+      "heading": "It starts with",
+      "emphasis": "a conversation.",
+      "description": "An idea, a question, or something that could work better. We’d love to hear about it.",
+      "booking": { "label": "Book a conversation", "href": "/termin" },
+      "emailLabel": "Prefer email?",
+      "email": "info@amphora-it.com",
+      "formHeading": "Tell us what’s on your mind.",
+      "formNote": "This form is a preview. For now, please get in touch by email.",
+      "name": "Your name", "namePlaceholder": "Alex Taylor",
+      "emailField": "Email address", "emailPlaceholder": "alex@company.com",
+      "company": "Company", "companyPlaceholder": "Your company",
+      "service": "What can we help with?", "servicePlaceholder": "Choose a service",
+      "message": "Your idea", "messagePlaceholder": "A few words about what you have in mind…",
+      "submit": "Send message", "optional": "optional"
+    }
+  }
+]

@@ -1,0 +1,29 @@
+[
+  {
+    "id": "en",
+    "title": "Amphora — Digital ideas. Made useful.",
+    "lang": "en",
+    "skipLink": "Skip to content",
+    "homeLabel": "Amphora home",
+    "menuLabel": "Menu",
+    "navigationLabel": "Main navigation",
+    "navigation": [
+      { "label": "Services", "href": "/#services" },
+      { "label": "Our work", "href": "/#work" },
+      { "label": "About us", "href": "/#team" },
+      { "label": "Contact", "href": "/#calendly" }
+    ],
+    "booking": { "label": "Let’s talk", "href": "/termin" },
+    "email": "info@amphora-it.com",
+    "footer": {
+      "tagline": "Thoughtfully designed. Personally built.",
+      "location": "Bremen, Germany",
+      "copyright": "Amphora IT",
+      "legalLinks": [
+        { "label": "Impressum", "href": "/impressum" },
+        { "label": "Datenschutz", "href": "/datenschutz" }
+      ]
+    },
+    "legalBack": "Back to home"
+  }
+]

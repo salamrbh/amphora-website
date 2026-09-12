@@ -1,0 +1,44 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import salam from '../../assets/team/salam-original.png';
+import marcel from '../../assets/team/marcel-original.png';
+interface Props { content: CollectionEntry<'homepage'>['data']['team']; }
+const { content } = Astro.props;
+const photos = { salam, marcel };
+---
+<section class="section shell team-section" id="team" aria-labelledby="team-heading">
+  <div class="team-intro">
+    <p class="eyebrow"><span class="section-index">03 /</span>{content.eyebrow}</p>
+    <h2 class="section-heading" id="team-heading">{content.heading}<br /><span class="editorial">{content.emphasis}</span></h2>
+    <p class="team-description">{content.description}</p>
+    <p class="team-note"><span aria-hidden="true">↳</span>{content.note}</p>
+  </div>
+  <div class="team-grid">
+    {content.items.map((person) => (
+      <article class="person">
+        <div class="portrait"><Image src={photos[person.id]} alt={person.imageAlt} width={480} height={540} widths={[240, 360, 480]} sizes="(min-width: 1280px) 270px, (min-width: 768px) 25vw, (min-width: 480px) 42vw, 85vw" format="webp" quality={82} fit="cover" loading="lazy" /></div>
+        <div class="person-name"><h3>{person.name}</h3><span>{person.role}</span></div>
+        <p>{person.description}</p>
+      </article>
+    ))}
+  </div>
+</section>
+<style>
+  .team-section { display: grid; grid-template-columns: 1fr 1.35fr; gap: 70px; align-items: start; }
+  .team-intro .eyebrow { margin-bottom: 34px; }
+  .team-intro h2 { font-size: clamp(2.5rem, 3.7vw, 3.65rem); }
+  .team-description { font-size: 14px; line-height: 1.75; color: var(--color-muted); max-width: 335px; margin-top: 28px; }
+  .team-note { display: flex; align-items: center; gap: 10px; font-size: 11px; margin-top: 30px; }
+  .team-note span { font-size: 20px; }
+  .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .portrait { overflow: hidden; border-radius: 14px; background: var(--color-surface); }
+  .portrait :global(img) { width: 100%; height: auto; aspect-ratio: 8 / 9; object-fit: cover; }
+  .person-name { margin-top: 21px; }
+  h3 { font-size: 19px; letter-spacing: -.035em; }
+  .person-name span { font-size: 11px; color: var(--color-muted); display: block; margin-top: 5px; }
+  .person > p { font-size: 12px; color: var(--color-muted); line-height: 1.7; margin-top: 14px; }
+  @media (max-width: 1100px) { .team-section { gap: 40px; grid-template-columns: 1fr 1.2fr; } .team-grid { gap: 18px; } }
+  @media (max-width: 767px) { .team-section { grid-template-columns: 1fr; gap: 36px; } .team-description { max-width: 430px; } .team-intro h2 { font-size: 2.8rem; } }
+  @media (max-width: 479px) { .team-grid { grid-template-columns: 1fr; gap: 32px; } .portrait :global(img) { aspect-ratio: 1.1; object-position: center 35%; } }
+</style>

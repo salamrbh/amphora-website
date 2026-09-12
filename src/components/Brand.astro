@@ -1,0 +1,11 @@
+---
+interface Props { label: string; }
+const { label } = Astro.props;
+---
+<a class="brand" href="/" aria-label={label}>
+  <img src="/images/brand/amphora-full-logo-216.webp" width="384" height="216" alt="Amphora" />
+</a>
+<style>
+  .brand { display: block; position: relative; width: 148px; height: 46px; overflow: hidden; flex: none; }
+  .brand img { position: absolute; width: 148px; max-width: none; height: auto; top: 50%; transform: translateY(-50%); }
+</style>

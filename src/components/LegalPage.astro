@@ -1,0 +1,25 @@
+---
+import { getEntry } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+interface Props { page: 'impressum' | 'datenschutz'; }
+const { page } = Astro.props;
+const entry = await getEntry('legal', page);
+const site = await getEntry('site', 'en');
+if (!entry || !site) throw new Error('Missing legal or site content.');
+---
+<Layout title={`${entry.data.title} | Amphora`} lang="de">
+  <div class="legal-shell shell">
+    <a class="text-link" href="/" lang="en">← {site.data.legalBack}</a>
+    <article class="legal-content" set:html={entry.data.html} />
+  </div>
+</Layout>
+<style>
+  .legal-shell { max-width: 900px; padding-block: 64px 120px; }
+  .legal-content { margin-top: 48px; overflow-wrap: anywhere; }
+  .legal-content :global(h1) { font-size: clamp(2rem, 5vw, 4rem); line-height: 1.15; letter-spacing: -0.05em; margin-bottom: 36px; }
+  .legal-content :global(h2) { font-size: 1.5rem; line-height: 1.3; margin: 42px 0 16px; letter-spacing: -0.025em; }
+  .legal-content :global(h3) { font-size: 1.2rem; margin: 28px 0 12px; }
+  .legal-content :global(p), .legal-content :global(ul), .legal-content :global(ol) { margin-block: 14px; line-height: 1.75; }
+  .legal-content :global(ul), .legal-content :global(ol) { padding-left: 24px; list-style: revert; }
+  .legal-content :global(a) { text-decoration: underline; text-underline-offset: 3px; }
+</style>

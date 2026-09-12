@@ -1,0 +1,59 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Brand from './Brand.astro';
+import Icon from './Icon.astro';
+interface Props { site: CollectionEntry<'site'>['data']; }
+const { site } = Astro.props;
+---
+<header class="site-header" id="top">
+  <div class="shell header-inner">
+    <Brand label={site.homeLabel} />
+    <nav class="desktop-nav" aria-label={site.navigationLabel}>
+      {site.navigation.map((item) => <a href={item.href}>{item.label}</a>)}
+    </nav>
+    <a class="button button-dark header-cta" href={site.booking.href}>{site.booking.label}<Icon /></a>
+    <details class="mobile-nav">
+      <summary>{site.menuLabel}<span class="menu-icon" aria-hidden="true"></span></summary>
+      <nav aria-label={site.navigationLabel}>
+        {site.navigation.map((item) => <a href={item.href}>{item.label}<Icon /></a>)}
+        <a class="mobile-booking" href={site.booking.href}>{site.booking.label}<Icon /></a>
+      </nav>
+    </details>
+  </div>
+</header>
+<script>
+  const menu = document.querySelector<HTMLDetailsElement>('.mobile-nav');
+  const closeMenu = (restoreFocus = false) => {
+    if (!menu?.open) return;
+    menu.open = false;
+    if (restoreFocus) menu.querySelector('summary')?.focus();
+  };
+  menu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => closeMenu()));
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeMenu(true); });
+  document.addEventListener('click', (event) => { if (event.target instanceof Node && !menu?.contains(event.target)) closeMenu(); });
+  window.matchMedia('(min-width: 768px)').addEventListener('change', (event) => { if (event.matches) closeMenu(); });
+</script>
+<style>
+  .site-header { border-bottom: 1px solid var(--color-line); background: var(--color-paper); position: relative; z-index: 10; }
+  .header-inner { min-height: 96px; display: flex; align-items: center; justify-content: space-between; gap: 32px; }
+  .desktop-nav { display: flex; align-items: center; gap: 30px; margin-left: auto; margin-right: 20px; }
+  .desktop-nav a { font-size: 14px; padding-block: 14px; transition: color 180ms ease; }
+  .desktop-nav a:hover { color: var(--color-muted); }
+  .header-cta { min-height: 46px; padding: 12px 18px; font-size: 14px; gap: 26px; }
+  .header-cta :global(svg) { width: 17px; height: 17px; }
+  .mobile-nav { display: none; }
+  @media (max-width: 1023px) { .desktop-nav { gap: 20px; margin-right: 0; } .header-inner { gap: 24px; } }
+  @media (max-width: 767px) {
+    .header-inner { min-height: 78px; }
+    .desktop-nav, .header-cta { display: none; }
+    .mobile-nav { display: block; }
+    summary { cursor: pointer; display: flex; min-height: 44px; align-items: center; gap: 14px; font-size: 14px; list-style: none; }
+    summary::-webkit-details-marker { display: none; }
+    .menu-icon { width: 20px; height: 8px; border-block: 1.5px solid; }
+    .mobile-nav[open] .menu-icon { height: 2px; }
+    .mobile-nav nav { position: absolute; inset: calc(100% - 1px) 0 auto; padding: 12px 24px 24px; background: var(--color-paper); border-bottom: 1px solid var(--color-line); box-shadow: 0 16px 24px #2424240a; }
+    .mobile-nav nav a { padding: 17px 0; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--color-line); }
+    .mobile-nav nav :global(svg) { width: 18px; }
+    .mobile-booking { color: var(--color-ink); font-weight: 500; }
+  }
+</style>

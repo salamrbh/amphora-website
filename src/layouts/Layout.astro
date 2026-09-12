@@ -1,0 +1,29 @@
+---
+import { getEntry } from 'astro:content';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+interface Props { title?: string; lang?: string; }
+const entry = await getEntry('site', 'en');
+if (!entry) throw new Error('Missing site content.');
+const site = entry.data;
+const { title = site.title, lang = site.lang } = Astro.props;
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" href="/icon.png" />
+    <link rel="apple-touch-icon" href="/apple-icon.png" />
+    <link rel="preload" href="/fonts/TheFuture-Regular.subset.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/TiemposHeadline-400-Regular-Italic.woff2" as="font" type="font/woff2" crossorigin />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main" lang="en">{site.skipLink}</a>
+    <div lang={site.lang}><Header site={site} /></div>
+    <main id="main" tabindex="-1"><slot /></main>
+    <div lang={site.lang}><Footer site={site} /></div>
+  </body>
+</html>

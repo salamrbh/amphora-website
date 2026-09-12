@@ -1,1 +1,64 @@
 @import "tailwindcss";
+
+@font-face { font-family: "The Future"; src: url("/fonts/TheFuture-Regular.subset.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "The Future"; src: url("/fonts/TheFuture-Medium.subset.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "The Future"; src: url("/fonts/TheFuture-Bold.subset.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Tiempos Headline"; src: url("/fonts/TiemposHeadline-400-Regular-Italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "Tiempos Headline"; src: url("/fonts/TiemposHeadline-500-Medium-Italic.otf") format("opentype"); font-weight: 500; font-style: italic; font-display: swap; }
+@font-face { font-family: "Tiempos Headline"; src: url("/fonts/TiemposHeadline-600-SemiboldItalic.otf") format("opentype"); font-weight: 600; font-style: italic; font-display: swap; }
+
+@theme static {
+  --font-sans: "The Future", Arial, sans-serif;
+  --font-editorial: "Tiempos Headline", Georgia, serif;
+  --color-paper: #ffffff;
+  --color-ink: #282826;
+  --color-muted: #6b6b65;
+  --color-line: #e5e5df;
+  --color-surface: #f5f5f2;
+  --color-blue: #365dde;
+  --color-red: #cf453b;
+  --color-orange: #df762e;
+  --color-purple: #8860b2;
+  --color-accent: #365dde;
+  --color-accent-soft: #eef1ff;
+}
+
+@layer base {
+  * { box-sizing: border-box; }
+  html { scroll-padding-top: 32px; }
+  body { margin: 0; background: var(--color-paper); color: var(--color-ink); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+  h1, h2, h3, p { margin: 0; }
+  h1, h2, h3 { font-weight: 500; }
+  a { color: inherit; text-decoration: none; }
+  button, input, select, textarea { font: inherit; }
+  button, summary, a, input, textarea, select { -webkit-tap-highlight-color: transparent; }
+  img { display: block; max-width: 100%; }
+  ::selection { background: var(--color-accent-soft); color: var(--color-ink); }
+  :focus-visible { outline: 2px solid var(--color-ink); outline-offset: 5px; }
+  main:focus { outline: none; }
+}
+
+@layer components {
+  .shell { width: min(100% - 112px, 1328px); margin-inline: auto; }
+  .section { padding-block: 108px; }
+  .eyebrow { display: flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; }
+  .section-index { color: var(--color-muted); margin-right: 5px; }
+  .section-heading { font-size: clamp(2.5rem, 4.2vw, 4rem); line-height: 1.05; letter-spacing: -0.055em; }
+  .editorial { font-family: var(--font-editorial); font-weight: 400; font-style: italic; letter-spacing: -0.055em; }
+  .button { display: inline-flex; align-items: center; justify-content: space-between; gap: 32px; padding: 17px 22px; min-height: 54px; border: 1px solid transparent; border-radius: 8px; font-size: 14px; font-weight: 500; line-height: 1.25; transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease; }
+  .button svg { width: 19px; height: 19px; flex: none; }
+  .button-dark { background: var(--color-ink); color: var(--color-paper); }
+  .button-dark:hover { background: var(--color-accent); color: var(--color-paper); }
+  .button-accent { background: var(--color-accent); color: var(--color-paper); }
+  .button-accent:hover { background: var(--color-ink); color: white; }
+  .text-link { font-size: 14px; display: inline-flex; align-items: center; gap: 12px; text-decoration: underline; text-underline-offset: 6px; text-decoration-color: #aaa; }
+  .text-link:hover { text-decoration-color: currentColor; }
+  .tag { display: inline-flex; border: 1px solid var(--color-line); border-radius: 100px; padding: 6px 10px; font-size: 10px; line-height: 1.4; }
+  .draft-note { font-size: 11px; color: var(--color-muted); line-height: 1.5; }
+  .skip-link { position: absolute; top: 12px; left: 16px; padding: 12px 20px; background: var(--color-paper); z-index: 100; transform: translateY(-160%); }
+  .skip-link:focus { transform: translateY(0); }
+}
+
+@media (max-width: 1023px) { .shell { width: calc(100% - 64px); } .section { padding-block: 80px; } }
+@media (max-width: 767px) { .shell { width: calc(100% - 40px); } .section { padding-block: 64px; } .section-heading { font-size: clamp(2.35rem, 9vw, 3.25rem); } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }

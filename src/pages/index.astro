@@ -1,17 +1,21 @@
 ---
-
+import Layout from '../layouts/Layout.astro';
+import { getEntry } from 'astro:content';
+import Hero from '../components/home/Hero.astro';
+import Services from '../components/home/Services.astro';
+import Work from '../components/home/Work.astro';
+import Partners from '../components/home/Partners.astro';
+import Team from '../components/home/Team.astro';
+import Contact from '../components/home/Contact.astro';
+const entry = await getEntry('homepage', 'en');
+if (!entry) throw new Error('Missing homepage content.');
+const content = entry.data;
 ---
-
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout>
+  <Hero content={content.hero} draftLabel={content.draftLabel} />
+  <Services content={content.services} />
+  <Work content={content.work} services={content.services.items} />
+  <Partners content={content.partners} />
+  <Team content={content.team} />
+  <Contact content={content.contact} services={content.services.items} />
+</Layout>
