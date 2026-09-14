@@ -2,6 +2,7 @@
 import { getEntry } from 'astro:content';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import IntroLoader from '../components/IntroLoader.astro';
 import '../styles/global.css';
 interface Props { title?: string; lang?: string; }
 const entry = await getEntry('site', 'en');
@@ -18,12 +19,33 @@ const { title = site.title, lang = site.lang } = Astro.props;
     <link rel="apple-touch-icon" href="/apple-icon.png" />
     <link rel="preload" href="/fonts/TheFuture-Regular.subset.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/TiemposHeadline-400-Regular-Italic.woff2" as="font" type="font/woff2" crossorigin />
+    <script is:inline>
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion-ready');
+    </script>
     <title>{title}</title>
   </head>
   <body>
     <a class="skip-link" href="#main" lang="en">{site.skipLink}</a>
+    <IntroLoader label={site.homeLabel} />
     <div lang={site.lang}><Header site={site} /></div>
     <main id="main" tabindex="-1"><slot /></main>
     <div lang={site.lang}><Footer site={site} /></div>
+    <script is:inline>
+      (() => {
+        const items = document.querySelectorAll('.reveal-on-scroll');
+        if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          items.forEach((item) => item.classList.add('is-visible'));
+          return;
+        }
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -7% 0px' });
+        items.forEach((item) => observer.observe(item));
+      })();
+    </script>
   </body>
 </html>

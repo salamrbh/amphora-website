@@ -4,7 +4,7 @@ import Icon from '../Icon.astro';
 interface Props { content: CollectionEntry<'homepage'>['data']['services']; }
 const { content } = Astro.props;
 ---
-<section class="section shell" id="services" aria-labelledby="services-heading">
+<section class="section shell reveal-on-scroll" id="services" aria-labelledby="services-heading">
   <div class="section-intro">
     <p class="eyebrow"><span class="section-index">01 /</span>{content.eyebrow}</p>
     <div><h2 class="section-heading" id="services-heading">{content.heading}<br /><span class="editorial">{content.emphasis}</span></h2><p class="intro-description">{content.description}</p></div>
@@ -25,7 +25,8 @@ const { content } = Astro.props;
   .section-intro .eyebrow { padding-top: 9px; }
   .intro-description { font-size: 14px; color: var(--color-muted); line-height: 1.6; margin-top: 22px; }
   .services-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--color-line); border-radius: 14px; overflow: hidden; }
-  .service-card { display: flex; flex-direction: column; padding: 28px 24px 26px; min-height: 338px; background: var(--color-paper); transition: background-color 180ms ease, color 180ms ease; }
+  .service-card { position: relative; isolation: isolate; display: flex; flex-direction: column; padding: 28px 24px 26px; min-height: 338px; background: var(--color-paper); transition: color 240ms ease, transform 240ms ease; }
+  .service-card::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--brand-gradient-interactive); opacity: 0; transition: opacity 240ms ease; }
   .service-card + .service-card { border-left: 1px solid var(--color-line); }
   .service-top { display: flex; align-items: center; gap: 10px; margin-bottom: 40px; }
   .service-icon { display: grid; place-items: center; width: 42px; height: 42px; color: var(--service-accent); border: 1px solid var(--color-line); border-radius: 10px; }
@@ -35,9 +36,10 @@ const { content } = Astro.props;
   .service-card > p { font-size: 13px; line-height: 1.7; color: var(--color-muted); margin: 16px 0 28px; }
   .service-tags { display: flex; flex-wrap: wrap; gap: 6px 12px; margin-top: auto; font-size: 9px; }
   .service-tags span + span::before { content: '·'; margin-right: 12px; color: var(--color-muted); }
-  .service-card:hover, .service-card:focus-visible { background: #161616; color: white; }
-  .service-card:hover > p, .service-card:focus-visible > p, .service-card:hover .service-number, .service-card:focus-visible .service-number { color: #bdbdb6; }
-  .service-card:hover .service-icon, .service-card:focus-visible .service-icon { border-color: #4b4b44; }
+  .service-card:hover, .service-card:focus-visible { color: white; transform: translateY(-3px); }
+  .service-card:hover::before, .service-card:focus-visible::before { opacity: 1; }
+  .service-card:hover > p, .service-card:focus-visible > p, .service-card:hover .service-number, .service-card:focus-visible .service-number { color: #fff; }
+  .service-card:hover .service-icon, .service-card:focus-visible .service-icon { color: white; border-color: #ffffff80; background: #ffffff17; }
   .service-card:focus-visible { outline-offset: -5px; outline-color: white; }
   @media (max-width: 1100px) { .services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .service-card { min-height: 300px; } .service-card:nth-child(3) { border-left: none; } .service-card:nth-child(n+3) { border-top: 1px solid var(--color-line); } h3 { font-size: 24px; min-height: 2.5em; } }
   @media (max-width: 767px) { .section-intro { grid-template-columns: 1fr; gap: 26px; margin-bottom: 32px; } }

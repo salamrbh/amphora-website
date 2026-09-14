@@ -1,0 +1,50 @@
+---
+interface Props { label: string; }
+const { label } = Astro.props;
+---
+<div class="intro-loader" aria-hidden="true">
+  <img src="/images/brand/amphora-full-logo-216.webp" width="384" height="216" alt={label} />
+</div>
+
+<script is:inline>
+  (() => {
+    const loader = document.querySelector('.intro-loader');
+    if (!loader) return;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) {
+      loader.remove();
+      return;
+    }
+    document.documentElement.classList.add('intro-active');
+    window.addEventListener('load', () => {
+      window.setTimeout(() => {
+        loader.classList.add('is-leaving');
+        document.documentElement.classList.remove('intro-active');
+        window.setTimeout(() => loader.remove(), 700);
+      }, 650);
+    }, { once: true });
+  })();
+</script>
+
+<style>
+  .intro-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    display: grid;
+    place-items: center;
+    background: var(--color-paper);
+    transition: opacity 600ms cubic-bezier(.65, 0, .35, 1), visibility 600ms;
+  }
+  .intro-loader img {
+    width: clamp(154px, 17vw, 220px);
+    height: auto;
+    animation: logo-arrive 800ms cubic-bezier(.22, 1, .36, 1) both;
+  }
+  .intro-loader.is-leaving { opacity: 0; visibility: hidden; pointer-events: none; }
+  @keyframes logo-arrive {
+    from { opacity: 0; transform: translateY(10px) scale(.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @media (prefers-reduced-motion: reduce) { .intro-loader { display: none; } }
+</style>

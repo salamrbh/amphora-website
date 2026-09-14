@@ -14,14 +14,14 @@ for (const project of content.items) {
 ---
 <section class="work-section section" id="work" aria-labelledby="work-heading">
   <div class="shell">
-    <div class="work-heading">
-      <div><p class="eyebrow"><span class="section-index">02 /</span>{content.eyebrow}</p><h2 class="section-heading" id="work-heading">{content.heading}<br /><span class="editorial">{content.emphasis}</span></h2></div>
+    <div class="work-heading reveal-on-scroll">
+      <div><p class="eyebrow"><span class="section-index">03 /</span>{content.eyebrow}</p><h2 class="section-heading" id="work-heading">{content.heading}<br /><span class="editorial">{content.emphasis}</span></h2></div>
       <p class="work-intro">{content.description}</p>
     </div>
     <div class="work-grid">
       {content.items.map((project, index) => (
-        <article class="project">
-          <div class:list={['project-preview', `preview-${project.id}`]}>
+        <article class="project reveal-on-scroll" style={`--reveal-delay: ${index * 70}ms`}>
+          <div class:list={['project-preview', `preview-${project.id}`]} data-wobble>
             <div class="browser-bar" aria-hidden="true"><span></span><span></span><span></span><span class="browser-name">{project.name}</span></div>
             <div class="project-screen"><LocalPicture {...project.image} /></div>
           </div>
@@ -36,6 +36,25 @@ for (const project of content.items) {
     </div>
   </div>
 </section>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-wobble]').forEach((card) => {
+    card.addEventListener('pointermove', (event) => {
+      const bounds = card.getBoundingClientRect();
+      const x = (event.clientX - bounds.left) / bounds.width - .5;
+      const y = (event.clientY - bounds.top) / bounds.height - .5;
+      card.style.setProperty('--rotate-x', `${y * -3.5}deg`);
+      card.style.setProperty('--rotate-y', `${x * 4.5}deg`);
+      card.style.setProperty('--shift-x', `${x * -7}px`);
+      card.style.setProperty('--shift-y', `${y * -7}px`);
+    });
+    card.addEventListener('pointerleave', () => {
+      card.style.removeProperty('--rotate-x');
+      card.style.removeProperty('--rotate-y');
+      card.style.removeProperty('--shift-x');
+      card.style.removeProperty('--shift-y');
+    });
+  });
+</script>
 <style>
   .work-section { background: var(--color-surface); }
   .work-heading { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; margin-bottom: 46px; }
@@ -43,7 +62,7 @@ for (const project of content.items) {
   .work-intro { max-width: 240px; color: var(--color-muted); font-size: 14px; line-height: 1.7; padding-bottom: 6px; }
   .work-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 52px 28px; align-items: start; }
   .project { min-width: 0; }
-  .project-preview { aspect-ratio: 1.58; border-radius: 16px; padding: 32px 28px 0; overflow: hidden; background: #e9e4d9; }
+  .project-preview { --rotate-x: 0deg; --rotate-y: 0deg; --shift-x: 0px; --shift-y: 0px; aspect-ratio: 1.58; border-radius: 16px; padding: 32px 28px 0; overflow: hidden; background: #e9e4d9; transform: perspective(900px) rotateX(var(--rotate-x)) rotateY(var(--rotate-y)); transform-style: preserve-3d; transition: transform 180ms ease, filter 280ms ease; will-change: transform; }
   .preview-evltn { background: #dddeda; }
   .preview-grechows { background: #e0e7dc; }
   .preview-nordostsee { background: #dee4ed; }
@@ -51,7 +70,7 @@ for (const project of content.items) {
   .browser-bar > span:not(.browser-name) { width: 4px; height: 4px; background: #d3d3cd; border-radius: 50%; }
   .browser-name { position: absolute; left: 50%; transform: translateX(-50%); color: var(--color-muted); font-size: 7px; }
   .project-screen { height: calc(100% - 25px); overflow: hidden; background: white; border-radius: 0 0 3px 3px; }
-  .project-screen :global(img) { width: 100%; height: auto; min-height: 100%; object-fit: cover; object-position: top; }
+  .project-screen :global(img) { width: 100%; height: auto; min-height: 100%; object-fit: cover; object-position: top; transform: translate(var(--shift-x), var(--shift-y)) scale(1.025); transition: transform 180ms ease; }
   .preview-grechows .project-screen { height: auto; }
   .project-meta { display: flex; gap: 16px; margin-top: 24px; }
   .project-index { font-size: 10px; color: var(--color-muted); padding-top: 6px; }
@@ -70,5 +89,9 @@ for (const project of content.items) {
   .project-story > p:first-child { font-size: 14px; line-height: 1.7; }
   .project-story .draft-note { margin-top: 12px; }
   summary:hover { text-decoration: underline; text-underline-offset: 4px; }
+  @media (hover: hover) and (pointer: fine) {
+    .project-preview { filter: blur(1.15px) saturate(.9); }
+    .project-preview:hover { filter: blur(0) saturate(1); }
+  }
   @media (max-width: 767px) { .work-heading { display: block; margin-bottom: 32px; } .work-intro { margin-top: 22px; max-width: 310px; } .work-grid { grid-template-columns: 1fr; gap: 40px; } .project-preview { padding: 24px 22px 0; } h3 { font-size: 22px; } }
 </style>

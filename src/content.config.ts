@@ -25,6 +25,8 @@ const homepage = defineCollection({
     draftLabel: z.string(),
     hero: z.object({ eyebrow: z.string(), heading: z.string(), emphasis: z.string(), subline: z.string(), primary: link, secondary: link, note: z.string(), image, imageCaption: z.string(), imageNote: z.string(), scrollLabel: z.string() }),
     services: intro.extend({ items: z.array(z.object({ id: z.string(), number: z.string(), name: z.string(), description: z.string(), icon: z.enum(['web', 'workflow', 'crm', 'mobile']), accent: z.enum(['blue', 'red', 'orange', 'purple']), tags: z.array(z.string()) })).length(4) }),
+    about: intro.extend({ reviewCount: z.string(), reviewLabel: z.string(), reviewAriaLabel: z.string() }),
+    process: z.object({ eyebrow: z.string(), heading: z.string(), description: z.string(), items: z.array(z.object({ number: z.string(), name: z.string(), description: z.string() })).length(4) }),
     work: intro.extend({ expandLabel: z.string(), collapseLabel: z.string(), placeholder: z.string(), items: z.array(z.object({ id: z.string(), name: z.string(), category: z.string(), image, services: z.array(z.string()).min(1), description: z.string(), todo: z.string().startsWith('TODO:') })) }),
     partners: z.object({ heading: z.string(), items: z.array(image).length(14) }),
     team: intro.extend({ note: z.string(), items: z.array(z.object({ id: z.enum(['salam', 'marcel']), name: z.string(), role: z.string(), description: z.string(), imageAlt: z.string(), todo: z.string().startsWith('TODO:') })) }),

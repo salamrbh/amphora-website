@@ -28,6 +28,26 @@
         { "id": "mobile", "number": "04", "name": "Mobile apps", "description": "Useful, intuitive experiences that put your business in your customers’ hands.", "icon": "mobile", "accent": "purple", "tags": ["iOS", "Android", "App design"] }
       ]
     },
+    "about": {
+      "eyebrow": "About Amphora",
+      "heading": "Close collaboration.",
+      "emphasis": "Clear digital progress.",
+      "description": "We work with growing businesses, founders, and established teams. From a first idea to a better way of working, we turn complex digital questions into useful, lasting solutions.",
+      "reviewCount": "50+",
+      "reviewLabel": "five-star Google reviews",
+      "reviewAriaLabel": "More than 50 five-star reviews on Google"
+    },
+    "process": {
+      "eyebrow": "How it works",
+      "heading": "Simple from the start.",
+      "description": "Four clear steps, with a free first draft before you commit.",
+      "items": [
+        { "number": "01", "name": "Tell us your idea", "description": "A relaxed first conversation about your goals, users, and what needs to work better." },
+        { "number": "02", "name": "Get a free draft", "description": "We turn the conversation into a first visual direction, free and without obligation." },
+        { "number": "03", "name": "Build it together", "description": "With your feedback, we design and develop the solution in clear, focused rounds." },
+        { "number": "04", "name": "Launch and grow", "description": "We put it live, make sure it works, and stay close for the next useful step." }
+      ]
+    },
     "work": {
       "eyebrow": "Selected work",
       "heading": "A few ideas,",

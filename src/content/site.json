@@ -9,8 +9,8 @@
     "navigationLabel": "Main navigation",
     "navigation": [
       { "label": "Services", "href": "/#services" },
-      { "label": "Our work", "href": "/#work" },
-      { "label": "About us", "href": "/#team" },
+      { "label": "Amphora", "href": "/#about" },
+      { "label": "Our team", "href": "/#team" },
       { "label": "Contact", "href": "/#calendly" }
     ],
     "booking": { "label": "Let’s talk", "href": "/termin" },

@@ -3,7 +3,7 @@ import type { CollectionEntry } from 'astro:content';
 interface Props { content: CollectionEntry<'homepage'>['data']['partners']; }
 const { content } = Astro.props;
 ---
-<section class="partners shell" aria-labelledby="partners-heading">
+<section class="partners shell reveal-on-scroll" aria-labelledby="partners-heading">
   <h2 class="eyebrow" id="partners-heading">{content.heading}</h2>
   <ul class="partner-grid">
     {content.items.map((logo) => <li><img {...logo} loading="lazy" decoding="async" class:list={[logo.width / logo.height < 1.8 && 'portrait-logo']} /></li>)}

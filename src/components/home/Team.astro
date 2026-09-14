@@ -9,14 +9,14 @@ const photos = { salam, marcel };
 ---
 <section class="section shell team-section" id="team" aria-labelledby="team-heading">
   <div class="team-intro">
-    <p class="eyebrow"><span class="section-index">03 /</span>{content.eyebrow}</p>
+    <p class="eyebrow"><span class="section-index">04 /</span>{content.eyebrow}</p>
     <h2 class="section-heading" id="team-heading">{content.heading}<br /><span class="editorial">{content.emphasis}</span></h2>
     <p class="team-description">{content.description}</p>
     <p class="team-note"><span aria-hidden="true">↳</span>{content.note}</p>
   </div>
   <div class="team-grid">
-    {content.items.map((person) => (
-      <article class="person">
+    {content.items.map((person, index) => (
+      <article class="person reveal-on-scroll" style={`--reveal-delay: ${index * 90}ms`}>
         <div class="portrait"><Image src={photos[person.id]} alt={person.imageAlt} width={480} height={540} widths={[240, 360, 480]} sizes="(min-width: 1280px) 270px, (min-width: 768px) 25vw, (min-width: 480px) 42vw, 85vw" format="webp" quality={82} fit="cover" loading="lazy" /></div>
         <div class="person-name"><h3>{person.name}</h3><span>{person.role}</span></div>
         <p>{person.description}</p>
@@ -33,7 +33,8 @@ const photos = { salam, marcel };
   .team-note span { font-size: 20px; }
   .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
   .portrait { overflow: hidden; border-radius: 14px; background: var(--color-surface); }
-  .portrait :global(img) { width: 100%; height: auto; aspect-ratio: 8 / 9; object-fit: cover; }
+  .portrait :global(img) { width: 100%; height: auto; aspect-ratio: 8 / 9; object-fit: cover; transition: transform 500ms cubic-bezier(.22, 1, .36, 1), filter 400ms ease; }
+  .person:hover .portrait :global(img), .person:focus-within .portrait :global(img) { transform: scale(1.035); filter: saturate(1.05) contrast(1.02); }
   .person-name { margin-top: 21px; }
   h3 { font-size: 19px; letter-spacing: -.035em; }
   .person-name span { font-size: 11px; color: var(--color-muted); display: block; margin-top: 5px; }

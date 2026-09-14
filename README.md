@@ -24,14 +24,15 @@ PowerShell users with restricted script execution can use `npm.cmd` in place of 
 ## Current scope
 
 - Shared header and footer, local six-face font setup, Tailwind colour tokens, favicons, and an English homepage.
-- Eight sections in the specified order: header, hero, four services, case studies, partner logos, team, contact, footer.
+- Homepage sections in order: header, hero, four services, Amphora introduction and four-step process, case studies, partner logos, team, contact, footer.
+- A 50+ five-star Google review proof point and a simple four-step process including a free first draft.
 - Exactly four services: Websites, Webshops & Web-Apps; Workflows & KI; CRM; Mobile apps.
 - Four provisional case studies with keyboard-accessible, native in-place expansion. No filtering or separate case pages.
 - All 14 partner logos in uniform dark grey on white, plus the supplied team and consultation photos.
 - German `/impressum` and `/datenschutz` pages. Text was copied from the live site on 11 September 2026, without translation or rewriting. The source URLs and copy date are recorded alongside it.
 - `/systeme`, `/skills`, and `/systeme-old` redirect permanently (301) to `/` through Astro’s Vercel configuration.
 
-The PDF’s four accent colours remain in use pending confirmation of the requested yellow direction. Colours are defined once in `src/styles/global.css`. The layout uses white backgrounds, dark grey text, rounded images, and restrained hover transitions. No scroll animation, cursor follower, 3D effect, tracking, or third-party runtime resource is added.
+Colours are drawn from Amphora’s gradient mark and defined once in `src/styles/global.css`. The layout uses white backgrounds, dark grey text, rounded images, gradient CTA/service hovers, restrained scroll reveals, softly blurred wobble previews, and subtle team-photo focus effects. Motion respects the user’s reduced-motion preference and does not add a third-party runtime dependency.
 
 ## Content and assets
 

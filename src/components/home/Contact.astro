@@ -8,9 +8,9 @@ interface Props {
 const { content, services } = Astro.props;
 ---
 <section class="contact-section" id="calendly" aria-labelledby="contact-heading">
-  <div class="shell contact-shell">
+  <div class="shell contact-shell reveal-on-scroll">
     <div class="contact-intro">
-      <p class="eyebrow"><span class="section-index">04 /</span>{content.eyebrow}</p>
+      <p class="eyebrow"><span class="section-index">05 /</span>{content.eyebrow}</p>
       <h2 class="section-heading" id="contact-heading">{content.heading}<br /><span class="editorial">{content.emphasis}</span></h2>
       <p class="contact-description">{content.description}</p>
       <a class="button button-dark" href={content.booking.href}>{content.booking.label}<Icon /></a>

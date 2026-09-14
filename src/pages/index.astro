@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import { getEntry } from 'astro:content';
 import Hero from '../components/home/Hero.astro';
+import AboutProcess from '../components/home/AboutProcess.astro';
 import Services from '../components/home/Services.astro';
 import Work from '../components/home/Work.astro';
 import Partners from '../components/home/Partners.astro';
@@ -14,6 +15,7 @@ const content = entry.data;
 <Layout>
   <Hero content={content.hero} draftLabel={content.draftLabel} />
   <Services content={content.services} />
+  <AboutProcess about={content.about} process={content.process} />
   <Work content={content.work} services={content.services.items} />
   <Partners content={content.partners} />
   <Team content={content.team} />

@@ -1,0 +1,81 @@
+---
+import type { CollectionEntry } from 'astro:content';
+interface Props {
+  about: CollectionEntry<'homepage'>['data']['about'];
+  process: CollectionEntry<'homepage'>['data']['process'];
+}
+const { about, process } = Astro.props;
+---
+<section class="about-section" id="about" aria-labelledby="about-heading">
+  <div class="shell about-grid reveal-on-scroll">
+    <p class="eyebrow"><span class="section-index">02 /</span>{about.eyebrow}</p>
+    <div class="about-copy">
+      <h2 class="section-heading" id="about-heading">{about.heading}<br /><span class="editorial">{about.emphasis}</span></h2>
+      <p>{about.description}</p>
+    </div>
+    <div class="review-proof" aria-label={about.reviewAriaLabel}>
+      <span class="stars" aria-hidden="true">★★★★★</span>
+      <strong>{about.reviewCount}</strong>
+      <span>{about.reviewLabel}</span>
+    </div>
+  </div>
+
+  <div class="shell process reveal-on-scroll" id="process" aria-labelledby="process-heading">
+    <div class="process-heading">
+      <p class="eyebrow">{process.eyebrow}</p>
+      <h3 id="process-heading">{process.heading}</h3>
+      <p>{process.description}</p>
+    </div>
+    <ol class="process-list">
+      {process.items.map((step) => (
+        <li>
+          <span class="step-number">{step.number}</span>
+          <div><h4>{step.name}</h4><p>{step.description}</p></div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .about-section { padding-block: 112px; background: var(--color-ink); color: var(--color-paper); }
+  .about-grid { display: grid; grid-template-columns: .85fr 1.75fr .65fr; gap: 44px; align-items: start; }
+  .about-grid > .eyebrow { padding-top: 10px; color: #c8c8c2; }
+  .about-grid .section-index { color: #8c8c86; }
+  .about-copy h2 { font-size: clamp(2.8rem, 5vw, 5rem); }
+  .about-copy > p { margin-top: 30px; max-width: 650px; font-size: clamp(1.05rem, 1.55vw, 1.35rem); line-height: 1.65; color: #d3d3cd; }
+  .review-proof { justify-self: end; width: 154px; aspect-ratio: 1; padding: 23px; border: 1px solid #55554f; border-radius: 50%; display: flex; flex-direction: column; justify-content: center; }
+  .review-proof .stars { color: var(--color-logo-yellow); font-size: 12px; letter-spacing: .08em; }
+  .review-proof strong { font-size: 30px; line-height: 1; margin-top: 10px; font-weight: 500; }
+  .review-proof > span:last-child { margin-top: 7px; font-size: 10px; line-height: 1.45; color: #b8b8b2; }
+  .process { margin-top: 90px; padding-top: 52px; border-top: 1px solid #4a4a45; display: grid; grid-template-columns: .85fr 2.4fr; gap: 44px; }
+  .process-heading .eyebrow { color: #aaa9a3; }
+  .process-heading h3 { margin-top: 22px; font-size: 25px; letter-spacing: -.04em; }
+  .process-heading > p:last-child { color: #aaa9a3; font-size: 12px; line-height: 1.7; margin-top: 13px; max-width: 230px; }
+  .process-list { display: grid; grid-template-columns: repeat(4, 1fr); list-style: none; padding: 0; margin: 0; }
+  .process-list li { min-width: 0; padding: 0 22px; border-left: 1px solid #4a4a45; }
+  .step-number { display: block; color: var(--color-logo-cyan); font-size: 10px; margin-bottom: 48px; }
+  h4 { font-size: 16px; font-weight: 500; line-height: 1.35; }
+  .process-list p { color: #aaa9a3; font-size: 11px; line-height: 1.65; margin-top: 12px; }
+  @media (max-width: 1023px) {
+    .about-grid { grid-template-columns: .7fr 2fr; }
+    .review-proof { grid-column: 2; justify-self: start; width: auto; aspect-ratio: auto; border-radius: 100px; flex-direction: row; align-items: center; gap: 10px; padding: 14px 20px; }
+    .review-proof strong, .review-proof > span:last-child { margin-top: 0; }
+    .process { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 767px) {
+    .about-section { padding-block: 72px; }
+    .about-grid { grid-template-columns: 1fr; gap: 30px; }
+    .about-grid > .eyebrow, .review-proof { grid-column: auto; }
+    .about-copy > p { font-size: 16px; margin-top: 24px; }
+    .process { margin-top: 60px; padding-top: 38px; gap: 34px; }
+    .process-list { grid-template-columns: 1fr 1fr; gap: 34px 0; }
+    .step-number { margin-bottom: 24px; }
+  }
+  @media (max-width: 470px) {
+    .review-proof { flex-wrap: wrap; }
+    .process-list { grid-template-columns: 1fr; }
+    .process-list li { display: grid; grid-template-columns: 40px 1fr; }
+    .step-number { margin: 3px 0 0; }
+  }
+</style>
