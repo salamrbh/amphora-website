@@ -2,20 +2,47 @@
 import type { CollectionEntry } from 'astro:content';
 interface Props { content: CollectionEntry<'homepage'>['data']['partners']; }
 const { content } = Astro.props;
+const logosByFile = new Map(content.items.map((logo) => [logo.src.split('/').at(-1), logo]));
+const rowFiles = [
+  ['remco.webp', 'therapie-praxis-mueller.webp', 'wia.webp', 'cords-cafe.webp', 'evltn-martial-arts.webp', 'grechows-beauty.webp', 'nord-ostsee-logistik.webp'],
+  ['oxzy.webp', 'antik-vehrs.webp', 'clockwise-wordmark.svg', 'bremer-stadtmusikanten.webp', 'uni-bremen.webp', 'clickless.webp', 'life-lounge-bar.webp'],
+];
+const rows = rowFiles.map((files) => files.map((file) => {
+  const logo = logosByFile.get(file);
+  if (!logo) throw new Error(`Missing partner logo: ${file}`);
+  return logo;
+}));
 ---
-<section class="partners shell reveal-on-scroll" aria-labelledby="partners-heading">
+<section class="partners reveal-on-scroll" aria-labelledby="partners-heading">
   <h2 class="eyebrow" id="partners-heading">{content.heading}</h2>
-  <ul class="partner-grid">
-    {content.items.map((logo) => <li><img {...logo} loading="lazy" decoding="async" class:list={[logo.width / logo.height < 1.8 && 'portrait-logo']} /></li>)}
-  </ul>
+  <div class="partner-rows">
+    {rows.map((logos, index) => (
+      <div class:list={['partner-row', index === 0 ? 'moves-left' : 'moves-right']}>
+        <ul class="logo-track">
+          {logos.map((logo) => <li><img {...logo} loading="lazy" decoding="async" class:list={[logo.width / logo.height < 1.8 && 'portrait-logo']} /></li>)}
+          {[0, 1].map(() => logos.map(({ alt: _alt, ...logo }) => (
+            <li aria-hidden="true"><img {...logo} alt="" loading="lazy" decoding="async" class:list={[logo.width / logo.height < 1.8 && 'portrait-logo']} /></li>
+          )))}
+        </ul>
+      </div>
+    ))}
+  </div>
 </section>
 <style>
   .partners { padding-block: 56px 64px; border-bottom: 1px solid var(--color-line); }
   h2 { justify-content: center; color: var(--color-muted); font-size: 10px; margin-bottom: 38px; }
-  .partner-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); align-items: center; gap: 26px 32px; list-style: none; margin: 0; padding: 0; }
-  li { display: flex; align-items: center; justify-content: center; height: 56px; }
+  .partner-rows { width: 100%; overflow: hidden; mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent); }
+  .partner-row { --marquee-gap: 36px; --cycle-offset: -1302px; display: block; width: 100%; height: 56px; overflow: hidden; }
+  .partner-row + .partner-row { margin-top: 22px; }
+  .logo-track { display: flex !important; flex-flow: row nowrap !important; align-items: center; gap: var(--marquee-gap); width: max-content; height: 56px; list-style: none; margin: 0; padding: 0; white-space: nowrap; will-change: transform; }
+  .moves-left .logo-track { animation: partners-left 68s linear infinite; }
+  .moves-right .logo-track { animation: partners-right 68s linear infinite; }
+  li { display: flex; align-items: center; justify-content: center; width: 150px; height: 56px; flex: 0 0 150px; }
   img { width: auto; max-width: 108px; height: auto; max-height: 38px; object-fit: contain; filter: brightness(0) invert(0.22); }
   img.portrait-logo { max-width: 70px; max-height: 50px; }
-  @media (max-width: 1023px) { .partner-grid { gap: 22px; } img { max-width: 78px; max-height: 32px; } }
-  @media (max-width: 767px) { .partners { padding-block: 42px; } .partner-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; } img { max-width: 64px; max-height: 30px; } img.portrait-logo { max-height: 43px; max-width: 55px; } }
+  @keyframes partners-left { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(var(--cycle-offset), 0, 0); } }
+  @keyframes partners-right { from { transform: translate3d(var(--cycle-offset), 0, 0); } to { transform: translate3d(0, 0, 0); } }
+  @media (max-width: 1023px) { .partner-row { --marquee-gap: 28px; --cycle-offset: -1071px; } li { width: 125px; flex-basis: 125px; } img { max-width: 82px; max-height: 32px; } }
+  @media (max-width: 767px) { .partners { padding-block: 42px; } .partner-rows { mask-image: linear-gradient(90deg, transparent, black 4%, black 96%, transparent); } .partner-row { --marquee-gap: 22px; --cycle-offset: -889px; height: 50px; } .partner-row + .partner-row { margin-top: 17px; } .logo-track { height: 50px; } li { width: 105px; height: 50px; flex-basis: 105px; } img { max-width: 70px; max-height: 30px; } img.portrait-logo { max-height: 42px; max-width: 55px; } }
+  @media (prefers-reduced-motion: reduce) { .logo-track { animation: none !important; } }
 </style>

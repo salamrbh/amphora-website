@@ -13,11 +13,17 @@ if (!entry) throw new Error('Missing homepage content.');
 const content = entry.data;
 ---
 <Layout>
-  <Hero content={content.hero} draftLabel={content.draftLabel} />
-  <Services content={content.services} />
+  <div class="opening-sections">
+    <Hero content={content.hero} draftLabel={content.draftLabel} />
+    <Services content={content.services} />
+  </div>
   <AboutProcess about={content.about} process={content.process} />
   <Work content={content.work} services={content.services.items} />
   <Partners content={content.partners} />
   <Team content={content.team} />
   <Contact content={content.contact} services={content.services.items} />
 </Layout>
+
+<style>
+  .opening-sections { background: #fff; }
+</style>
