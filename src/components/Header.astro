@@ -2,20 +2,23 @@
 import type { CollectionEntry } from 'astro:content';
 import Brand from './Brand.astro';
 import Icon from './Icon.astro';
+import routes from '../content/routes.json';
 interface Props { site: CollectionEntry<'site'>['data']; }
 const { site } = Astro.props;
+const navigation = site.navigation.map((item) => ({ ...item, upcoming: item.href === routes.skills && !routes.skillsReady, href: item.href === routes.skills && !routes.skillsReady ? `${routes.systems}#skills` : item.href }));
+const isCurrent = (href: string) => href === routes.systems && [routes.systems, '/'].includes(Astro.url.pathname.replace(/\/$/, '') || '/');
 ---
 <header class="site-header" id="top">
   <div class="shell header-inner">
     <Brand label={site.homeLabel} />
     <nav class="desktop-nav" aria-label={site.navigationLabel}>
-      {site.navigation.map((item) => <a href={item.href}>{item.label}</a>)}
+      {navigation.map((item) => <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}{item.upcoming && <span class="soon">Soon</span>}</a>)}
     </nav>
     <a class="button button-dark header-cta" href={site.booking.href}>{site.booking.label}<Icon /></a>
     <details class="mobile-nav">
       <summary>{site.menuLabel}<span class="menu-icon" aria-hidden="true"></span></summary>
       <nav aria-label={site.navigationLabel}>
-        {site.navigation.map((item) => <a href={item.href}>{item.label}<Icon /></a>)}
+        {navigation.map((item) => <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}><span>{item.label}{item.upcoming && <span class="soon">Soon</span>}</span><Icon /></a>)}
         <a class="mobile-booking" href={site.booking.href}>{site.booking.label}<Icon /></a>
       </nav>
     </details>
@@ -39,6 +42,8 @@ const { site } = Astro.props;
   .desktop-nav { display: flex; align-items: center; gap: 30px; margin-left: auto; margin-right: 20px; }
   .desktop-nav a { font-size: 14px; padding-block: 14px; transition: color 180ms ease; }
   .desktop-nav a:hover { color: var(--color-muted); }
+  .desktop-nav a[aria-current] { text-decoration: underline; text-underline-offset: 7px; text-decoration-color: var(--color-accent); }
+  .soon { margin-left: 6px; font-size: 9px; color: var(--color-muted); }
   .header-cta { min-height: 46px; padding: 12px 18px; font-size: 14px; gap: 26px; }
   .header-cta :global(svg) { width: 17px; height: 17px; }
   .mobile-nav { display: none; }

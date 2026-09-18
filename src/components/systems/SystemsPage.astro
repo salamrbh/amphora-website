@@ -1,0 +1,27 @@
+---
+import { getEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Hero from '../home/Hero.astro';
+import TrustNeeds from './TrustNeeds.astro';
+import WorkSample from './WorkSample.astro';
+import Services from './Services.astro';
+import Projects from './Projects.astro';
+import Collaboration from './Collaboration.astro';
+import AboutFaq from './AboutFaq.astro';
+import Contact from './Contact.astro';
+import routes from '../../content/routes.json';
+const entry = await getEntry('systems', 'en');
+if (!entry) throw new Error('Missing Systems content.');
+const content = entry.data;
+const hero = { ...content.hero, primary: { label: 'Discuss a project', href: `${routes.booking}?area=systems` }, secondary: { label: 'See our work', href: '#sample' } };
+---
+<Layout title={content.title} description={content.description}>
+  <Hero content={hero} draftLabel={content.draftLabel} />
+  <TrustNeeds trust={content.trust} needs={content.needs} />
+  <WorkSample content={content.sample} />
+  <Services content={content.services} />
+  <Projects content={content.work} />
+  <Collaboration process={content.process} support={content.support} />
+  <AboutFaq about={content.about} faq={content.faq} />
+  <Contact content={content.contact} services={content.services.items} />
+</Layout>

@@ -1,6 +1,6 @@
-# Amphora homepage — Phases 1 and 2
+# Amphora Systems
 
-A new, independent homepage built with Astro, TypeScript, Tailwind CSS 4, and the Vercel adapter. It uses plain Astro components and a small mobile-navigation script. All fonts and images are served locally.
+A Systems landing page built with Astro, TypeScript, Tailwind CSS 4, and the Vercel adapter. It uses plain Astro components and locally hosted fonts and images. The September 2026 Part B Systems brief is implemented at `/systems`; `/` displays the same page until the separate hub is built.
 
 The original handoff in `For Ricardo-COPY_FOLDER/For Ricardo/`, including `00 README.md` and the technical specification, is unchanged. The heavy reference wordmark SVG is not used.
 
@@ -15,6 +15,7 @@ Use Node **24.21.0**, pinned in `.nvmrc`, and npm.
 | `npm run build` | Build the static pages and Vercel output |
 | `npm run preview` | Preview the production build locally |
 | `npm run check` | Check Astro components and TypeScript |
+| `npm test` | Verify the contact API contract with a mocked email provider |
 | `npm run dev:status` | Show the background server status |
 | `npm run dev:logs` | Read the background server logs |
 | `npm run dev:stop` | Stop the background server |
@@ -23,42 +24,52 @@ PowerShell users with restricted script execution can use `npm.cmd` in place of 
 
 ## Current scope
 
-- Shared header and footer, local six-face font setup, Tailwind colour tokens, favicons, and an English homepage.
-- Homepage sections in order: header, hero, four services, Amphora introduction and four-step process, case studies, partner logos, team, contact, footer.
-- A 50+ five-star Google review proof point and a simple four-step process including a free first draft.
-- Exactly four services: Websites, Webshops & Web-Apps; Workflows & KI; CRM; Mobile apps.
-- Four provisional case studies with keyboard-accessible, native in-place expansion. No filtering or separate case pages.
-- All 14 partner logos in uniform dark grey on white, plus the supplied team and consultation photos.
-- German `/impressum` and `/datenschutz` pages. Text was copied from the live site on 11 September 2026, without translation or rewriting. The source URLs and copy date are recorded alongside it.
-- `/systeme`, `/skills`, and `/systeme-old` redirect permanently (301) to `/` through Astro’s Vercel configuration.
+The page follows the brief: hero, Systems references, four need scenarios, a project walkthrough, four service cards, two project narratives plus a lighter gallery and an illustrative automation, collaboration, ongoing support, Salam as the Systems contact alongside Marcel as co-founder of Skills, FAQs, and a short enquiry form.
 
-Colours are drawn from Amphora’s gradient mark and defined once in `src/styles/global.css`. The layout uses white backgrounds, dark grey text, rounded images, gradient CTA/service hovers, restrained scroll reveals, softly blurred wobble previews, and subtle team-photo focus effects. Motion respects the user’s reduced-motion preference and does not add a third-party runtime dependency.
+Shared navigation is Systems, Skills, About, Contact. Section 02 uses all 14 supplied partner logos in a centered, full-width strip with a continuous right-to-left loop and faded edges. There is no partner count or selection label. Reduced-motion preferences show all logos in centered, static rows. The secondary page navigation and unverified Google review count are no longer rendered. Free-draft offers are removed.
+
+`/skills` is reserved for the next task. Until its page exists, navigation points to the quiet Skills note and email enquiry near the end of Systems. Set `skillsReady` in `src/content/routes.json` to `true` when the Skills page is ready. No Skills landing page or hub has been built here.
+
+Only `/systeme-old` retains its 301 redirect to `/`. The old `/systeme` and `/skills` redirects are removed. German legal pages and their content are unchanged.
 
 ## Content and assets
 
-All editable page copy lives in validated Astro content collections:
+Landing-page copy lives in validated Astro content collections:
 
 | File | Content |
 | --- | --- |
-| `src/content/site.json` | Navigation, shared labels, footer, and page title |
-| `src/content/homepage.json` | Hero, services, project previews, logos, team, and contact layout |
+| `src/content/site.json` | Global navigation, shared labels, and footer |
+| `src/content/systems.json` | Systems copy, services, stories, images, automation, FAQs, and contact copy |
+| `src/content/routes.json` | Area paths, Skills availability, booking path, and exact Calendly URL |
 | `src/content/legal.json` | Unmodified German legal text, source URLs, and copy date |
 | `src/content.config.ts` | Collection schemas |
 
-English copy is a working draft and is marked on the page. `TODO:` fields identify approval and translation work. Case summaries and team biographies remain visibly provisional; no client results or metrics are invented. Case tags reference the four service IDs and are checked during the build.
+English copy remains marked for review. The client has not supplied additional project details or verified results. The two stories distinguish observations from the supplied screenshots from the starting situation and outcomes that still need confirmation. The walkthrough is explicitly a design reading, not an attributed client rationale. References remain labelled as awaiting approval.
+
+The automation is deliberately text-only and labelled as an illustration, not a completed project. To replace it, edit `work.automation` in `systems.json`: update the heading, description, steps and note, and optionally replace `image: null` with `{ "src": "/images/work/example.webp", "alt": "Meaningful description", "width": 1200, "height": 800 }`. Supply the matching AVIF asset and set `imageCaption`. No empty image frame is rendered while the image is null. CRM, automation, mobile apps and web apps are identified as new to the displayed portfolio or awaiting examples.
+
+The previous `homepage.json` and unused `components/home/` sections are retained as source material. The current landing page uses `components/systems/`, plus the existing hero component.
 
 Fonts are copied into `public/fonts/`. The pre-optimised images live under `public/images/`. Team originals in `src/assets/team/` are processed by Astro into responsive WebP images. The original handoff package remains the source of these files. No external font, image, or old-site runtime dependency is present.
 
-## Reserved for later phases
+## Booking and enquiries
 
-- **Phase 3:** `/termin`, the Calendly embed, and `/danke-termin`. Booking links already preserve the required `/termin` target; that page does not exist yet in this Phase 2 build.
-- **Phase 4:** The working contact form, `POST /api/kontakt`, Resend delivery, validation, and `/danke`. The contact area already has `id="calendly"`. Its disabled fieldset is a clearly labelled layout preview; the email link works. There is no submit handler or network request.
-- **Phase 5:** Launch metadata, sitemap, robots rules, scroll motion, analytics/consent requirements, and launch audits.
+`/termin` immediately initializes the Calendly inline embed using the exact URL and colours provided by the client. The same unmodified URL is the visible fallback link. The embed API attaches the Systems area and selected service as UTM context, as described in [Calendly's embed documentation](https://developer.calendly.com/api-docs/overview/embedding/recipes). These are attribution fields, not invented custom booking-question answers. A confirmed `calendly.event_scheduled` message is accepted only from `https://calendly.com` and the embedded iframe, then redirects to `/danke-termin`.
 
-`.env.example` lists the future `RESEND_API_KEY` variable without a value. No integration or secret is needed for Phases 1 and 2.
+The live calendar was verified to render on 18 September 2026. Its existing event title is **Kostenloses Analysegespräch** (free analysis call). That title is controlled in the Calendly account and should be renamed there to align the booking flow with the brief's no-giveaway wording; the supplied URL has been preserved.
+
+Service-card and support links preselect the enquiry service. The form posts **JSON** to `/api/kontakt` using the exact fields: `name`, `email`, `companyName`, `serviceType`, `selectedServices`, `projectDescription`, `contactViaPhone`, `phone`, `website`, and `formLoadedAt`. It also sends hidden `area=systems`; the endpoint accepts `area=skills` for the future page and defaults to Systems if omitted.
+
+Name, a valid email, and project description are required. Organisation and enquiry type are optional. `selectedServices` is an optional string array; the current single-service selector populates it with the selected service's display name from the content collection. Final service names can be changed there when approved. The server accepts up to four string entries. Phone is required only when the visitor selects the callback checkbox. `formLoadedAt` is a numeric timestamp set in the browser when the form initializes; the server rejects submissions less than three seconds later, future timestamps, and missing or invalid timestamps. A filled honeypot is silently discarded with the same `{ "success": true }` response, without calling Resend.
+
+Validation errors appear beside the relevant fields and focus moves to the first invalid field. The submit button is disabled during requests, errors preserve the visitor's entries, and `{ "success": true }` redirects to `/danke`. JSON responses are returned regardless of the `Accept` header. Without JavaScript, the page offers direct email instead of submitting an untimed form. Both confirmation pages are noindex. Server validation and delivery logic live in `src/lib/contact.ts`; the Astro endpoint remains on-demand (`prerender = false`), while page routes remain static.
+
+Set `RESEND_API_KEY` in local `.env` or Vercel's server environment to enable delivery. The sender is `Anfrage <formular@amphora-it.com>` and recipient is `m.henning@amphora-it.com`, from the existing handoff; the sending domain must be verified with Resend. Without the key, the endpoint returns an honest unavailable response and the form offers the email fallback. No secret is committed, no real test enquiry has been sent, and no real booking has been made.
+
+Still needed before launch: approved case details and references, the real automation case when available, final copy approval/translation, delivery configuration, and any separate launch SEO/analytics work. Skills and the hub remain separate tasks.
 
 ## Verification
 
-Run `npm run check` and `npm run build` before reviewing a change. Review the homepage at **360, 390, 768, 1280, and 1440 px**, including the mobile menu, keyboard focus, expanded case studies, partner-logo treatment, image loading, and contact anchor. Booking and submission flows are intentionally deferred as described above.
+Run `npm run check` and `npm run build` before reviewing a change. Review `/systems` at **360, 390, 768, 1280, and 1440 px**, including the mobile menu, keyboard focus, FAQ expansion, image loading, service preselection and contact anchor. These sizes passed layout and automated accessibility checks. Endpoint delivery branches were verified with a mocked provider; confirmation and failure handling were checked without sending email or booking a meeting. Refresh/restart the background server after changing collection configuration if its content cache is stale.
 
 The Vercel adapter produces deployment files in `.vercel/output/`. Creating a Vercel project, publishing, and switching the live domain remain outside this local implementation.

@@ -29,8 +29,33 @@ const homepage = defineCollection({
     process: z.object({ eyebrow: z.string(), heading: z.string(), description: z.string(), items: z.array(z.object({ number: z.string(), name: z.string(), description: z.string() })).length(4) }),
     work: intro.extend({ expandLabel: z.string(), collapseLabel: z.string(), placeholder: z.string(), items: z.array(z.object({ id: z.string(), name: z.string(), category: z.string(), image, services: z.array(z.string()).min(1), description: z.string(), todo: z.string().startsWith('TODO:') })) }),
     partners: z.object({ heading: z.string(), items: z.array(image).length(14) }),
-    team: intro.extend({ note: z.string(), items: z.array(z.object({ id: z.enum(['salam', 'marcel']), name: z.string(), role: z.string(), description: z.string(), imageAlt: z.string(), todo: z.string().startsWith('TODO:') })) }),
+    team: intro.extend({ note: z.string(), items: z.array(z.object({ id: z.enum(['salam', 'marcel']), name: z.string(), role: z.string(), imageAlt: z.string() })) }),
     contact: intro.extend({ booking: link, emailLabel: z.string(), email: z.string(), formHeading: z.string(), formNote: z.string(), name: z.string(), namePlaceholder: z.string(), emailField: z.string(), emailPlaceholder: z.string(), company: z.string(), companyPlaceholder: z.string(), service: z.string(), servicePlaceholder: z.string(), message: z.string(), messagePlaceholder: z.string(), submit: z.string(), optional: z.string() }),
   }),
 });
-export const collections = { site, legal, homepage };
+const projectPreview = z.object({ id: z.string(), name: z.string(), category: z.string(), tag: z.string(), image });
+const systems = defineCollection({
+  loader: file('src/content/systems.json'),
+  schema: z.object({
+    title: z.string(), description: z.string(), draftLabel: z.string(),
+    hero: z.object({ eyebrow: z.string(), heading: z.string(), emphasis: z.string(), subline: z.string(), note: z.string(), image, imageCaption: z.string(), imageNote: z.string(), scrollLabel: z.string() }),
+    trust: z.object({ eyebrow: z.string(), note: z.string(), logos: z.array(image) }),
+    needs: intro.extend({ items: z.array(z.object({ number: z.string(), heading: z.string(), description: z.string(), service: z.string(), linkLabel: z.string() })).length(4) }),
+    sample: intro.extend({ project: z.string(), image, note: z.string(), items: z.array(z.object({ label: z.string(), text: z.string() })) }),
+    services: intro.extend({ items: z.array(z.object({ id: z.string(), number: z.string(), name: z.string(), icon: z.enum(['web', 'workflow', 'crm', 'mobile']), accent: z.enum(['blue', 'red', 'orange', 'purple']), useCase: z.string(), service: z.string(), outcome: z.string(), proof: z.string() })).length(4) }),
+    work: intro.extend({
+      items: z.array(projectPreview.extend({ situation: z.string(), work: z.string(), outcome: z.string(), status: z.string() })).length(2),
+      gallery: z.array(projectPreview), galleryNote: z.string(),
+      automation: z.object({ label: z.string(), heading: z.string(), description: z.string(), steps: z.array(z.string()), note: z.string(), image: image.nullable(), imageCaption: z.string() }),
+    }),
+    process: intro.extend({ items: z.array(z.object({ number: z.string(), name: z.string(), description: z.string(), effort: z.string() })).length(4) }),
+    support: intro.extend({ items: z.array(z.object({ name: z.string(), description: z.string() })) }),
+    about: intro.extend({
+      name: z.string(), role: z.string(), connection: z.string(),
+      marcel: z.object({ name: z.string(), role: z.string(), imageAlt: z.string() }),
+    }),
+    faq: intro.extend({ items: z.array(z.object({ question: z.string(), answer: z.string() })) }),
+    contact: intro.extend({ formHeading: z.string(), formNote: z.string(), email: z.email() }),
+  }),
+});
+export const collections = { site, legal, homepage, systems };

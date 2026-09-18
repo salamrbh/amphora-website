@@ -1,0 +1,35 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import SectionHeading from './SectionHeading.astro';
+import Icon from '../Icon.astro';
+interface Props { process: CollectionEntry<'systems'>['data']['process']; support: CollectionEntry<'systems'>['data']['support']; }
+const { process, support } = Astro.props;
+---
+<section class="collaboration section" id="process" aria-labelledby="process-heading">
+  <div class="shell"><SectionHeading number="07" id="process-heading" content={process} />
+    <ol class="process-list">{process.items.map((step) => <li><span class="step-number">{step.number}</span><h3>{step.name}</h3><p>{step.description}</p><p class="client-effort">{step.effort}</p></li>)}</ol>
+  </div>
+</section>
+<section class="section shell support" id="support" aria-labelledby="support-heading">
+  <SectionHeading number="08" id="support-heading" content={support} />
+  <div class="support-grid">{support.items.map((item) => <div><h3>{item.name}</h3><p>{item.description}</p></div>)}</div>
+  <a class="text-link" href="?service=support#contact" data-enquiry-service="support">Ask about ongoing support<Icon /></a>
+</section>
+<style>
+  .collaboration { background: var(--color-ink); color: white; --color-muted: #bcbcb4; --color-line: #50504b; }
+  .process-list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 30px; margin: 0; padding: 0; list-style: none; }
+  .process-list li { border-top: 1px solid #51514a; padding-top: 24px; display: flex; flex-direction: column; }
+  .step-number { font-size: 11px; color: #aab4ff; margin-bottom: 36px; }
+  h3 { font-size: 22px; letter-spacing: -.035em; line-height: 1.3; }
+  .process-list p { font-size: 13px; color: #bcbcb4; line-height: 1.75; margin: 18px 0 24px; }
+  .process-list .client-effort { color: #e2e2da; font-size: 11px; padding-top: 18px; border-top: 1px solid #51514a; margin: auto 0 0; }
+  .support { border-bottom: 1px solid var(--color-line); }
+  .support-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 38px; }
+  .support-grid > div { border-top: 1px solid var(--color-line); padding-top: 25px; }
+  .support-grid p { margin-top: 14px; font-size: 14px; line-height: 1.75; color: var(--color-muted); max-width: 335px; }
+  .support > a { margin-top: 36px; min-height: 44px; }
+  .support > a :global(svg) { width: 18px; }
+  @media (max-width: 1023px) { .process-list { grid-template-columns: repeat(2, 1fr); gap: 38px; } }
+  @media (max-width: 767px) { .support-grid { grid-template-columns: 1fr; gap: 24px; } .support-grid p { max-width: 480px; } }
+  @media (max-width: 479px) { .process-list { grid-template-columns: 1fr; } .step-number { margin-bottom: 20px; } }
+</style>

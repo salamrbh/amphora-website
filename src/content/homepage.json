@@ -88,8 +88,8 @@
       "description": "Meet Salam and Marcel. Your direct contacts, from the first conversation to the details that make it work.",
       "note": "Based in Bremen. Happy to meet you.",
       "items": [
-        { "id": "salam", "name": "Salam Rouabhia", "role": "Co-founder", "description": "A little more about Salam and his work — coming soon.", "imageAlt": "Portrait of Salam Rouabhia, co-founder of Amphora", "todo": "TODO: Amphora to supply Salam’s short biography and confirm role wording." },
-        { "id": "marcel", "name": "Marcel Henning", "role": "Co-founder", "description": "A little more about Marcel and his work — coming soon.", "imageAlt": "Portrait of Marcel Henning, co-founder of Amphora", "todo": "TODO: Amphora to supply Marcel’s short biography and confirm role wording." }
+        { "id": "salam", "name": "Salam Rouabhia", "role": "Co-founder · Systems", "imageAlt": "Portrait of Salam Rouabhia, co-founder of Amphora" },
+        { "id": "marcel", "name": "Marcel Henning", "role": "Co-founder · Skills", "imageAlt": "Portrait of Marcel Henning, co-founder of Amphora" }
       ]
     },
     "contact": {

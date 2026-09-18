@@ -16,13 +16,16 @@ const { label } = Astro.props;
       return;
     }
     document.documentElement.classList.add('intro-active');
-    window.addEventListener('load', () => {
-      window.setTimeout(() => {
-        loader.classList.add('is-leaving');
-        document.documentElement.classList.remove('intro-active');
-        window.setTimeout(() => loader.remove(), 700);
-      }, 650);
-    }, { once: true });
+    let finished = false;
+    const finish = () => {
+      if (finished) return;
+      finished = true;
+      loader.classList.add('is-leaving');
+      document.documentElement.classList.remove('intro-active');
+      window.setTimeout(() => loader.remove(), 700);
+    };
+    window.addEventListener('load', () => window.setTimeout(finish, 650), { once: true });
+    window.setTimeout(finish, 1800);
   })();
 </script>
 
@@ -31,7 +34,7 @@ const { label } = Astro.props;
     position: fixed;
     inset: 0;
     z-index: 999;
-    display: grid;
+    display: none;
     place-items: center;
     background: var(--color-paper);
     transition: opacity 600ms cubic-bezier(.65, 0, .35, 1), visibility 600ms;
@@ -41,6 +44,7 @@ const { label } = Astro.props;
     height: auto;
     animation: logo-arrive 800ms cubic-bezier(.22, 1, .36, 1) both;
   }
+  :global(html.intro-active) .intro-loader { display: grid; }
   .intro-loader.is-leaving { opacity: 0; visibility: hidden; pointer-events: none; }
   @keyframes logo-arrive {
     from { opacity: 0; transform: translateY(10px) scale(.96); }

@@ -1,0 +1,14 @@
+---
+interface Props { number: string; id: string; content: { eyebrow: string; heading: string; emphasis: string; description?: string }; }
+const { number, id, content } = Astro.props;
+---
+<div class="section-intro">
+  <p class="eyebrow"><span class="section-index">{number} /</span>{content.eyebrow}</p>
+  <div><h2 class="section-heading" id={id}>{content.heading}<br /><span class="editorial">{content.emphasis}</span></h2>{content.description && <p class="section-description">{content.description}</p>}</div>
+</div>
+<style>
+  .section-intro { display: grid; grid-template-columns: 1fr 2fr; gap: 40px; margin-bottom: 48px; }
+  .eyebrow { padding-top: 10px; align-self: start; }
+  .section-description { max-width: 540px; font-size: 15px; line-height: 1.75; color: var(--color-muted); margin-top: 22px; }
+  @media (max-width: 767px) { .section-intro { grid-template-columns: 1fr; gap: 24px; margin-bottom: 32px; } }
+</style>

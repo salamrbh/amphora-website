@@ -1,0 +1,53 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import SectionHeading from './SectionHeading.astro';
+import Icon from '../Icon.astro';
+interface Props { trust: CollectionEntry<'systems'>['data']['trust']; needs: CollectionEntry<'systems'>['data']['needs']; }
+const { trust, needs } = Astro.props;
+---
+<section class="trust shell" aria-labelledby="trust-heading">
+  <div class="trust-top"><h2 class="eyebrow" id="trust-heading"><span class="section-index">02 /</span>{trust.eyebrow}</h2><p class="draft-note">{trust.note}</p></div>
+  <div class="partner-carousel">
+    <div class="partner-viewport">
+      <div class="partner-track" id="systems-partner-track" style={`--partner-duration: ${trust.logos.length * 6}s`}>
+        <ul class="partner-group" role="list">{trust.logos.map((logo) => <li><img {...logo} loading="eager" decoding="async" /></li>)}</ul>
+        <ul class="partner-group partner-copy" aria-hidden="true">{trust.logos.map(({ alt: _alt, ...logo }) => <li><img {...logo} alt="" loading="eager" decoding="async" /></li>)}</ul>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section shell" id="needs" aria-labelledby="needs-heading">
+  <SectionHeading number="03" id="needs-heading" content={needs} />
+  <div class="needs-grid">
+    {needs.items.map((need) => <a class="need" href={`#service-${need.service}`}><span class="need-number">{need.number}</span><h3>{need.heading}</h3><p>{need.description}</p><span class="need-link">{need.linkLabel}<Icon /></span></a>)}
+  </div>
+</section>
+<style>
+  .trust { padding-block: 38px 44px; border-bottom: 1px solid var(--color-line); }
+  .trust-top { display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+  .partner-carousel { min-width: 0; width: 100%; margin: 30px auto 0; }
+  .partner-viewport { overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
+  .partner-track { display: flex; width: max-content; animation: partner-scroll var(--partner-duration) linear infinite; }
+  .partner-group { display: flex; flex: none; align-items: center; gap: 40px; padding: 0 40px 0 0; margin: 0; list-style: none; }
+  .partner-group li { display: flex; align-items: center; justify-content: center; flex: 0 0 140px; width: 140px; height: 64px; }
+  .partner-group img { width: auto; max-width: 120px; height: auto; max-height: 54px; object-fit: contain; filter: brightness(0) invert(.25); }
+  @keyframes partner-scroll { to { transform: translateX(-50%); } }
+  .needs-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; }
+  .need { display: flex; flex-direction: column; border-top: 1px solid var(--color-line); padding-top: 22px; transition: border-color 180ms; }
+  .need:hover { border-color: var(--color-accent); }
+  .need-number { font-size: 11px; color: var(--color-accent); margin-bottom: 26px; }
+  h3 { font-size: 23px; letter-spacing: -.035em; line-height: 1.25; max-width: 230px; }
+  .need > p { font-size: 13px; color: var(--color-muted); line-height: 1.75; margin: 18px 0 24px; }
+  .need-link { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 12px; margin-top: auto; min-height: 44px; }
+  .need-link :global(svg) { width: 18px; }
+  @media (max-width: 1023px) { .needs-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; } }
+  @media (max-width: 767px) { .partner-group { gap: 28px; padding-right: 28px; } .partner-group li { flex-basis: 120px; width: 120px; } .partner-group img { max-width: 102px; max-height: 48px; } }
+  @media (max-width: 540px) { .needs-grid { grid-template-columns: 1fr; } h3 { max-width: none; } .need-number { margin-bottom: 18px; } }
+  @media (prefers-reduced-motion: reduce) {
+    .partner-viewport { overflow: visible; mask-image: none; }
+    .partner-track { display: block; width: 100%; animation: none; }
+    .partner-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; padding: 0; }
+    .partner-group li { width: auto; }
+    .partner-copy { display: none; }
+  }
+</style>

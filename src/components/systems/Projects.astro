@@ -1,0 +1,68 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import LocalPicture from '../LocalPicture.astro';
+import SectionHeading from './SectionHeading.astro';
+import Icon from '../Icon.astro';
+interface Props { content: CollectionEntry<'systems'>['data']['work']; }
+const { content } = Astro.props;
+---
+<section class="work-section section" id="work" aria-labelledby="work-heading">
+  <div class="shell">
+    <SectionHeading number="06" id="work-heading" content={content} />
+    <div class="stories">
+      {content.items.map((project, index) => <article class="project-story">
+        <div class:list={['project-preview', `preview-${project.id}`]}><LocalPicture {...project.image} /></div>
+        <div class="story-content">
+          <div class="project-top"><span class="eyebrow">0{index + 1} / {project.tag}</span><span class="draft-note">{project.status}</span></div>
+          <h3>{project.name}</h3><p class="project-category">{project.category}</p>
+          <dl>{[{ label: 'Initial situation', text: project.situation }, { label: 'The work', text: project.work }, { label: 'Outcome · verification pending', text: project.outcome }].map((item) => <div><dt>{item.label}</dt><dd>{item.text}</dd></div>)}</dl>
+        </div>
+      </article>)}
+    </div>
+    <article class="automation" aria-labelledby="automation-heading">
+      <div class="automation-intro"><p class="eyebrow"><Icon name="workflow" />{content.automation.label}</p><h3 id="automation-heading">{content.automation.heading}</h3><p>{content.automation.description}</p></div>
+      <div class="automation-example"><ol>{content.automation.steps.map((step, index) => <li><span>0{index + 1}</span>{step}{index < content.automation.steps.length - 1 && <span class="flow-arrow" aria-hidden="true">↓</span>}</li>)}</ol><p class="draft-note">{content.automation.note}</p></div>
+      {content.automation.image && <figure class="automation-image"><LocalPicture {...content.automation.image} /><figcaption>{content.automation.imageCaption}</figcaption></figure>}
+    </article>
+    <p class="gallery-note">{content.galleryNote}</p>
+    <div class="project-gallery">{content.gallery.map((project) => <article><div class:list={['gallery-preview', `preview-${project.id}`]}><LocalPicture {...project.image} /></div><div class="gallery-meta"><div><h3>{project.name}</h3><p>{project.category}</p></div><span class="tag">{project.tag}</span></div></article>)}</div>
+  </div>
+</section>
+<style>
+  .work-section { background: var(--color-surface); }
+  .stories { display: grid; gap: 44px; }
+  .project-story { display: grid; grid-template-columns: 1.05fr 1fr; gap: 44px; padding-bottom: 44px; border-bottom: 1px solid #ddddd5; align-items: start; }
+  .project-preview { padding: 34px 28px; border-radius: 14px; background: #e9e1d3; min-width: 0; }
+  .preview-nordostsee { background: #e0e7ee; }
+  .project-preview :global(img) { width: 100%; height: auto; border-radius: 5px; box-shadow: 0 12px 24px #28282612; }
+  .project-top { display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: center; justify-content: space-between; margin-bottom: 22px; }
+  .project-top .eyebrow { font-size: 10px; }
+  h3 { font-size: 29px; letter-spacing: -.04em; line-height: 1.15; }
+  .project-category { margin-top: 8px; font-size: 13px; color: var(--color-muted); }
+  dl { margin: 26px 0 0; }
+  dl > div { display: grid; grid-template-columns: 110px 1fr; gap: 20px; padding-block: 14px; border-top: 1px solid #ddddd5; }
+  dt { font-size: 11px; line-height: 1.6; font-weight: 500; }
+  dd { margin: 0; font-size: 12px; line-height: 1.75; color: var(--color-muted); }
+  .automation { display: grid; grid-template-columns: 1.05fr 1fr; gap: 44px; padding: 40px; margin-top: 44px; border-radius: 14px; background: #eaeef6; border: 1px solid #d8dfeb; }
+  .automation .eyebrow { font-size: 10px; }
+  .automation h3 { max-width: 380px; margin-top: 24px; font-size: 31px; }
+  .automation-intro > p:last-child { margin-top: 18px; max-width: 430px; font-size: 13px; line-height: 1.8; color: var(--color-muted); }
+  .automation ol { list-style: none; margin: 0; padding: 0; }
+  .automation li { display: flex; gap: 14px; align-items: center; padding: 14px 0; border-bottom: 1px solid #cdd5e3; font-size: 13px; }
+  .automation li > span:first-child { font-size: 10px; color: var(--color-muted); }
+  .flow-arrow { margin-left: auto; color: #5965a3; }
+  .automation .draft-note { margin-top: 20px; max-width: 380px; }
+  .automation-image { grid-column: 1 / -1; margin: 0; }
+  .automation-image :global(img) { width: 100%; height: auto; border-radius: 8px; }
+  .automation-image figcaption { font-size: 12px; margin-top: 12px; }
+  .gallery-note { font-size: 11px; color: var(--color-muted); margin: 44px 0 22px; }
+  .project-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+  .gallery-preview { aspect-ratio: 1.8; padding: 26px 24px 0; overflow: hidden; border-radius: 12px; background: #dedfd9; }
+  .preview-grechows { background: #e0e6dc; }
+  .gallery-preview :global(img) { width: 100%; height: auto; border-radius: 4px 4px 0 0; }
+  .gallery-meta { display: flex; justify-content: space-between; align-items: start; gap: 12px; margin-top: 20px; }
+  .gallery-meta h3 { font-size: 21px; }
+  .gallery-meta p { color: var(--color-muted); font-size: 12px; margin-top: 8px; }
+  @media (max-width: 1023px) { .project-story { gap: 30px; } dl > div { grid-template-columns: 1fr; gap: 7px; } .automation { padding: 30px; gap: 30px; } }
+  @media (max-width: 767px) { .project-story, .automation, .project-gallery { grid-template-columns: 1fr; } .automation { padding: 26px 22px; } .project-preview { padding: 28px 22px; } .project-gallery { gap: 36px; } }
+</style>

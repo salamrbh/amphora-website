@@ -1,0 +1,161 @@
+[
+  {
+    "id": "en",
+    "title": "Amphora Systems — Digital ideas. Made useful.",
+    "description": "Websites, webshops, web apps, automation, AI and CRM for growing businesses in and around Bremen. Speak directly with the people building your system.",
+    "draftLabel": "Draft copy · for review",
+    "hero": {
+      "eyebrow": "Digital systems · Bremen",
+      "heading": "Digital ideas.",
+      "emphasis": "Made useful.",
+      "subline": "Websites, webshops, web apps, workflows and AI, CRM, and mobile apps. Built for growing businesses, founders, and teams in and around Bremen — by the people you speak to.",
+      "note": "From the first conversation to life after launch.",
+      "image": { "src": "/images/team/consultation-1280.webp", "width": 1280, "height": 724, "alt": "Marcel discussing a website with a client at a desk" },
+      "imageCaption": "Your idea. A conversation with the people who build it.",
+      "imageNote": "A small team, working closely with yours.",
+      "scrollLabel": "Find your next useful step"
+    },
+    "trust": {
+      "eyebrow": "A few familiar names",
+      "note": "Selected Systems references · client approval pending",
+      "logos": [
+        { "src": "/images/partners/cords-cafe.webp", "alt": "Cord’s Café", "width": 320, "height": 193 },
+        { "src": "/images/partners/oxzy.webp", "alt": "Oxzy", "width": 320, "height": 64 },
+        { "src": "/images/partners/nord-ostsee-logistik.webp", "alt": "Nord-Ostsee Logistik", "width": 320, "height": 106 },
+        { "src": "/images/partners/therapie-praxis-mueller.webp", "alt": "Therapie Praxis Müller", "width": 320, "height": 126 },
+        { "src": "/images/partners/evltn-martial-arts.webp", "alt": "EVLTN Martial Arts", "width": 320, "height": 173 },
+        { "src": "/images/partners/remco.webp", "alt": "Remco", "width": 320, "height": 71 },
+        { "src": "/images/partners/grechows-beauty.webp", "alt": "Grechow’s Beauty", "width": 320, "height": 320 },
+        { "src": "/images/partners/wia.webp", "alt": "WIA", "width": 720, "height": 265 },
+        { "src": "/images/partners/uni-bremen.webp", "alt": "Universität Bremen", "width": 320, "height": 115 },
+        { "src": "/images/partners/clockwise-wordmark.svg", "alt": "Clockwise", "width": 205, "height": 26 },
+        { "src": "/images/partners/clickless.webp", "alt": "Clickless", "width": 320, "height": 86 },
+        { "src": "/images/partners/bremer-stadtmusikanten.webp", "alt": "Bremer Stadtmusikanten", "width": 320, "height": 320 },
+        { "src": "/images/partners/life-lounge-bar.webp", "alt": "Life Lounge & Bar", "width": 320, "height": 395 },
+        { "src": "/images/partners/antik-vehrs.webp", "alt": "Vehrs Antik", "width": 320, "height": 77 }
+      ]
+    },
+    "needs": {
+      "eyebrow": "Sound familiar?",
+      "heading": "A familiar problem.",
+      "emphasis": "A useful next step.",
+      "description": "Start with what is getting in the way. We’ll help you work out what needs to change.",
+      "items": [
+        { "number": "01", "heading": "Great business. Hard to find online.", "description": "Make it easier for people to understand what you do and take the next step.", "service": "web", "linkLabel": "A clearer website" },
+        { "number": "02", "heading": "Your shop closes. The internet doesn’t.", "description": "Give your products a home beyond the counter, with a shop that fits how you sell.", "service": "web", "linkLabel": "A shop that stays open" },
+        { "number": "03", "heading": "The same manual work. Every week.", "description": "Connect the tools you already use and give repetitive tasks a better route through your business.", "service": "workflows", "linkLabel": "Workflows & AI" },
+        { "number": "04", "heading": "One customer. Four different tools.", "description": "Bring contacts, conversations, and next steps into one place your team can work from.", "service": "crm", "linkLabel": "A connected CRM" }
+      ]
+    },
+    "sample": {
+      "eyebrow": "A closer look",
+      "heading": "Good work is in",
+      "emphasis": "the details.",
+      "description": "One screen, a few considered choices. A look at the Cord’s Café webshop from the supplied portfolio.",
+      "project": "Cord’s Café · Webshop",
+      "image": { "src": "/images/work/cords-cafe-hero-700.webp", "width": 700, "height": 318, "alt": "Cord’s Café webshop with a warm colour palette and a grid of ceramic cups" },
+      "note": "Design reading of the supplied screen · project rationale and results await client confirmation.",
+      "items": [
+        { "label": "The screen", "text": "Ceramic cups take centre stage, with product photography doing most of the talking." },
+        { "label": "The design choice", "text": "A quiet white background and a consistent product grid keep attention on the pieces. Colour comes from the ceramics themselves." },
+        { "label": "What you can see", "text": "A browsable product collection with a clear visual hierarchy. Sales and conversion results have not been verified." }
+      ]
+    },
+    "services": {
+      "eyebrow": "What we build",
+      "heading": "The right tools.",
+      "emphasis": "For your kind of work.",
+      "description": "Four ways we can help. We agree the scope around your business, your team, and the problem to solve.",
+      "items": [
+        { "id": "web", "number": "01", "name": "Websites, Webshops & Web Apps", "icon": "web", "accent": "blue", "useCase": "You need to be found, sell online, or offer a useful digital service.", "service": "Design and development shaped around your content, products, and users.", "outcome": "A clear, usable place for customers to discover, buy, or get things done.", "proof": "Website & webshop references below. Web apps: project example to come." },
+        { "id": "workflows", "number": "02", "name": "Workflows & AI", "icon": "workflow", "accent": "red", "useCase": "Your team keeps copying information or repeating the same routine.", "service": "Tool integrations, practical automation, and AI where it adds value.", "outcome": "A connected process with fewer manual handovers and clear human checks.", "proof": "New to this portfolio · illustrative workflow below." },
+        { "id": "crm", "number": "03", "name": "CRM", "icon": "crm", "accent": "orange", "useCase": "Customer information is scattered across inboxes, spreadsheets, and tools.", "service": "A CRM setup that brings contacts, activity, and reporting together.", "outcome": "One shared overview of your customers and the next action to take.", "proof": "New to this portfolio · client case to be added." },
+        { "id": "mobile", "number": "04", "name": "Mobile Apps", "icon": "mobile", "accent": "purple", "useCase": "Your service needs to be useful while people are on the move.", "service": "App design and development around a focused mobile experience.", "outcome": "The essential parts of your service, close at hand for your users.", "proof": "New to this portfolio · client case to be added." }
+      ]
+    },
+    "work": {
+      "eyebrow": "Selected projects",
+      "heading": "Real businesses.",
+      "emphasis": "Considered systems.",
+      "description": "Two project stories in focus, plus a little more from the website portfolio. Draft narratives are marked until the client details are confirmed.",
+      "items": [
+        { "id": "cords", "name": "Cord’s Café", "category": "A home for coffee & ceramics", "tag": "Webshop", "image": { "src": "/images/work/cords-cafe-hero-700.webp", "width": 700, "height": 318, "alt": "Cord’s Café webshop displaying ceramic cups" }, "situation": "A café and ceramics collection, presented together online. The starting brief and previous shop setup still need client confirmation.", "work": "The supplied webshop brings product photography into a consistent grid, framed by a quiet white background and restrained typography.", "outcome": "The screen shows a dedicated online product collection. Launch details and business impact are awaiting client verification.", "status": "Draft story · client approval pending" },
+        { "id": "nordostsee", "name": "Nord-Ostsee Logistik", "category": "A clearer route to an enquiry", "tag": "Website", "image": { "src": "/images/work/nord-ostsee-logistik-hero-700.webp", "width": 700, "height": 365, "alt": "Nord-Ostsee Logistik website with warehouse photography and a transport enquiry interface" }, "situation": "A logistics business presenting its transport services online. The original challenge and requirements are awaiting client confirmation.", "work": "The supplied website pairs warehouse photography with transport information and a prominent enquiry interface.", "outcome": "Visitors can see an enquiry entry point in the design. Enquiry volumes and operational results have not been verified.", "status": "Draft story · client approval pending" }
+      ],
+      "gallery": [
+        { "id": "evltn", "name": "EVLTN Martial Arts", "category": "Movement, discipline & community", "tag": "Website", "image": { "src": "/images/work/evltn-martial-arts-hero-700.webp", "width": 700, "height": 341, "alt": "EVLTN Martial Arts website with a martial artist and dark typography" } },
+        { "id": "grechows", "name": "Grechow’s Beauty", "category": "A personal approach to beauty", "tag": "Website", "image": { "src": "/images/work/grechows-beauty-hero-700.webp", "width": 700, "height": 963, "alt": "Grechow’s Beauty website with treatment photography and a light layout" } }
+      ],
+      "galleryNote": "More from the supplied portfolio · reference approval pending",
+      "automation": {
+        "label": "An automation, illustrated",
+        "heading": "From a new enquiry to a clear next step.",
+        "description": "Imagine a website enquiry creating a CRM contact, notifying the right person, and preparing a follow-up task — with your team reviewing what happens next.",
+        "steps": ["Enquiry received", "CRM contact created", "Team notified", "Follow-up prepared"],
+        "note": "Illustrative workflow · not a completed client project. A verified automation case will take this place.",
+        "image": null,
+        "imageCaption": ""
+      }
+    },
+    "process": {
+      "eyebrow": "Working together",
+      "heading": "A clear process.",
+      "emphasis": "A shared direction.",
+      "description": "You speak directly with the people building your system. We keep decisions visible and agree what we need from each other.",
+      "items": [
+        { "number": "01", "name": "Tell us your idea", "description": "We talk through the problem, the people using the system, and what needs to work better.", "effort": "You bring: context, priorities, and a look at your current tools." },
+        { "number": "02", "name": "We propose a direction", "description": "We outline an approach, define the scope, and agree the next steps before the build starts.", "effort": "You help: choose priorities and approve the agreed scope." },
+        { "number": "03", "name": "Build it together", "description": "We design and develop in focused rounds, with clear opportunities to review the work.", "effort": "You provide: content, access, and feedback from one main contact." },
+        { "number": "04", "name": "Launch and grow", "description": "We prepare the handover, check the system together, and plan what happens after launch.", "effort": "You take part: test key tasks and agree the handover." }
+      ]
+    },
+    "support": {
+      "eyebrow": "After launch",
+      "heading": "Live is a beginning.",
+      "emphasis": "Let’s keep it useful.",
+      "description": "A system needs a plan for the everyday. We’ll agree what you look after, where we can help, and how to approach the next improvement.",
+      "items": [
+        { "name": "Care & maintenance", "description": "Agree responsibility for updates, checks, and the things that keep your system working." },
+        { "name": "Hosting & ownership", "description": "Choose a suitable home for the system and make access and responsibilities clear." },
+        { "name": "Room to improve", "description": "Use real feedback to decide which small improvement is worth making next." }
+      ]
+    },
+    "about": {
+    "eyebrow": "The people behind Amphora",
+    "heading": "Real people.",
+      "emphasis": "From the first hello.",
+      "description": "I’m Salam, co-founder of Amphora and your contact for Systems. Tell me what is getting in the way, or what you would like to build. We’ll work through the next step together.",
+      "name": "Salam Rouabhia",
+      "role": "Co-founder · Systems",
+    "connection": "Good systems and confident people belong together. Systems is where we build; Skills is where we help people put digital tools to use.",
+    "marcel": {
+      "name": "Marcel Henning",
+      "role": "Co-founder · Skills",
+      "imageAlt": "Portrait of Marcel Henning, co-founder of Amphora and your Skills contact"
+    }
+    },
+    "faq": {
+      "eyebrow": "Before we start",
+      "heading": "Good questions.",
+      "emphasis": "Clear starting points.",
+      "description": "A few things you might want to know before we talk.",
+      "items": [
+        { "question": "How does a project start?", "answer": "With a conversation about your goals, users, and current setup. We then propose a direction and agree the scope before starting the build. You do not need a finished technical brief." },
+        { "question": "What will my project cost?", "answer": "That depends on the scope, the integrations, and the content or functionality you need. We discuss these together and set out the proposed work and costs before you decide to proceed." },
+        { "question": "Who owns the system, and what happens at handover?", "answer": "Ownership, licences, account access, and handover materials are agreed as part of the project scope. We make clear what you receive, which third-party services are involved, and how your team will manage the system." },
+        { "question": "Can you help with hosting and ongoing care?", "answer": "We can discuss hosting, maintenance, and future improvements alongside the build. Responsibilities and the scope of ongoing support are agreed separately so everyone knows what happens after launch." },
+        { "question": "What do you need from us?", "answer": "A main contact, your priorities, relevant content, access to the tools involved, and timely feedback at the agreed review points. We will explain what is needed and when." },
+        { "question": "How long will it take?", "answer": "We work out a schedule once we understand the scope, dependencies, and availability of your team. Content, integrations, and review rounds all affect the plan; we agree milestones together." }
+      ]
+    },
+    "contact": {
+      "eyebrow": "Your next useful step",
+      "heading": "Tell us what",
+      "emphasis": "you have in mind.",
+      "description": "An idea, a recurring problem, or a system ready for its next chapter. Start with a conversation or write us a few lines.",
+      "formHeading": "A little about your project",
+      "formNote": "A few sentences are enough to start the conversation.",
+      "email": "info@amphora-it.com"
+    }
+  }
+]

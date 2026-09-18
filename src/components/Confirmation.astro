@@ -1,0 +1,20 @@
+---
+import Layout from '../layouts/Layout.astro';
+import routes from '../content/routes.json';
+interface Props { booked?: boolean; }
+const { booked = false } = Astro.props;
+---
+<Layout title={booked ? 'Your conversation is booked — Amphora' : 'Thank you for your enquiry — Amphora'} noindex>
+  <section class="confirmation shell section">
+    <p class="eyebrow">{booked ? 'See you soon' : 'Message received'}</p>
+    <h1 class="section-heading">{booked ? 'It’s in the calendar.' : 'Thank you for writing.'}<br /><span class="editorial">{booked ? 'Let’s make it useful.' : 'Let’s take the next step.'}</span></h1>
+    <p>{booked ? 'Your booking is confirmed. Look out for the invitation from Calendly with your meeting details.' : 'Your project enquiry has been sent to Amphora. We’ll get back to you using the contact details you provided.'}</p>
+    <a class="button button-dark" href={routes.systems}>Back to Systems <span aria-hidden="true">↗</span></a>
+  </section>
+</Layout>
+<style>
+  .confirmation { min-height: 60vh; }
+  h1 { margin-top: 30px; }
+  .confirmation > p:not(.eyebrow) { max-width: 540px; line-height: 1.8; color: var(--color-muted); margin-top: 30px; }
+  .button { margin-top: 30px; }
+</style>

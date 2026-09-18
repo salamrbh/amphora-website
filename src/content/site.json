@@ -8,12 +8,12 @@
     "menuLabel": "Menu",
     "navigationLabel": "Main navigation",
     "navigation": [
-      { "label": "Services", "href": "/#services" },
-      { "label": "Amphora", "href": "/#about" },
-      { "label": "Our team", "href": "/#team" },
-      { "label": "Contact", "href": "/#calendly" }
+      { "label": "Systems", "href": "/systems" },
+      { "label": "Skills", "href": "/skills" },
+      { "label": "About", "href": "/systems#about" },
+      { "label": "Contact", "href": "/systems#contact" }
     ],
-    "booking": { "label": "Let’s talk", "href": "/termin" },
+    "booking": { "label": "Discuss a project", "href": "/termin?area=systems" },
     "email": "info@amphora-it.com",
     "footer": {
       "tagline": "Thoughtfully designed. Personally built.",

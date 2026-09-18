@@ -1,0 +1,48 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Icon from '../Icon.astro';
+import SectionHeading from './SectionHeading.astro';
+import routes from '../../content/routes.json';
+interface Props { content: CollectionEntry<'systems'>['data']['services']; }
+const { content } = Astro.props;
+---
+<section class="section shell" id="services" aria-labelledby="services-heading">
+  <SectionHeading number="05" id="services-heading" content={content} />
+  <div class="services-grid">
+    {content.items.map((service) => <article class="service-card" id={`service-${service.id}`} style={`--service-accent: var(--color-${service.accent})`}>
+      <div class="service-top"><span class="service-icon"><Icon name={service.icon} /></span><span>{service.number}</span></div>
+      <h3>{service.name}</h3>
+      <dl><div><dt>Your situation</dt><dd>{service.useCase}</dd></div><div><dt>What we build</dt><dd>{service.service}</dd></div><div><dt>What it’s for</dt><dd>{service.outcome}</dd></div></dl>
+      <p class="proof-note">{service.proof}</p>
+      <div class="service-actions"><a class="service-enquiry" href={`?service=${service.id}#contact`} data-enquiry-service={service.id}>Discuss this project<Icon /></a><a class="booking-link" href={`${routes.booking}?area=systems&service=${service.id}`}>Book a conversation</a></div>
+    </article>)}
+  </div>
+</section>
+<style>
+  .services-grid { --color-line: #3b3b3d; --color-muted: #c7c7c3; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+  .service-card { position: relative; isolation: isolate; padding: 26px 23px; display: flex; flex-direction: column; min-width: 0; scroll-margin-top: 30px; border: 1px solid var(--color-line); border-radius: 14px; overflow: hidden; background: #1c1c1e; color: white; transition: color 240ms ease; }
+  .service-card::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: var(--brand-gradient-interactive); opacity: 0; transition: opacity 240ms ease; }
+  .service-card:target { background: #26262a; }
+  .service-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+  .service-top > span:last-child { color: var(--color-muted); font-size: 10px; }
+  .service-icon { color: var(--service-accent); padding: 10px; border: 1px solid var(--color-line); border-radius: 10px; }
+  h3 { font-size: 23px; line-height: 1.2; letter-spacing: -.04em; min-height: 84px; }
+  dl { margin: 22px 0; }
+  dl > div + div { margin-top: 20px; }
+  dt { font-size: 10px; font-weight: 500; margin-bottom: 7px; }
+  dd { margin: 0; color: var(--color-muted); font-size: 12px; line-height: 1.75; }
+  .proof-note { color: var(--color-muted); font-size: 10px; line-height: 1.65; border-top: 1px solid var(--color-line); padding-top: 16px; margin-top: auto; }
+  .service-actions { margin-top: 18px; }
+  .service-enquiry { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 12px; min-height: 44px; }
+  .service-enquiry :global(svg) { width: 17px; }
+  .booking-link { display: inline-flex; align-items: center; min-height: 32px; color: var(--color-muted); font-size: 10px; text-decoration: underline; text-underline-offset: 4px; }
+  .service-enquiry:hover { color: var(--color-accent); }
+  .service-card:is(:hover, :focus-within) { color: white; }
+  .service-card:is(:hover, :focus-within)::before { opacity: 1; }
+  .service-card:is(:hover, :focus-within) :is(.service-top > span:last-child, dd, .proof-note, .service-enquiry, .booking-link) { color: white; }
+  .service-card:is(:hover, :focus-within) .service-icon { color: white; border-color: #ffffff80; background: #ffffff17; }
+  .service-card:is(:hover, :focus-within) .proof-note { border-color: #ffffff80; }
+  .service-card a:focus-visible { outline-color: white; }
+  @media (max-width: 1100px) { .services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } h3 { min-height: 56px; max-width: 290px; } }
+  @media (max-width: 540px) { .services-grid { grid-template-columns: 1fr; } h3 { min-height: 0; } }
+</style>
