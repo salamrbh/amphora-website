@@ -11,7 +11,7 @@ const { content, draftLabel } = Astro.props;
     <div class="hero-copy">
       <h1 id="hero-heading">{content.heading}<br /><span class="editorial">{content.emphasis}</span></h1>
       <p class="hero-subline">{content.subline}</p>
-      <div class="hero-actions"><a class="button button-dark" href={content.primary.href}>{content.primary.label}<Icon /></a><a class="text-link" href={content.secondary.href}>{content.secondary.label}</a></div>
+      <div class="hero-actions"><a class="button button-dark button-metallic" href={content.primary.href}>{content.primary.label}<Icon /></a><a class="text-link" href={content.secondary.href}>{content.secondary.label}</a></div>
       <p class="hero-note"><span aria-hidden="true">↳</span>{content.note}</p>
     </div>
     <figure class="hero-figure">

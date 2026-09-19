@@ -4,7 +4,7 @@ const { number, id, content } = Astro.props;
 ---
 <div class="section-intro">
   <p class="eyebrow"><span class="section-index">{number} /</span>{content.eyebrow}</p>
-  <div><h2 class="section-heading" id={id}>{content.heading}<br /><span class="editorial">{content.emphasis}</span></h2>{content.description && <p class="section-description">{content.description}</p>}</div>
+  <div><h2 class="section-heading" id={id}><slot name="heading">{content.heading}</slot><br /><span class="editorial"><slot name="emphasis">{content.emphasis}</slot></span></h2>{content.description && <p class="section-description">{content.description}</p>}</div>
 </div>
 <style>
   .section-intro { display: grid; grid-template-columns: 1fr 2fr; gap: 40px; margin-bottom: 48px; }

@@ -14,7 +14,7 @@ const isCurrent = (href: string) => href === routes.systems && [routes.systems, 
     <nav class="desktop-nav" aria-label={site.navigationLabel}>
       {navigation.map((item) => <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}{item.upcoming && <span class="soon">Soon</span>}</a>)}
     </nav>
-    <a class="button button-dark header-cta" href={site.booking.href}>{site.booking.label}<Icon /></a>
+    <a class="button button-dark button-metallic header-cta" href={site.booking.href}>{site.booking.label}<Icon /></a>
     <details class="mobile-nav">
       <summary>{site.menuLabel}<span class="menu-icon" aria-hidden="true"></span></summary>
       <nav aria-label={site.navigationLabel}>

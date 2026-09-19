@@ -4,32 +4,114 @@ import SectionHeading from './SectionHeading.astro';
 import Icon from '../Icon.astro';
 interface Props { process: CollectionEntry<'systems'>['data']['process']; support: CollectionEntry<'systems'>['data']['support']; }
 const { process, support } = Astro.props;
+const directionStart = process.emphasis.lastIndexOf(' ') + 1;
 ---
 <section class="collaboration section" id="process" aria-labelledby="process-heading">
-  <div class="shell"><SectionHeading number="07" id="process-heading" content={process} />
-    <ol class="process-list">{process.items.map((step) => <li><span class="step-number">{step.number}</span><h3>{step.name}</h3><p>{step.description}</p><p class="client-effort">{step.effort}</p></li>)}</ol>
+  <div class="shell"><SectionHeading number="07" id="process-heading" content={process}>
+      <Fragment slot="emphasis">{process.emphasis.slice(0, directionStart)}<span class="direction-gradient">{process.emphasis.slice(directionStart)}</span></Fragment>
+    </SectionHeading>
+    <ol class="process-list">{process.items.map((step) => <li><div class="process-card"><span class="step-number">{step.number}</span><h3>{step.name}</h3><p>{step.description}</p><p class="client-effort">{step.effort}</p></div></li>)}</ol>
   </div>
 </section>
 <section class="section shell support" id="support" aria-labelledby="support-heading">
-  <SectionHeading number="08" id="support-heading" content={support} />
+  <SectionHeading number="08" id="support-heading" content={support}>
+    <span slot="emphasis" class="support-sheen" data-support-sheen>{support.emphasis}</span>
+  </SectionHeading>
   <div class="support-grid">{support.items.map((item) => <div><h3>{item.name}</h3><p>{item.description}</p></div>)}</div>
   <a class="text-link" href="?service=support#contact" data-enquiry-service="support">Ask about ongoing support<Icon /></a>
 </section>
+<script>
+  const supportHeading = document.querySelector<HTMLElement>('[data-support-sheen]');
+  if (supportHeading) {
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(([entry]) => {
+        supportHeading.classList.toggle('is-visible', entry.isIntersecting);
+      }, { threshold: .25 });
+      observer.observe(supportHeading);
+    } else {
+      supportHeading.classList.add('is-visible');
+    }
+  }
+</script>
 <style>
   .collaboration { background: var(--color-ink); color: white; --color-muted: #bcbcb4; --color-line: #50504b; }
-  .process-list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 30px; margin: 0; padding: 0; list-style: none; }
-  .process-list li { border-top: 1px solid #51514a; padding-top: 24px; display: flex; flex-direction: column; }
-  .step-number { font-size: 11px; color: #aab4ff; margin-bottom: 36px; }
+  .direction-gradient { display: inline-block; padding: .18em .08em; margin: -.18em -.08em; background-image: var(--brand-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  @media (forced-colors: active) { .direction-gradient { background: none; color: inherit; } }
+  .process-list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; margin: 0; padding: 0; list-style: none; }
+  .process-list li { min-width: 0; }
+  .process-card {
+    position: relative;
+    isolation: isolate;
+    min-width: 0;
+    height: 100%;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid transparent;
+    border-radius: 18px;
+    background:
+      radial-gradient(ellipse at top left, #27cfd024, transparent 60%) padding-box,
+      radial-gradient(ellipse at bottom right, #e94f8720, transparent 60%) padding-box,
+      linear-gradient(#17171d, #17171d) padding-box,
+      linear-gradient(#28282670, #28282670) border-box,
+      var(--brand-gradient) border-box;
+    box-shadow: 0 16px 32px #00000026, 0 0 24px #9656dc14;
+  }
+  .process-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(115deg, transparent 20%, #ffffff0a 36%, #ffffff38 46%, #ffffff0d 52%, transparent 66%);
+    background-size: 200% 100%;
+    background-position: 100% 0;
+    box-shadow: inset 0 1px 0 #ffffff40, inset 0 -1px 0 #ffffff0d;
+    opacity: 0;
+    transition: opacity 250ms ease, background-position 650ms cubic-bezier(.22, 1, .36, 1);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .process-list li:hover .process-card::before { opacity: 1; background-position: 40% 0; }
+  }
+  .step-number { font-size: 11px; color: #aab4ff; margin-bottom: 28px; }
   h3 { font-size: 22px; letter-spacing: -.035em; line-height: 1.3; }
   .process-list p { font-size: 13px; color: #bcbcb4; line-height: 1.75; margin: 18px 0 24px; }
-  .process-list .client-effort { color: #e2e2da; font-size: 11px; padding-top: 18px; border-top: 1px solid #51514a; margin: auto 0 0; }
+  .process-list .client-effort { color: #e2e2da; font-size: 11px; padding-top: 18px; border-top: 1px solid #ffffff24; margin: auto 0 0; }
   .support { border-bottom: 1px solid var(--color-line); }
-  .support-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 38px; }
-  .support-grid > div { border-top: 1px solid var(--color-line); padding-top: 25px; }
-  .support-grid p { margin-top: 14px; font-size: 14px; line-height: 1.75; color: var(--color-muted); max-width: 335px; }
-  .support > a { margin-top: 36px; min-height: 44px; }
+  .support-sheen { display: inline-block; padding: .18em .08em; margin: -.18em -.08em; }
+  @media (prefers-reduced-motion: no-preference) and (forced-colors: none) {
+    .support-sheen {
+      background-color: var(--color-ink);
+      background-image:
+        linear-gradient(115deg, transparent 18%, #ffffff18 34%, #ffffff52 44%, #ffffff52 48%, #ffffff18 58%, transparent 70%),
+        linear-gradient(115deg, #27cfd0a3 0%, #5965e8a3 30%, #9656dca3 44%, #e94f87a3 59%, #f47a45a3 78%, #f7bd2fa3 100%);
+      background-size: 200% 100%;
+      background-repeat: no-repeat;
+      background-position: -100% 0;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: support-metallic-slide 7s linear infinite paused;
+    }
+    .support-sheen.is-visible { animation-play-state: running; }
+    @keyframes support-metallic-slide {
+      0%, 10% { background-position: -100% 0; }
+      90%, 100% { background-position: 200% 0; }
+    }
+  }
+  .support-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 38px; text-align: center; }
+  .support-grid > div { position: relative; border-top: 1px solid var(--color-line); padding-top: 25px; }
+  .support-grid > div::before { content: ''; position: absolute; top: -1px; inset-inline: 0; height: 1px; background: var(--brand-gradient-interactive); opacity: 0; pointer-events: none; transition: opacity 180ms ease; }
+  .support-grid > div:hover::before { opacity: 1; }
+  .support-grid h3 { width: fit-content; max-width: 100%; margin-inline: auto; background-image: var(--brand-gradient-interactive); -webkit-background-clip: text; background-clip: text; transition: color 180ms ease; }
+  .support-grid > div:hover h3 { color: transparent; }
+  @media (forced-colors: active) { .support-grid > div:hover h3 { color: CanvasText; } }
+  .support-grid p { margin: 14px auto 0; font-size: 14px; line-height: 1.75; color: var(--color-muted); max-width: 335px; }
+  .support > a { display: flex; width: fit-content; max-width: 100%; margin: 36px auto 0; min-height: 44px; justify-content: center; text-align: center; }
   .support > a :global(svg) { width: 18px; }
-  @media (max-width: 1023px) { .process-list { grid-template-columns: repeat(2, 1fr); gap: 38px; } }
+  @media (forced-colors: active) { .process-card { border-color: CanvasText; } }
+  @media (max-width: 1100px) { .process-list { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 767px) { .support-grid { grid-template-columns: 1fr; gap: 24px; } .support-grid p { max-width: 480px; } }
-  @media (max-width: 479px) { .process-list { grid-template-columns: 1fr; } .step-number { margin-bottom: 20px; } }
+  @media (max-width: 600px) { .process-list { grid-template-columns: 1fr; gap: 20px; } .step-number { margin-bottom: 20px; } }
 </style>

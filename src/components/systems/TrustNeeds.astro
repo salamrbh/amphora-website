@@ -17,11 +17,27 @@ const { trust, needs } = Astro.props;
   </div>
 </section>
 <section class="section shell" id="needs" aria-labelledby="needs-heading">
-  <SectionHeading number="03" id="needs-heading" content={needs} />
+  <SectionHeading number="03" id="needs-heading" content={needs}>
+    <span slot="heading" class="sliding-gradient" data-gradient-heading>{needs.heading}</span>
+    <span slot="emphasis" class="sliding-gradient sliding-gradient-return">{needs.emphasis}</span>
+  </SectionHeading>
   <div class="needs-grid">
     {needs.items.map((need) => <a class="need" href={`#service-${need.service}`}><span class="need-number">{need.number}</span><h3>{need.heading}</h3><p>{need.description}</p><span class="need-link">{need.linkLabel}<Icon /></span></a>)}
   </div>
 </section>
+<script>
+  const heading = document.querySelector<HTMLElement>('#needs-heading');
+  if (heading) {
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(([entry]) => {
+        heading.classList.toggle('is-visible', entry.isIntersecting);
+      }, { threshold: .25 });
+      observer.observe(heading);
+    } else {
+      heading.classList.add('is-visible');
+    }
+  }
+</script>
 <style>
   .trust { padding-block: 38px 44px; border-bottom: 1px solid var(--color-line); }
   .trust-top { display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
@@ -32,14 +48,43 @@ const { trust, needs } = Astro.props;
   .partner-group li { display: flex; align-items: center; justify-content: center; flex: 0 0 140px; width: 140px; height: 64px; }
   .partner-group img { width: auto; max-width: 120px; height: auto; max-height: 54px; object-fit: contain; filter: brightness(0) invert(.25); }
   @keyframes partner-scroll { to { transform: translateX(-50%); } }
+  .sliding-gradient { display: inline-block; }
+  .sliding-gradient-return { padding: .18em .08em; margin: -.18em -.08em; }
+  @media (prefers-reduced-motion: no-preference) and (forced-colors: none) {
+    .sliding-gradient {
+      background-color: var(--color-ink);
+      background-image: var(--brand-gradient-interactive);
+      background-size: 200% 100%;
+      background-repeat: no-repeat;
+      background-position: -100% 0;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      /* Two 7s sweeps, each followed by a 0.5s pause. */
+      animation: heading-gradient-slide 15s linear infinite paused;
+    }
+    .sliding-gradient-return { background-position: 200% 0; animation-name: heading-gradient-return; }
+    :global(#needs-heading.is-visible) .sliding-gradient { animation-play-state: running; }
+    @keyframes heading-gradient-slide {
+      0% { background-position: -100% 0; }
+      46.666667%, 100% { background-position: 200% 0; }
+    }
+    @keyframes heading-gradient-return {
+      0%, 50% { background-position: 200% 0; }
+      96.666667%, 100% { background-position: -100% 0; }
+    }
+  }
   .needs-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; }
-  .need { display: flex; flex-direction: column; border-top: 1px solid var(--color-line); padding-top: 22px; transition: border-color 180ms; }
-  .need:hover { border-color: var(--color-accent); }
+  .need { position: relative; display: flex; flex-direction: column; border-top: 1px solid var(--color-line); padding-top: 22px; }
+  .need::before { content: ''; position: absolute; top: -1px; inset-inline: 0; height: 1px; background: var(--brand-gradient-interactive); opacity: 0; pointer-events: none; transition: opacity 180ms ease; }
+  .need:is(:hover, :focus-visible)::before { opacity: 1; }
   .need-number { font-size: 11px; color: var(--color-accent); margin-bottom: 26px; }
-  h3 { font-size: 23px; letter-spacing: -.035em; line-height: 1.25; max-width: 230px; }
+  h3 { font-size: 23px; letter-spacing: -.035em; line-height: 1.25; max-width: 230px; background-image: var(--brand-gradient-interactive); -webkit-background-clip: text; background-clip: text; transition: color 180ms ease; }
+  .need:is(:hover, :focus-visible) h3 { color: transparent; }
   .need > p { font-size: 13px; color: var(--color-muted); line-height: 1.75; margin: 18px 0 24px; }
   .need-link { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 12px; margin-top: auto; min-height: 44px; }
   .need-link :global(svg) { width: 18px; }
+  @media (forced-colors: active) { .need:is(:hover, :focus-visible) h3 { color: LinkText; } }
   @media (max-width: 1023px) { .needs-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; } }
   @media (max-width: 767px) { .partner-group { gap: 28px; padding-right: 28px; } .partner-group li { flex-basis: 120px; width: 120px; } .partner-group img { max-width: 102px; max-height: 48px; } }
   @media (max-width: 540px) { .needs-grid { grid-template-columns: 1fr; } h3 { max-width: none; } .need-number { margin-bottom: 18px; } }
