@@ -1,7 +1,7 @@
 {
   "systems": "/systems",
   "skills": "/skills",
-  "skillsReady": false,
+  "skillsReady": true,
   "booking": "/termin",
   "contact": "/systems#contact",
   "about": "/systems#about",

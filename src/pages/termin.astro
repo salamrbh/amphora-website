@@ -4,11 +4,14 @@ import routes from '../content/routes.json';
 import { getEntry } from 'astro:content';
 const content = (await getEntry('systems', 'en'))!.data;
 const services = content.services.items;
+const skills = (await getEntry('skills', 'en'))!.data;
 ---
 <Layout title="Discuss a project — Amphora" description="Book a conversation with Amphora about your next digital project.">
   <section class="booking-page shell section" aria-labelledby="booking-heading">
     <div class="booking-intro"><p class="eyebrow">A conversation with Amphora</p><h1 class="section-heading" id="booking-heading">Your next step.<br /><span class="editorial">Let’s talk it through.</span></h1><p>Choose a time that works for you. Bring your idea, a question, or something you would like to make work better.</p></div>
     <label class="booking-context">Your conversation<select id="booking-service"><option value="project">Systems · A digital project</option>{services.map((service) => <option value={service.id}>Systems · {service.name}</option>)}<option value="support">Systems · Ongoing support</option></select></label>
+    <template id="skills-booking-options"><option value="project">Skills · A training project</option>{skills.services.items.map((service) => <option value={service.id}>Skills · {service.name}</option>)}<option value="partnership">Skills · Education partnership</option></template>
+    <noscript><p class="booking-fallback">Please mention whether your enquiry is about Systems or Skills when booking.</p></noscript>
     <div class="booking-widget"><div class="calendly-inline-widget" data-auto-load="false" data-url={routes.calendly} style="min-width:280px;height:800px"></div></div>
     <p class="booking-fallback">Can’t see the calendar? <a href={routes.calendly} target="_blank" rel="noopener noreferrer">Open Calendly directly <span aria-hidden="true">↗</span></a></p>
     <a class="text-link" href={routes.contact} id="booking-enquiry">Prefer to write? Send a project enquiry</a>
@@ -24,9 +27,17 @@ const services = content.services.items;
   <script id="calendly-script" is:inline src="https://assets.calendly.com/assets/external/widget.js" async></script>
 </Layout>
 <script>
+  import routes from '../content/routes.json';
+  const area = new URLSearchParams(location.search).get('area') === 'skills' ? 'skills' : 'systems';
   const select = document.querySelector<HTMLSelectElement>('#booking-service');
   const link = document.querySelector<HTMLAnchorElement>('#booking-enquiry');
   const widget = document.querySelector<HTMLElement>('.calendly-inline-widget');
+  if (area === 'skills') {
+    const options = document.querySelector<HTMLTemplateElement>('#skills-booking-options');
+    if (select && options) select.replaceChildren(options.content.cloneNode(true));
+    if (link) { link.href = `${routes.skills}#contact`; link.textContent = 'Prefer to write? Send a training enquiry'; }
+    document.title = 'Discuss a training project — Amphora Skills';
+  }
   const calendlyWindow = window as typeof window & { Calendly?: { initInlineWidget: (options: { url: string; parentElement: HTMLElement; utm: Record<string, string> }) => void } };
   let mountedService: string | undefined;
   const mountCalendar = () => {
@@ -34,13 +45,13 @@ const services = content.services.items;
     mountedService = select.value;
     widget.replaceChildren();
     // Keep the supplied URL intact; attach the enquiry context via the embed API.
-    calendlyWindow.Calendly.initInlineWidget({ url: widget.dataset.url, parentElement: widget, utm: { utmSource: 'amphora', utmMedium: 'website', utmCampaign: 'systems', utmContent: select.value } });
+    calendlyWindow.Calendly.initInlineWidget({ url: widget.dataset.url, parentElement: widget, utm: { utmSource: 'amphora', utmMedium: 'website', utmCampaign: area, utmContent: select.value } });
   };
   const requested = new URLSearchParams(location.search).get('service');
   if (select && requested && [...select.options].some((option) => option.value === requested)) select.value = requested;
   const updateContext = () => {
     if (!select || !link) return;
-    const url = new URL(location.href); url.searchParams.set('area', 'systems'); url.searchParams.set('service', select.value); history.replaceState(null, '', url);
+    const url = new URL(location.href); url.searchParams.set('area', area); url.searchParams.set('service', select.value); history.replaceState(null, '', url);
     const enquiry = new URL(link.href); enquiry.searchParams.set('service', select.value); link.href = enquiry.pathname + enquiry.search + enquiry.hash;
     mountCalendar();
   };

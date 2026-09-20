@@ -58,4 +58,23 @@ const systems = defineCollection({
     contact: intro.extend({ formHeading: z.string(), formNote: z.string(), email: z.email() }),
   }),
 });
-export const collections = { site, legal, homepage, systems };
+const skills = defineCollection({
+  loader: file('src/content/skills.json'),
+  schema: z.object({
+    todo: z.string().startsWith('TODO:'), title: z.string(), description: z.string(), draftLabel: z.string(),
+    hero: z.object({ eyebrow: z.string(), heading: z.string(), emphasis: z.string(), subline: z.string(), primary: z.string(), secondary: z.string(), note: z.string(), imageAlt: z.string(), imageCaption: z.string(), cardLabel: z.string(), cardHeading: z.string(), cardNote: z.string() }),
+    navigation: z.array(link),
+    trust: z.object({ eyebrow: z.string(), heading: z.string(), placeholder: z.string(), note: z.string(), todo: z.string() }),
+    needs: intro.extend({ items: z.array(z.object({ number: z.string(), heading: z.string(), description: z.string(), service: z.string(), link: z.string() })) }),
+    sample: intro.extend({ placeholder: z.string(), note: z.string(), status: z.string(), todo: z.string(), steps: z.array(z.object({ name: z.string(), description: z.string() })) }),
+    services: intro.extend({ labels: z.array(z.string()).length(3), cta: z.string(), items: z.array(z.object({ id: z.string(), number: z.string(), name: z.string(), icon: z.enum(['web', 'workflow', 'crm', 'mobile']), accent: z.enum(['blue', 'red', 'orange', 'purple']), useCase: z.string(), service: z.string(), outcome: z.string() })).length(4) }),
+    projects: intro.extend({ status: z.string(), labels: z.array(z.string()).length(3), items: z.array(z.object({ number: z.string(), heading: z.string(), situation: z.string(), service: z.string(), outcome: z.string(), todo: z.string() })).length(2) }),
+    process: intro.extend({ effortLabel: z.string(), items: z.array(z.object({ number: z.string(), name: z.string(), description: z.string(), effort: z.string() })).length(4) }),
+    partners: intro.extend({ tags: z.array(z.string()), cta: z.string(), placeholder: z.string(), note: z.string(), todo: z.string() }),
+    about: intro.extend({ connection: z.string(), cta: z.string(), name: z.string(), role: z.string(), imageAlt: z.string(), secondaryName: z.string(), secondaryRole: z.string(), bioNote: z.string(), todo: z.string() }),
+    faq: intro.extend({ items: z.array(z.object({ question: z.string(), answer: z.string() })) }),
+    contact: intro.extend({ formHeading: z.string(), formNote: z.string(), email: z.email() }),
+    crossLink: z.object({ text: z.string(), label: z.string() }),
+  }),
+});
+export const collections = { site, legal, homepage, systems, skills };

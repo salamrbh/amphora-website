@@ -4,9 +4,14 @@ import Brand from './Brand.astro';
 import Icon from './Icon.astro';
 import routes from '../content/routes.json';
 interface Props { site: CollectionEntry<'site'>['data']; }
-const { site } = Astro.props;
+const onSkills = Astro.url.pathname.replace(/\/$/, '') === routes.skills;
+const site = onSkills ? {
+  ...Astro.props.site,
+  navigation: Astro.props.site.navigation.map(item => ({ ...item, href: item.href === routes.about ? `${routes.skills}#about` : item.href === routes.contact ? `${routes.skills}#contact` : item.href })),
+  booking: { label: 'Discuss a training project', href: `${routes.booking}?area=skills` },
+} : Astro.props.site;
 const navigation = site.navigation.map((item) => ({ ...item, upcoming: item.href === routes.skills && !routes.skillsReady, href: item.href === routes.skills && !routes.skillsReady ? `${routes.systems}#skills` : item.href }));
-const isCurrent = (href: string) => href === routes.systems && [routes.systems, '/'].includes(Astro.url.pathname.replace(/\/$/, '') || '/');
+const isCurrent = (href: string) => href === routes.skills ? onSkills : href === routes.systems && [routes.systems, '/'].includes(Astro.url.pathname.replace(/\/$/, '') || '/');
 ---
 <header class="site-header" id="top">
   <div class="shell header-inner">

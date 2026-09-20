@@ -1,0 +1,60 @@
+[
+  {
+    "id": "en",
+    "todo": "TODO: Marcel to approve copy, biographies, references and media; translate before launch.",
+    "title": "Amphora Skills — Turning knowledge into skills",
+    "description": "Custom video courses, e-learning and practical training in Microsoft 365, AI and project management for companies, public sector organisations and education partners.",
+    "draftLabel": "Draft copy · for review",
+    "hero": {
+      "eyebrow": "Professional development · Bremen",
+      "heading": "Turning knowledge",
+      "emphasis": "into skills.",
+      "subline": "Custom video courses, e-learning and practical training for companies and public sector organisations. Built around your people. Ready for everyday work.",
+      "primary": "Discuss a training project",
+      "secondary": "View a course sample",
+      "note": "Microsoft 365 · AI · Project management",
+      "imageAlt": "A conversation with the Amphora team around a laptop",
+      "imageCaption": "Learning starts with your people.",
+      "cardLabel": "Designed for your team",
+      "cardHeading": "Understand. Practise. Apply.",
+      "cardNote": "Knowledge that becomes part of the working day."
+    },
+    "navigation": [{"label":"Your needs","href":"#needs"},{"label":"Course sample","href":"#sample"},{"label":"Our services","href":"#services"},{"label":"Education partners","href":"#partners"}],
+    "trust": {"eyebrow":"Built on trust","heading":"Good learning. Shared experiences.","placeholder":"Client voices, coming soon.","note":"Space reserved for approved training client logos or a testimonial.","todo":"TODO: Add approved Skills references only. Do not reuse Systems or New Horizons end-client logos."},
+    "needs": {
+      "eyebrow":"Your starting point","heading":"New tools. New people.","emphasis":"New possibilities.","description":"Start with what your team needs to do. We shape the learning around it.",
+      "items":[
+        {"number":"01","heading":"Make new tools feel familiar.","description":"Help your team put Microsoft 365, AI and new ways of working into practice, with examples from their day-to-day tasks.","service":"training","link":"Explore practical training"},
+        {"number":"02","heading":"Get everyone on the same page.","description":"Turn knowledge held by a few people into clear, consistent learning that the whole organisation can return to.","service":"video","link":"Explore video courses"},
+        {"number":"03","heading":"Give new colleagues a clear start.","description":"Build an onboarding path that introduces your processes, tools and ways of working, one useful step at a time.","service":"elearning","link":"Explore e-learning"}
+      ]
+    },
+    "sample": {
+      "eyebrow":"Video courses & work sample","heading":"Your knowledge.","emphasis":"Made worth watching.","description":"From the first concept to the next update, we turn your expertise into focused lessons people can use and revisit.",
+      "placeholder":"A closer look at learning.","note":"A sample lesson will appear here once the course excerpt is approved. No registration required.","status":"Course sample · coming soon","todo":"TODO: Add an approved excerpt, poster, captions and transcript. Keep the sample openly accessible.",
+      "steps":[{"name":"Concept","description":"Learning goals, real tasks and a clear story."},{"name":"Production","description":"Focused lessons, carefully explained and produced."},{"name":"Reuse","description":"Modular content for onboarding and ongoing learning."},{"name":"Updates","description":"Keep lessons useful as your tools and processes change."}]
+    },
+    "services": {
+      "eyebrow":"What we do","heading":"Four formats.","emphasis":"One learning journey.","description":"Combine the formats that fit your goals, your people and the way your organisation works.","labels":["Your use case","Our service","The intended outcome"],"cta":"Discuss this format",
+      "items":[
+        {"id":"video","number":"01","name":"Video courses","icon":"mobile","accent":"blue","useCase":"Explain a process once, then make it available to everyone.","service":"Custom concepts, scripts and video production, structured as reusable lessons.","outcome":"A consistent source of knowledge your team can revisit."},
+        {"id":"elearning","number":"02","name":"E-learning","icon":"web","accent":"red","useCase":"Help people learn independently and put knowledge into practice.","service":"Learning paths with practical tasks, interactive content and knowledge checks.","outcome":"A clear route from understanding a topic to applying it."},
+        {"id":"training","number":"03","name":"Training","icon":"workflow","accent":"orange","useCase":"Build confidence with Microsoft 365, AI or project management.","service":"Guided sessions with relevant examples, exercises and room for questions.","outcome":"Practical skills connected to the work your team actually does."},
+        {"id":"lms","number":"04","name":"Learning platforms","icon":"crm","accent":"purple","useCase":"Bring your learning content and participants together in one place.","service":"Support selecting, structuring and setting up a suitable learning platform or LMS.","outcome":"An organised learning environment that fits your team."}
+      ]
+    },
+    "projects": {
+      "eyebrow":"Selected learning projects","heading":"From a real need.","emphasis":"To a useful outcome.","description":"A place for the context, the work and the results behind our learning projects.","status":"Project story · awaiting approval","labels":["Initial situation","Our service","Verified outcome"],
+      "items":[{"number":"01","heading":"Learning project 01","situation":"Client context to be added after approval.","service":"Learning concept and delivery details to follow.","outcome":"Verified results to be supplied by the client.","todo":"TODO: Planned RemCo IT story. Obtain written approval and verified details before naming or showing the client."},{"number":"02","heading":"Learning project 02","situation":"Client context to be added after approval.","service":"Learning concept and delivery details to follow.","outcome":"Verified results to be supplied by the client.","todo":"TODO: Planned Hannover Airport story. Confirm relationship and written permission; do not present a New Horizons end client as an Amphora client."}]
+    },
+    "process": {
+      "eyebrow":"How we work together","heading":"A clear process.","emphasis":"A shared direction.","description":"You bring the knowledge of your organisation. We help turn it into a learning experience.","effortLabel":"Your part",
+      "items":[{"number":"01","name":"Clarify the need","description":"We discuss your audience, their starting point and what they need to do differently.","effort":"Share your goals, examples and existing materials."},{"number":"02","name":"Align the concept","description":"Together, we choose the topics, formats and structure of the learning journey.","effort":"Review the approach and agree the scope."},{"number":"03","name":"Bring it to life","description":"We develop the content and learning experience, with agreed opportunities for feedback.","effort":"Connect us with subject experts and review key stages."},{"number":"04","name":"Deliver & develop","description":"We prepare the handover and discuss how content can stay relevant over time.","effort":"Coordinate the rollout and share learner feedback."}]
+    },
+    "partners": {"eyebrow":"For education partners","heading":"Your expertise.","emphasis":"Our shared next chapter.","description":"For academies and training providers: let’s discuss how we can support your learning offer, from concept and materials to production and training.","tags":["Concept development","Learning materials","Production","Training"],"cta":"Discuss a partnership","placeholder":"Room for a future partnership.","note":"Partner information, imagery and examples will be added here.","todo":"TODO: Add Marcel’s education partner offer, approved imagery and partnership examples."},
+    "about": {"eyebrow":"The people behind Skills","heading":"A personal connection.","emphasis":"From the first conversation.","description":"Talk to Marcel about your learning goals and the people you want to reach. Together, we can explore the right combination of content, training and technology.","connection":"Skills and systems belong together. Marcel is your contact for professional development; Salam connects the learning experience with the digital systems behind it.","cta":"Talk to Marcel","name":"Marcel Henning","role":"Co-founder · Amphora Skills","imageAlt":"Marcel Henning, co-founder and contact for Amphora Skills","secondaryName":"Salam Rouabhia","secondaryRole":"Co-founder · Amphora Systems","bioNote":"Professional background and detailed bio to follow.","todo":"TODO: Marcel to approve expertise and biography. No credentials or teaching results are assumed."},
+    "faq": {"eyebrow":"A few useful answers","heading":"Before we begin.","emphasis":"Let’s make it clear.","description":"Every learning project starts with a conversation about what you need.","items":[{"question":"Can the learning be tailored to our organisation?","answer":"That is the starting point. We discuss your audience, tools, real tasks and existing materials, then agree the content and formats that fit your goals."},{"question":"Can content work with our existing learning platform?","answer":"We review your platform and its technical requirements before proposing a format. Any integration, tracking or accessibility requirements are agreed as part of the scope."},{"question":"Who can use the content, and can we update it?","answer":"We agree usage rights, access to source materials and how updates will be handled in the proposal, so the handover is clear before production begins."},{"question":"How much time do we need to contribute?","answer":"You help define the goals, provide subject knowledge and review the work at agreed stages. We set out the input and review time needed once the scope is clear."},{"question":"What does a learning project cost?","answer":"The cost depends on the content, production, formats and technical requirements. We discuss the brief first and then propose a defined scope."},{"question":"How long does a project take?","answer":"The schedule depends on the amount of content, access to subject experts and review rounds. We agree milestones and responsibilities together before starting."}]},
+    "contact": {"eyebrow":"Let’s talk about learning","heading":"What should your team", "emphasis":"be able to do next?","description":"Tell us about your people, your goals and the knowledge you want to share. We’ll start there.","formHeading":"Your training project","formNote":"A few details are enough to start the conversation.","email":"info@amphora-it.com"},
+    "crossLink": {"text":"Need the digital systems to support your team?","label":"Explore Amphora Systems"}
+  }
+]

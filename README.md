@@ -28,7 +28,11 @@ The page follows the brief: hero, Systems references, four need scenarios, a pro
 
 Shared navigation is Systems, Skills, About, Contact. Section 02 uses all 14 supplied partner logos in a centered, full-width strip with a continuous right-to-left loop and faded edges. There is no partner count or selection label. Reduced-motion preferences show all logos in centered, static rows. The secondary page navigation and unverified Google review count are no longer rendered. Free-draft offers are removed.
 
-`/skills` is reserved for the next task. Until its page exists, navigation points to the quiet Skills note and email enquiry near the end of Systems. Set `skillsReady` in `src/content/routes.json` to `true` when the Skills page is ready. No Skills landing page or hub has been built here.
+`/skills` implements Part C of the 15 September developer briefing. The existing Skills navigation and Systems cross-link now lead there. Its ten sections use the existing fonts, colour tokens, shared layout and section headings. Systems section components and copy are unchanged. The hub remains a separate, undecided task.
+
+Skills copy is in the validated `src/content/skills.json` collection. Sections 02 (trust), 04 (course sample) and 08 (education partners) intentionally reserve visible space for later content; locate them using `data-content-slot` in `src/components/skills/SkillsPage.astro`. The sample has no pretend playback control. Add the approved video, captions and transcript when supplied. The two project stories and Marcel’s detailed biography are also explicitly awaiting approval. Planned client names are kept in editorial TODO fields and are not shown to visitors.
+
+Service and partnership CTAs preselect the Skills enquiry type. The form uses the existing endpoint with `area=skills`, the same validation and delivery behaviour, and the shared success page. `/termin?area=skills` offers Skills formats, preserves the selected service, and passes Skills UTM context into the existing Calendly embed. A separate Skills calendar has not been supplied, so the shared calendar URL remains unchanged. Without JavaScript, the booking page asks visitors to mention their area in the booking.
 
 Only `/systeme-old` retains its 301 redirect to `/`. The old `/systeme` and `/skills` redirects are removed. German legal pages and their content are unchanged.
 
@@ -40,6 +44,7 @@ Landing-page copy lives in validated Astro content collections:
 | --- | --- |
 | `src/content/site.json` | Global navigation, shared labels, and footer |
 | `src/content/systems.json` | Systems copy, services, stories, images, automation, FAQs, and contact copy |
+| `src/content/skills.json` | Skills copy, four learning formats, reserved media sections, project placeholders, FAQs and contact copy |
 | `src/content/routes.json` | Area paths, Skills availability, booking path, and exact Calendly URL |
 | `src/content/legal.json` | Unmodified German legal text, source URLs, and copy date |
 | `src/content.config.ts` | Collection schemas |
@@ -66,7 +71,7 @@ Validation errors appear beside the relevant fields and focus moves to the first
 
 Set `RESEND_API_KEY` in local `.env` or Vercel's server environment to enable delivery. The sender is `Anfrage <formular@amphora-it.com>` and recipient is `m.henning@amphora-it.com`, from the existing handoff; the sending domain must be verified with Resend. Without the key, the endpoint returns an honest unavailable response and the form offers the email fallback. No secret is committed, no real test enquiry has been sent, and no real booking has been made.
 
-Still needed before launch: approved case details and references, the real automation case when available, final copy approval/translation, delivery configuration, and any separate launch SEO/analytics work. Skills and the hub remain separate tasks.
+Still needed before launch: approved case details and references, the real automation case when available, Skills media and partner information, final copy approval/translation, delivery configuration, and any separate launch SEO/analytics work. The hub remains a separate task.
 
 ## Verification
 

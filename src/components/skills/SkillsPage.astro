@@ -1,0 +1,218 @@
+---
+import { getEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import Layout from '../../layouts/Layout.astro';
+import Icon from '../Icon.astro';
+import LocalPicture from '../LocalPicture.astro';
+import SectionHeading from '../systems/SectionHeading.astro';
+import Contact from './Contact.astro';
+import marcel from '../../assets/team/marcel-original.png';
+import routes from '../../content/routes.json';
+const entry = await getEntry('skills', 'en');
+if (!entry) throw new Error('Missing Skills content.');
+const c = entry.data;
+const enquiry = (service: string) => `${routes.skills}?service=${service}#contact`;
+---
+<Layout title={c.title} description={c.description}>
+  <section class="skills-hero shell" aria-labelledby="skills-heading">
+    <div class="topline"><p class="eyebrow"><span class="section-index">01 /</span>{c.hero.eyebrow}</p><p class="draft-note">{c.draftLabel}</p></div>
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <h1 id="skills-heading">{c.hero.heading}<br /><span class="editorial">{c.hero.emphasis}</span></h1>
+        <p class="hero-description">{c.hero.subline}</p>
+        <div class="hero-actions"><a class="button button-dark button-metallic" href={`${routes.booking}?area=skills`}>{c.hero.primary}<Icon /></a><a class="text-link" href="#sample">{c.hero.secondary}</a></div>
+        <p class="hero-note">{c.hero.note}</p>
+      </div>
+      <div class="hero-visual">
+        <figure class="hero-photo"><LocalPicture src="/images/team/consultation-1280.webp" alt={c.hero.imageAlt} width={1280} height={853} eager responsive sizes="(min-width: 768px) 44vw, calc(100vw - 40px)" /><figcaption>{c.hero.imageCaption}</figcaption></figure>
+        <div class="learning-card"><div class="learning-symbol" aria-hidden="true"><span></span><span></span><span></span></div><p class="eyebrow">{c.hero.cardLabel}</p><p class="learning-title">{c.hero.cardHeading}</p><p class="learning-note">{c.hero.cardNote}</p></div>
+      </div>
+    </div>
+    <nav class="page-nav" aria-label="Skills sections">{c.navigation.map(item => <a href={item.href}>{item.label}<span aria-hidden="true">↘</span></a>)}</nav>
+  </section>
+
+  <section class="trust shell" aria-labelledby="trust-heading" data-content-slot="trust">
+    <div><p class="eyebrow"><span class="section-index">02 /</span>{c.trust.eyebrow}</p><h2 id="trust-heading">{c.trust.heading}</h2></div>
+    <div class="trust-space"><span class="quote-mark editorial" aria-hidden="true">“</span><div><p>{c.trust.placeholder}</p><p class="small-note">{c.trust.note}</p></div></div>
+  </section>
+
+  <section class="section shell" id="needs" aria-labelledby="needs-heading">
+    <SectionHeading number="03" id="needs-heading" content={c.needs} />
+    <div class="needs-grid">{c.needs.items.map(item => <article class="need-card reveal-on-scroll"><span class="editorial card-number">{item.number}</span><h3>{item.heading}</h3><p>{item.description}</p><a class="text-link" href={`#service-${item.service}`}>{item.link}<Icon /></a></article>)}</div>
+  </section>
+
+  <section class="section sample-section" id="sample" aria-labelledby="sample-heading" data-content-slot="course-sample"><div class="shell">
+    <SectionHeading number="04" id="sample-heading" content={c.sample} />
+    <div class="sample-grid"><div class="sample-space"><span class="tag">{c.sample.status}</span><div class="sample-art" aria-hidden="true"><span></span><span></span><span></span></div><div><h3>{c.sample.placeholder}</h3><p>{c.sample.note}</p></div></div><ol class="sample-steps">{c.sample.steps.map((step, i) => <li><span class="step-index">0{i + 1}</span><div><h3>{step.name}</h3><p>{step.description}</p></div></li>)}</ol></div>
+  </div></section>
+
+  <section class="section shell" id="services" aria-labelledby="services-heading">
+    <SectionHeading number="05" id="services-heading" content={c.services} />
+    <div class="services-grid">{c.services.items.map(item => <article class:list={['service-card', item.accent, 'reveal-on-scroll']} id={`service-${item.id}`}><div class="service-top"><span class="service-icon"><Icon name={item.icon} /></span><span class="small-note">{item.number} /</span></div><h3>{item.name}</h3><dl>{[item.useCase, item.service, item.outcome].map((text, i) => <div><dt>{c.services.labels[i]}</dt><dd>{text}</dd></div>)}</dl><a class="text-link" href={enquiry(item.id)} data-enquiry-service={item.id}>{c.services.cta}<Icon /></a></article>)}</div>
+  </section>
+
+  <section class="section projects-section" id="projects" aria-labelledby="projects-heading"><div class="shell">
+    <SectionHeading number="06" id="projects-heading" content={c.projects} />
+    <div class="project-grid">{c.projects.items.map(item => <article class="project-card"><div class="project-title"><span class="editorial">{item.number}</span><p class="small-note">{c.projects.status}</p></div><h3>{item.heading}</h3><dl>{[item.situation, item.service, item.outcome].map((text, i) => <div><dt>{c.projects.labels[i]}</dt><dd>{text}</dd></div>)}</dl></article>)}</div>
+  </div></section>
+
+  <section class="section shell" id="process" aria-labelledby="process-heading">
+    <SectionHeading number="07" id="process-heading" content={c.process} />
+    <div class="process-grid">{c.process.items.map(item => <article class="process-card reveal-on-scroll"><span class="editorial card-number">{item.number}</span><h3>{item.name}</h3><p>{item.description}</p><div class="your-part"><span>{c.process.effortLabel}</span><p>{item.effort}</p></div></article>)}</div>
+  </section>
+
+  <section class="partners-section shell" id="partners" aria-labelledby="partners-heading" data-content-slot="education-partners">
+    <div class="partners-copy"><p class="eyebrow"><span class="section-index">08 /</span>{c.partners.eyebrow}</p><h2 class="section-heading" id="partners-heading">{c.partners.heading}<br /><span class="editorial">{c.partners.emphasis}</span></h2><p class="body-copy">{c.partners.description}</p><div class="partner-tags">{c.partners.tags.map(tag => <span class="tag">{tag}</span>)}</div><a class="button button-dark button-metallic" href={enquiry('partnership')} data-enquiry-service="partnership">{c.partners.cta}<Icon /></a></div>
+    <div class="partner-space"><span class="partner-mark" aria-hidden="true">+</span><h3>{c.partners.placeholder}</h3><p>{c.partners.note}</p></div>
+  </section>
+
+  <section class="section shell about-section" id="about" aria-labelledby="about-heading">
+    <div><p class="eyebrow"><span class="section-index">09 /</span>{c.about.eyebrow}</p><h2 class="section-heading" id="about-heading">{c.about.heading}<br /><span class="editorial">{c.about.emphasis}</span></h2><p class="body-copy">{c.about.description}</p><p class="body-copy connection">{c.about.connection}</p><a class="text-link" href="#contact">{c.about.cta}<Icon /></a></div>
+    <div class="people"><figure class="marcel"><div class="portrait"><Image src={marcel} alt={c.about.imageAlt} width={480} height={540} widths={[240,360,480]} sizes="(min-width: 768px) 340px, 85vw" format="webp" quality={82} loading="lazy" /></div><figcaption><h3>{c.about.name}</h3><p>{c.about.role}</p><p class="small-note">{c.about.bioNote}</p></figcaption></figure><a class="systems-person" href={`${routes.systems}#about`}><LocalPicture src="/images/team/salam-192.webp" alt="" width={192} height={192} /><span><strong>{c.about.secondaryName}</strong><span>{c.about.secondaryRole}</span></span><Icon /></a></div>
+  </section>
+
+  <section class="section faq-section" id="faq" aria-labelledby="faq-heading"><div class="shell">
+    <SectionHeading number="10" id="faq-heading" content={c.faq} />
+    <div class="faq-list">{c.faq.items.map(item => <details><summary>{item.question}<Icon name="plus" /></summary><p>{item.answer}</p></details>)}</div>
+  </div></section>
+  <Contact content={c.contact} services={c.services.items} crossLink={c.crossLink} />
+</Layout>
+<style>
+  .skills-hero { padding-top: 38px; }
+  .topline { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+  .topline .section-index { flex: none; white-space: nowrap; }
+  .hero-grid { display: grid; grid-template-columns: 1.2fr 1fr; align-items: center; gap: 52px; padding-block: 64px 60px; }
+  h1 { font-size: clamp(3.4rem, 6.3vw, 6rem); line-height: 1.04; letter-spacing: -.065em; }
+  h1 .editorial { position: relative; isolation: isolate; display: inline-block; }
+  h1 .editorial::after { content: ''; position: absolute; inset: 74% -2% 3%; border-radius: 3px; background: var(--color-accent-soft); z-index: -1; }
+  .hero-description { max-width: 440px; margin-top: 28px; font-size: 17px; line-height: 1.75; color: var(--color-muted); }
+  .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 22px; margin-top: 30px; }
+  .hero-actions .text-link { font-size: 12px; min-height: 44px; }
+  .hero-note { font-size: 11px; color: var(--color-muted); margin-top: 26px; }
+  .hero-visual { padding: 0 0 30px 14px; position: relative; }
+  figure { margin: 0; }
+  .hero-photo { position: relative; border-radius: 18px; overflow: hidden; background: var(--color-surface); }
+  .hero-photo :global(img) { width: 100%; height: auto; aspect-ratio: 1.04; object-fit: cover; object-position: 57% center; }
+  .hero-photo figcaption { position: absolute; top: 18px; left: 18px; right: 18px; width: fit-content; padding: 10px 14px; border-radius: 6px; background: #fffffff2; font-size: 11px; line-height: 1.5; }
+  .learning-card { position: relative; width: 88%; margin: -45px 0 0 -20px; padding: 25px; border: 1px solid #e1e4f3; border-radius: 12px; background: #f4f5ff; box-shadow: 0 12px 30px #2828260a; }
+  .learning-card .eyebrow { font-size: 9px; color: #525878; }
+  .learning-title { font-size: 21px; letter-spacing: -.035em; margin-top: 13px; }
+  .learning-note { font-size: 11px; color: var(--color-muted); line-height: 1.6; margin-top: 8px; max-width: 250px; }
+  .learning-symbol { float: right; display: flex; align-items: end; gap: 5px; margin-left: 12px; height: 36px; }
+  .learning-symbol span { width: 9px; height: 18px; border-radius: 3px; background: var(--color-blue); }
+  .learning-symbol span:nth-child(2) { height: 27px; background: var(--color-purple); }
+  .learning-symbol span:nth-child(3) { height: 36px; background: var(--color-red); }
+  .page-nav { display: flex; border-block: 1px solid var(--color-line); }
+  .page-nav a { display: flex; flex: 1; justify-content: space-between; gap: 12px; font-size: 12px; padding: 21px 24px; border-right: 1px solid var(--color-line); }
+  .page-nav a:first-child { padding-left: 0; } .page-nav a:last-child { padding-right: 0; border: 0; }
+  .page-nav a:hover { color: #3b48bd; }
+  .trust { display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; align-items: center; padding-block: 44px; border-bottom: 1px solid var(--color-line); }
+  .trust h2 { margin-top: 15px; font-size: 19px; letter-spacing: -.025em; }
+  .trust-space { min-height: 110px; display: flex; align-items: center; gap: 24px; border: 1px dashed #cbcbc4; border-radius: 12px; padding: 20px 28px; }
+  .quote-mark { font-size: 64px; line-height: 1; color: #9299be; }
+  .trust-space p { font-size: 14px; }
+  .small-note { font-size: 11px !important; line-height: 1.65; color: var(--color-muted); }
+  .trust-space .small-note { margin-top: 6px; }
+  .needs-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+  .need-card { border-top: 1px solid var(--color-line); padding-top: 24px; display: flex; flex-direction: column; align-items: start; }
+  .card-number { font-size: 42px; color: var(--color-blue); }
+  h3 { font-size: 24px; line-height: 1.2; letter-spacing: -.035em; }
+  .need-card h3 { margin-top: 24px; max-width: 260px; }
+  .need-card > p, .process-card > p { font-size: 14px; line-height: 1.8; color: var(--color-muted); margin-top: 18px; }
+  .need-card a { margin-top: auto; padding-top: 24px; min-height: 44px; font-size: 12px; }
+  .text-link :global(svg) { width: 16px; height: 16px; }
+  .sample-section, .faq-section { background: var(--color-surface); }
+  .sample-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 64px; align-items: center; }
+  .sample-space { min-height: 400px; background: #eef0fa; border: 1px dashed #bfc6e2; border-radius: 16px; padding: 28px 32px; display: flex; flex-direction: column; justify-content: space-between; align-items: start; }
+  .sample-space .tag { border-color: #c7cbe0; color: #525878; }
+  .sample-space p { max-width: 410px; color: #62677b; font-size: 13px; line-height: 1.8; margin-top: 12px; }
+  .sample-art { display: flex; align-items: center; justify-content: center; width: 100%; height: 160px; }
+  .sample-art span { display: block; width: 80px; height: 105px; border: 1px solid #8e9be5; border-radius: 13px; transform: rotate(-14deg); background: #ffffff66; }
+  .sample-art span:nth-child(2) { transform: rotate(0); margin-left: -25px; background: #dce1ff; }
+  .sample-art span:nth-child(3) { transform: rotate(14deg); margin-left: -25px; background: #eff0ff; }
+  .sample-steps { list-style: none; padding: 0; margin: 0; }
+  .sample-steps li { display: flex; gap: 24px; padding: 23px 0; border-bottom: 1px solid #ddddd5; }
+  .sample-steps li:first-child { padding-top: 0; }
+  .step-index { font-size: 11px; color: #4651bd; padding-top: 4px; }
+  .sample-steps h3 { font-size: 20px; }
+  .sample-steps p { color: var(--color-muted); font-size: 13px; line-height: 1.8; margin-top: 8px; }
+  .services-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 18px; }
+  .service-card { border: 1px solid var(--color-line); border-radius: 14px; padding: 24px; display: flex; flex-direction: column; --card-accent: var(--color-blue); }
+  .red { --card-accent: var(--color-red); } .orange { --card-accent: var(--color-orange); } .purple { --card-accent: var(--color-purple); }
+  .service-top { display: flex; align-items: center; justify-content: space-between; }
+  .service-icon { padding: 10px; border-radius: 10px; color: var(--color-ink); background: color-mix(in srgb, var(--card-accent) 12%, white); border: 1px solid color-mix(in srgb, var(--card-accent) 30%, white); }
+  .service-icon :global(svg) { display: block; }
+  .service-card h3 { font-size: 25px; margin-top: 28px; min-height: 60px; }
+  dl { margin: 22px 0 0; }
+  dl > div { padding-block: 15px; border-top: 1px solid var(--color-line); }
+  dt { text-transform: uppercase; font-size: 9px; font-weight: 500; letter-spacing: .08em; }
+  dd { margin: 8px 0 0; font-size: 12px; color: var(--color-muted); line-height: 1.8; }
+  .service-card a { margin-top: auto; padding-top: 22px; font-size: 12px; justify-content: space-between; }
+  .service-card:target { outline: 2px solid var(--card-accent); outline-offset: 4px; }
+  .projects-section { border-block: 1px solid var(--color-line); }
+  .project-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 28px; }
+  .project-card { background: var(--color-surface); padding: 32px; border-radius: 14px; }
+  .project-title { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 25px; }
+  .project-title .editorial { font-size: 42px; color: var(--color-muted); }
+  .project-card dl > div { display: grid; grid-template-columns: 135px 1fr; gap: 20px; }
+  .project-card dt { padding-top: 3px; } .project-card dd { margin: 0; }
+  .process-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 28px; }
+  .process-card { display: flex; flex-direction: column; border-top: 1px solid var(--color-line); padding-top: 24px; }
+  .process-card h3 { font-size: 21px; margin-top: 24px; }
+  .process-card > p { margin-bottom: 26px; }
+  .your-part { margin-top: auto; padding-top: 18px; border-top: 1px solid var(--color-line); }
+  .your-part span { font-size: 10px; text-transform: uppercase; letter-spacing: .08em; }
+  .your-part p { font-size: 12px; line-height: 1.8; color: var(--color-muted); margin-top: 8px; }
+  .partners-section { display: grid; grid-template-columns: 1.3fr 1fr; gap: 56px; padding: 56px; border-radius: 18px; background: var(--color-accent-soft); }
+  .partners-copy h2, .about-section h2 { margin-top: 30px; }
+  .partners-copy h2 { font-size: clamp(2.5rem,3.6vw,3.6rem); }
+  .body-copy { font-size: 15px; line-height: 1.8; color: var(--color-muted); margin-top: 24px; max-width: 530px; }
+  .partner-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-block: 24px; }
+  .partner-tags .tag { border-color: #cbd0e1; }
+  .partner-space { align-self: stretch; border: 1px dashed #b8bfd8; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 36px; text-align: center; min-height: 320px; }
+  .partner-mark { font-size: 58px; color: #828ba9; margin-bottom: 24px; font-weight: 400; }
+  .partner-space h3 { font-size: 23px; max-width: 240px; }
+  .partner-space p { margin-top: 14px; font-size: 12px; color: #62677b; line-height: 1.8; max-width: 230px; }
+  .about-section { display: grid; grid-template-columns: 1.3fr 1fr; gap: 90px; align-items: center; }
+  .connection { font-size: 14px; }
+  .about-section .text-link { margin-top: 26px; min-height: 44px; }
+  .people { width: min(100%,340px); justify-self: center; }
+  .portrait { border-radius: 14px; overflow: hidden; background: var(--color-surface); }
+  .portrait :global(img) { width: 100%; height: auto; }
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .portrait :global(img) { transition: transform 500ms cubic-bezier(.22, 1, .36, 1), filter 400ms ease; }
+    .portrait:hover :global(img) { transform: scale(1.035); filter: saturate(1.05) contrast(1.02); }
+  }
+  .marcel figcaption { padding-block: 22px; }
+  .marcel figcaption h3 { font-size: 22px; }
+  .marcel figcaption p { font-size: 12px; color: var(--color-muted); margin-top: 8px; }
+  .marcel figcaption .small-note { margin-top: 14px; }
+  .systems-person { display: flex; align-items: center; gap: 14px; border-top: 1px solid var(--color-line); padding-top: 18px; }
+  .systems-person :global(img) { width: 50px; height: 50px; object-fit: cover; border-radius: 50%; }
+  .systems-person strong { font-size: 13px; font-weight: 500; }
+  .systems-person span span { display: block; margin-top: 5px; font-size: 10px; color: var(--color-muted); }
+  .systems-person > :global(svg) { width: 17px; margin-left: auto; }
+  .faq-list { margin-left: calc((100% + 40px)/3); }
+  details { border-top: 1px solid #ddddd5; } details:last-child { border-bottom: 1px solid #ddddd5; }
+  summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 23px; font-size: 16px; line-height: 1.5; }
+  summary::-webkit-details-marker { display: none; }
+  summary :global(svg) { width: 20px; height: 20px; flex: none; }
+  details[open] summary :global(svg) { transform: rotate(45deg); }
+  details > p { padding: 0 35px 25px 0; font-size: 14px; color: var(--color-muted); line-height: 1.8; }
+  @media (hover: hover) and (pointer: fine) { .service-card { transition: border-color 180ms ease, box-shadow 180ms ease; } .service-card:hover { border-color: var(--card-accent); box-shadow: 0 8px 28px #28282608; } }
+  @media (max-width: 1100px) { .hero-grid { gap: 24px; } h1 { font-size: clamp(3.1rem,6.2vw,5rem); } .services-grid, .process-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } .service-card h3 { min-height: auto; } .partners-section { padding: 36px; gap: 32px; } .about-section { gap: 40px; } .sample-grid { gap: 32px; } }
+  @media (max-width: 767px) {
+    .skills-hero { padding-top: 25px; } .topline { align-items: start; } .topline .eyebrow { font-size: 9px; max-width: 195px; line-height: 1.6; } .topline .draft-note { font-size: 9px; text-align: right; }
+    .hero-grid { grid-template-columns: 1fr; padding-block: 44px 20px; gap: 40px; } h1 { font-size: clamp(3.1rem,11vw,5.5rem); } .hero-description { font-size: 16px; }
+    .hero-visual { padding-left: 12px; padding-bottom: 12px; } .hero-photo :global(img) { aspect-ratio: 1.3; } .learning-card { margin-left: -12px; padding: 22px; }
+    .page-nav { flex-wrap: wrap; } .page-nav a { flex: 1 1 50%; padding: 17px 12px; font-size: 11px; } .page-nav a:nth-child(odd) { padding-left: 0; } .page-nav a:nth-child(even) { padding-right: 0; border-right: 0; } .page-nav a:nth-child(-n+2) { border-bottom: 1px solid var(--color-line); }
+    .trust { grid-template-columns: 1fr; gap: 22px; padding-block: 32px; } .trust-space { padding: 20px; }
+    .needs-grid, .sample-grid, .project-grid, .partners-section, .about-section { grid-template-columns: 1fr; }
+    .needs-grid { gap: 28px; } .need-card h3 { max-width: none; margin-top: 15px; } .need-card > p { margin-top: 12px; } .need-card a { padding-top: 18px; }
+    .sample-space { min-height: 350px; padding: 24px; } .sample-art { height: 140px; } .sample-steps li:first-child { padding-top: 10px; }
+    .project-card { padding: 24px; } .project-card dl > div { grid-template-columns: 1fr; gap: 8px; }
+    .partners-section { padding: 32px 24px; gap: 32px; } .partner-space { min-height: 250px; } .about-section { gap: 36px; } .people { justify-self: start; }
+    .faq-list { margin-left: 0; } summary { font-size: 15px; } .process-grid { gap: 32px 22px; }
+  }
+  @media (max-width: 479px) { .services-grid, .process-grid { grid-template-columns: 1fr; } .service-card { padding: 26px; } .service-card h3 { margin-top: 22px; } .process-card h3 { margin-top: 15px; } .process-card > p { margin-bottom: 18px; } }
+</style>

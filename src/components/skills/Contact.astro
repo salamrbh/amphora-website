@@ -1,0 +1,175 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Icon from '../Icon.astro';
+import routes from '../../content/routes.json';
+interface Props { content: CollectionEntry<'skills'>['data']['contact']; services: CollectionEntry<'skills'>['data']['services']['items']; crossLink: CollectionEntry<'skills'>['data']['crossLink']; }
+const { content, services, crossLink } = Astro.props;
+---
+<section class="contact-section section" id="contact" aria-labelledby="contact-heading">
+  <span id="calendly" class="legacy-anchor" aria-hidden="true"></span>
+  <div class="shell contact-shell">
+    <div class="contact-intro"><p class="eyebrow">{content.eyebrow}</p><h2 class="section-heading" id="contact-heading">{content.heading}<br /><span class="editorial">{content.emphasis}</span></h2><p>{content.description}</p><a class="button button-dark" href={`${routes.booking}?area=skills`} data-contact-booking>Discuss a training project<Icon /></a><div class="email-contact"><span>Prefer email?</span><a class="text-link" href={`mailto:${content.email}`}>{content.email}</a></div></div>
+    <form id="project-enquiry" action="/api/kontakt" method="post" aria-labelledby="form-heading" data-success-url="/danke">
+      <h3 id="form-heading">{content.formHeading}</h3><p class="form-note">{content.formNote}</p>
+      <input type="hidden" name="area" value="skills" />
+      <input type="hidden" name="formLoadedAt" value="" />
+      <div class="honeypot" aria-hidden="true"><label>Leave this empty<input name="website" autocomplete="off" tabindex="-1" /></label></div>
+      <div class="field-grid">
+        <div><label for="enquiry-name">Your name</label><input id="enquiry-name" name="name" autocomplete="name" required maxlength="120" placeholder="Alex Taylor" aria-describedby="name-error" data-validate /><p class="field-error" id="name-error"></p></div>
+        <div><label for="enquiry-company">Organisation <span class="optional">optional</span></label><input id="enquiry-company" name="companyName" autocomplete="organization" maxlength="160" placeholder="Your organisation" aria-describedby="companyName-error" data-validate /><p class="field-error" id="companyName-error"></p></div>
+        <div><label for="enquiry-email">Email address</label><input id="enquiry-email" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="alex@company.com" aria-describedby="email-error" data-validate /><p class="field-error" id="email-error"></p></div>
+        <div><label for="enquiry-phone">Phone <span class="optional" id="phone-requirement">optional</span></label><input id="enquiry-phone" name="phone" type="tel" autocomplete="tel" maxlength="50" placeholder="Your phone number" aria-describedby="phone-error" data-validate /><p class="field-error" id="phone-error"></p></div>
+        <label class="phone-preference full-width"><input type="checkbox" name="contactViaPhone" value="true" />I’d prefer to be contacted by phone</label>
+        <div class="full-width"><label for="enquiry-service">What can we help with? <span class="optional">optional</span></label><select name="serviceType" id="enquiry-service" aria-describedby="serviceType-error"><option value="project">A training project · let’s work it out</option>{services.map((service) => <option value={service.id} data-service-name={service.name}>{service.name}</option>)}<option value="partnership">Education partnership</option></select><p class="field-error" id="serviceType-error"></p></div>
+        <div class="full-width"><label for="enquiry-project">Your project</label><textarea id="enquiry-project" name="projectDescription" required maxlength="5000" rows="4" placeholder="What should your team be able to do?" aria-describedby="projectDescription-error" data-validate></textarea><p class="field-error" id="projectDescription-error"></p></div>
+      </div>
+      <p class="privacy-note">We use your details to respond to your enquiry. <a href="/datenschutz" lang="de">Datenschutz</a></p>
+      <button class="button button-dark" type="submit" disabled><span>Send training enquiry</span><Icon /></button>
+      <noscript><p class="form-note">Enable JavaScript to send this form, or <a class="text-link" href={`mailto:${content.email}`}>email us directly</a>.</p></noscript>
+      <p class="form-status" role="status" aria-live="polite" tabindex="-1"></p>
+    </form>
+  </div>
+  <div class="shell skills-link"><p>{crossLink.text} <a href={routes.systems}>{crossLink.label} <span aria-hidden="true">↗</span></a></p></div>
+</section>
+<script>
+  const form = document.querySelector<HTMLFormElement>('#project-enquiry');
+  const select = form?.querySelector<HTMLSelectElement>('[name="serviceType"]');
+  const booking = document.querySelector<HTMLAnchorElement>('[data-contact-booking]');
+  const phone = form?.querySelector<HTMLInputElement>('[name="phone"]');
+  const contactViaPhone = form?.querySelector<HTMLInputElement>('[name="contactViaPhone"]');
+  const fields = Array.from(form?.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[data-validate]') ?? []);
+  if (form) {
+    form.noValidate = true;
+    form.querySelector<HTMLInputElement>('[name="formLoadedAt"]')!.value = String(Date.now());
+    form.querySelector<HTMLButtonElement>('button[type="submit"]')!.disabled = false;
+  }
+  const setError = (name: string, message: string) => {
+    const control = form?.elements.namedItem(name);
+    const output = document.getElementById(`${name}-error`);
+    if (output) output.textContent = message;
+    if (control instanceof HTMLElement) {
+      if (message) control.setAttribute('aria-invalid', 'true');
+      else control.removeAttribute('aria-invalid');
+    }
+  };
+  const validateField = (field: HTMLInputElement | HTMLTextAreaElement) => {
+    const value = field.value.trim();
+    let message = '';
+    if (field.required && !value) message = ({ name: 'Enter your name.', email: 'Enter a valid email address.', phone: 'Enter a phone number so we can call you.', projectDescription: 'Tell us a little about your project.' } as Record<string, string>)[field.name] || 'Complete this field.';
+    else if (field instanceof HTMLInputElement && field.type === 'email' && field.validity.typeMismatch) message = 'Enter a valid email address.';
+    else if (field.maxLength > 0 && value.length > field.maxLength) message = `Use no more than ${field.maxLength.toLocaleString('en')} characters.`;
+    setError(field.name, message);
+    return !message;
+  };
+  fields.forEach((field) => field.addEventListener('input', () => { if (field.hasAttribute('aria-invalid')) validateField(field); }));
+  const updatePhone = () => {
+    if (!phone || !contactViaPhone) return;
+    phone.required = contactViaPhone.checked;
+    document.getElementById('phone-requirement')!.textContent = phone.required ? 'required for a call' : 'optional';
+    if (!phone.required) setError('phone', '');
+  };
+  updatePhone();
+  contactViaPhone?.addEventListener('change', updatePhone);
+  const updateService = (value: string | null) => {
+    if (!select || !value || !Array.from(select.options).some((option) => option.value === value)) return;
+    select.value = value;
+    setError('serviceType', '');
+    if (booking) { const url = new URL(booking.href); url.searchParams.set('service', value); booking.href = url.pathname + url.search; }
+  };
+  updateService(new URLSearchParams(location.search).get('service'));
+  select?.addEventListener('change', () => updateService(select.value));
+  document.querySelectorAll<HTMLAnchorElement>('[data-enquiry-service]').forEach((link) => link.addEventListener('click', (event) => {
+    if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    updateService(link.dataset.enquiryService ?? null);
+    history.replaceState(null, '', link.href);
+    document.querySelector('#contact')?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+    select?.focus({ preventScroll: true });
+  }));
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    const label = button.querySelector('span')!;
+    const status = form.querySelector<HTMLElement>('.form-status')!;
+    if (button.disabled) return;
+    status.textContent = '';
+    const valid = fields.map(validateField).every(Boolean);
+    if (!valid) {
+      status.textContent = 'Please check the highlighted fields.';
+      form.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
+      return;
+    }
+    const data = new FormData(form);
+    const selectedOption = select?.selectedOptions[0];
+    const selectedService = selectedOption?.dataset.serviceName;
+    const payload = {
+      name: String(data.get('name') ?? '').trim(),
+      email: String(data.get('email') ?? '').trim(),
+      companyName: String(data.get('companyName') ?? '').trim(),
+      serviceType: select?.value === 'project' ? '' : (selectedOption?.textContent?.trim() ?? ''),
+      selectedServices: selectedService ? [selectedService] : [],
+      projectDescription: String(data.get('projectDescription') ?? '').trim(),
+      contactViaPhone: contactViaPhone?.checked ?? false,
+      phone: String(data.get('phone') ?? '').trim(),
+      website: String(data.get('website') ?? ''),
+      formLoadedAt: Number(data.get('formLoadedAt')),
+      area: String(data.get('area') ?? 'skills'),
+    };
+    button.disabled = true; label.textContent = 'Sending…'; status.textContent = '';
+    try {
+      const response = await fetch(form.action, { method: 'POST', body: JSON.stringify(payload), headers: { 'Content-Type': 'application/json', Accept: 'application/json' } });
+      const result = await response.json().catch(() => null);
+      if (!response.ok || result?.success !== true) {
+        if (result?.errors && typeof result.errors === 'object') {
+          for (const [name, message] of Object.entries(result.errors)) if (typeof message === 'string') setError(name, message);
+        }
+        status.textContent = typeof result?.message === 'string' ? result.message : 'Your message could not be sent. Please try again or email us.';
+        (form.querySelector<HTMLElement>('[aria-invalid="true"]') || status).focus();
+        return;
+      }
+      location.assign(form.dataset.successUrl || '/danke');
+    } catch {
+      status.textContent = 'Your message could not be sent. Please check your connection and try again, or email us.';
+      status.focus();
+    } finally { button.disabled = false; label.textContent = 'Send training enquiry'; }
+  });
+</script>
+<style>
+  .contact-section { position: relative; padding-bottom: 32px; }
+  .legacy-anchor { position: absolute; top: 0; }
+  .contact-shell { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; background: var(--color-accent-soft); border-radius: 18px; padding: 58px 48px; }
+  .contact-intro .eyebrow { font-size: 10px; margin-bottom: 30px; }
+  .contact-intro h2 { font-size: clamp(2.5rem, 3.8vw, 3.7rem); }
+  .contact-intro > p:not(.eyebrow) { max-width: 330px; font-size: 14px; line-height: 1.8; margin-top: 25px; color: var(--color-muted); }
+  .contact-intro > .button { margin-top: 30px; }
+  .email-contact { margin-top: 30px; display: flex; flex-direction: column; gap: 12px; align-items: start; }
+  .email-contact > span { font-size: 11px; color: var(--color-muted); }
+  form { min-width: 0; }
+  h3 { font-size: 22px; letter-spacing: -.035em; }
+  .form-note { font-size: 12px; color: var(--color-muted); line-height: 1.7; margin-top: 10px; }
+  .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 20px; margin-top: 30px; }
+  label { display: block; font-size: 11px; line-height: 1.5; min-width: 0; }
+  .field-grid > div { min-width: 0; }
+  input, select, textarea { display: block; width: 100%; min-width: 0; background: transparent; border: 0; border-bottom: 1px solid #aeb6cc; border-radius: 0; padding: 13px 0; font-size: 13px; color: var(--color-ink); }
+  input::placeholder, textarea::placeholder { color: #6b7080; }
+  textarea { resize: vertical; min-height: 110px; }
+  .full-width { grid-column: 1 / -1; }
+  .optional { color: var(--color-muted); font-size: 10px; margin-left: 5px; }
+  .phone-preference { display: flex; align-items: center; gap: 10px; cursor: pointer; min-height: 32px; }
+  .phone-preference input { width: 18px; height: 18px; flex: none; padding: 0; accent-color: var(--color-accent); }
+  [aria-invalid="true"] { border-color: #853b35; }
+  .field-error { color: #853b35; font-size: 11px; line-height: 1.6; margin-top: 8px; }
+  .field-error:empty { display: none; }
+  .privacy-note { font-size: 10px; line-height: 1.7; margin-top: 18px; color: var(--color-muted); }
+  .privacy-note a { text-decoration: underline; text-underline-offset: 3px; }
+  form > button { width: 100%; margin-top: 20px; cursor: pointer; }
+  button:disabled { opacity: .6; cursor: wait; }
+  .form-status { font-size: 13px; line-height: 1.6; margin-top: 16px; color: #853b35; }
+  .form-status:empty { display: none; }
+  .honeypot { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .skills-link { padding-block: 30px; text-align: center; font-size: 12px; line-height: 1.8; color: var(--color-muted); }
+  .skills-link a { color: var(--color-ink); text-decoration: underline; text-underline-offset: 4px; margin-left: 5px; }
+  @media (max-width: 1100px) { .contact-shell { padding: 42px 32px; gap: 36px; } }
+  @media (max-width: 767px) { .contact-shell { grid-template-columns: 1fr; padding: 36px 24px; gap: 44px; } }
+  @media (max-width: 420px) { .field-grid { grid-template-columns: 1fr; } }
+</style>
