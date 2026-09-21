@@ -30,7 +30,7 @@
 
 @layer base {
   * { box-sizing: border-box; }
-  html { scroll-padding-top: 32px; scroll-behavior: smooth; }
+  html { --header-top: 14px; --header-height: 72px; scroll-padding-top: calc(var(--header-top) + var(--header-height) + 24px); scroll-behavior: smooth; }
   html.intro-active { overflow: hidden; }
   body { margin: 0; background: var(--color-paper); color: var(--color-ink); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
   h1, h2, h3, p { margin: 0; }
@@ -51,6 +51,27 @@
   .section-index { color: var(--color-muted); margin-right: 5px; }
   .section-heading { font-size: clamp(2.5rem, 4.2vw, 4rem); line-height: 1.05; letter-spacing: -0.055em; }
   .editorial { font-family: var(--font-editorial); font-weight: 400; font-style: italic; letter-spacing: -0.055em; }
+  .portrait-frame {
+    position: relative;
+    isolation: isolate;
+    display: block;
+    border: 1px solid transparent;
+    border-radius: 15px;
+    background: linear-gradient(110deg, #a5aaff, #e8dcff 30%, #f8dce9 68%, #f9e5db) border-box;
+  }
+  .portrait-frame::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    background: conic-gradient(from 90deg, #e94f87, #f47a45, #f7bd2f, #27cfd0, #5965e8, #9656dc, #e94f87);
+    filter: blur(7px);
+    opacity: 0.25;
+  }
+  .portrait-frame-avatar { flex: none; border-radius: 50%; }
+  .portrait-frame-avatar::before { inset: -2px; filter: blur(4px); }
   .button { display: inline-flex; align-items: center; justify-content: space-between; gap: 32px; padding: 17px 22px; min-height: 54px; border: 1px solid transparent; border-radius: 8px; font-size: 14px; font-weight: 500; line-height: 1.25; transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease, transform 180ms ease; }
   .button svg { width: 19px; height: 19px; flex: none; }
   .button-dark { background: var(--color-ink); color: var(--color-paper); }
@@ -94,5 +115,6 @@
 }
 
 @media (max-width: 1023px) { .shell { width: calc(100% - 64px); } .section { padding-block: 80px; } }
+@media (max-width: 1023px) { html { --header-top: 10px; --header-height: 59.2px; } }
 @media (max-width: 767px) { .shell { width: calc(100% - 40px); } .section { padding-block: 64px; } .section-heading { font-size: clamp(2.35rem, 9vw, 3.25rem); } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }

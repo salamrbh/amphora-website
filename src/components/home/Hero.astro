@@ -26,8 +26,19 @@ const { content, draftLabel } = Astro.props;
   .hero-topline { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
   .hero-grid { display: grid; grid-template-columns: 1.18fr 1fr; gap: 50px; align-items: center; padding-block: 66px 72px; }
   h1 { font-size: clamp(3.8rem, 6.7vw, 6.5rem); line-height: 1.02; letter-spacing: -0.065em; }
-  h1 .editorial { display: inline-block; position: relative; z-index: 0; white-space: nowrap; }
-  h1 .editorial::after { content: ''; position: absolute; inset: 74% -3% 3%; background: var(--color-accent-soft); z-index: -1; border-radius: 3px; }
+  h1 .editorial {
+    display: inline-block;
+    white-space: nowrap;
+    padding-inline: .06em;
+    margin-inline: -.06em;
+    padding-bottom: .2em;
+    margin-bottom: -.2em;
+    background-image: linear-gradient(165deg, transparent 20%, #ffffff14 37%, #ffffff70 46%, #ffffff12 50%, #17172c24 55%, transparent 68%), var(--brand-gradient-interactive);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  @media (forced-colors: active) { h1 .editorial { background: none; color: inherit; opacity: 1; } }
   .hero-subline { max-width: 400px; font-size: 17px; line-height: 1.65; margin-top: 30px; color: var(--color-muted); }
   .hero-actions { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; margin-top: 32px; }
   .hero-actions .text-link { font-size: 12px; }

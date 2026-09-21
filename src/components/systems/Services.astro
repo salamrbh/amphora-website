@@ -9,19 +9,51 @@ const { content } = Astro.props;
 <section class="section shell" id="services" aria-labelledby="services-heading">
   <SectionHeading number="05" id="services-heading" content={content} />
   <div class="services-grid">
-    {content.items.map((service) => <article class="service-card" id={`service-${service.id}`} style={`--service-accent: var(--color-${service.accent})`}>
-      <div class="service-top"><span class="service-icon"><Icon name={service.icon} /></span><span>{service.number}</span></div>
+    {content.items.map((service) => <article class:list={['service-card', service.accent]} id={`service-${service.id}`}>
+      <span class="service-gradient" aria-hidden="true"></span>
+      <span class="service-number">{service.number}</span>
       <h3>{service.name}</h3>
-      <dl><div><dt>Your situation</dt><dd>{service.useCase}</dd></div><div><dt>What we build</dt><dd>{service.service}</dd></div><div><dt>What it’s for</dt><dd>{service.outcome}</dd></div></dl>
+      <p class="service-description">{service.useCase}</p>
+      <dl class="service-details"><div><dt>What we build</dt><dd>{service.service}</dd></div><div><dt>What it’s for</dt><dd>{service.outcome}</dd></div></dl>
       <p class="proof-note">{service.proof}</p>
       <div class="service-actions"><a class="service-enquiry" href={`?service=${service.id}#contact`} data-enquiry-service={service.id}>Discuss this project<Icon /></a><a class="booking-link" href={`${routes.booking}?area=systems&service=${service.id}`}>Book a conversation</a></div>
     </article>)}
   </div>
 </section>
 <style>
-  .services-grid { --color-line: #3b3b3d; --color-muted: #c7c7c3; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
-  .service-card { position: relative; isolation: isolate; padding: 26px 23px; display: flex; flex-direction: column; min-width: 0; scroll-margin-top: 30px; border: 1px solid var(--color-line); border-radius: 14px; overflow: hidden; background: #1c1c1e; color: white; transition: color 240ms ease; }
-  .service-card::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: var(--brand-gradient-interactive); opacity: 0; transition: opacity 240ms ease; }
+  .services-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 19.2px; }
+  .service-card {
+    --card-accent: var(--color-blue);
+    position: relative;
+    isolation: isolate;
+    min-width: 0;
+    border: 1px solid transparent;
+    border-radius: 22.4px;
+    padding: 25.6px;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(125deg, #fcfcff, #fffaf8) padding-box, linear-gradient(125deg, color-mix(in srgb, var(--card-accent) 65%, white), #ece7ff 48%, #ffcbb6) border-box;
+    box-shadow: 0 16px 36px #28282605;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(ellipse at 100% 0%, color-mix(in srgb, var(--card-accent) 16%, transparent), transparent 58%), repeating-linear-gradient(125deg, #ffffff50 0, #ffffff00 24px, #ffffff50 52px);
+  }
+  .service-gradient {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    background: var(--brand-gradient-interactive);
+    opacity: 0;
+    transition: opacity 240ms ease;
+  }
   .service-card::after {
     content: '';
     position: absolute;
@@ -29,42 +61,60 @@ const { content } = Astro.props;
     z-index: -1;
     border-radius: inherit;
     pointer-events: none;
-    background: linear-gradient(115deg, transparent 20%, #ffffff0a 36%, #ffffff38 46%, #ffffff0d 52%, transparent 66%);
-    background-size: 200% 100%;
-    background-position: 100% 0;
-    box-shadow: inset 0 1px 0 #ffffff40, inset 0 -1px 0 #ffffff0d;
+    background: linear-gradient(180deg, transparent 35%, #aeb4c414 42%, #ffffffcc 48%, #ffffffee 50%, #aeb4c426 54%, transparent 63%);
+    background-size: 100% 300%;
+    background-position: 0 100%;
     opacity: 0;
-    transition: opacity 250ms ease, background-position 650ms cubic-bezier(.22, 1, .36, 1);
   }
-  .service-card:target { background: #26262a; }
-  .service-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-  .service-top > span:last-child { color: var(--color-muted); font-size: 10px; }
-  .service-icon { color: var(--service-accent); padding: 10px; border: 1px solid var(--color-line); border-radius: 10px; }
-  h3 { font-size: 23px; line-height: 1.2; letter-spacing: -.04em; min-height: 84px; }
-  dl { margin: 22px 0; }
-  dl > div + div { margin-top: 20px; }
-  dt { font-size: 10px; font-weight: 500; margin-bottom: 7px; }
-  dd { margin: 0; color: var(--color-muted); font-size: 12px; line-height: 1.75; }
-  .proof-note { color: var(--color-muted); font-size: 10px; line-height: 1.65; border-top: 1px solid var(--color-line); padding-top: 16px; margin-top: auto; }
-  .service-actions { margin-top: 18px; }
-  .service-enquiry { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 12px; min-height: 44px; }
-  .service-enquiry :global(svg) { width: 17px; }
-  .booking-link { display: inline-flex; align-items: center; min-height: 32px; color: var(--color-muted); font-size: 10px; text-decoration: underline; text-underline-offset: 4px; }
-  .service-enquiry:hover { color: var(--color-accent); }
-  .service-card:is(:hover, :focus-within) { color: white; }
-  .service-card:is(:hover, :focus-within)::before { opacity: 1; }
-  .service-card:is(:hover, :focus-within) :is(.service-top > span:last-child, dd, .proof-note, .service-enquiry, .booking-link) { color: white; }
-  .service-card:is(:hover, :focus-within) .service-icon { color: white; border-color: #ffffff80; background: #ffffff17; }
-  .service-card:is(:hover, :focus-within) .proof-note { border-color: #ffffff80; }
+  @keyframes service-metallic-slide {
+    0% { background-position: 0 100%; opacity: 0; }
+    15%, 80% { opacity: 1; }
+    100% { background-position: 0 0; opacity: 0; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .service-card::after { animation: service-metallic-slide 7s linear infinite; }
+  }
+  .red { --card-accent: var(--color-red); } .orange { --card-accent: var(--color-orange); } .purple { --card-accent: var(--color-purple); }
+  .service-number { align-self: flex-start; display: inline-flex; align-items: center; justify-content: center; min-width: 35.2px; min-height: 24px; padding: 4px 11.2px; border: 1px solid #dedde3; border-radius: 100px; color: #70707c; font-size: 9px; }
+  .service-card h3 { font-size: clamp(25.6px, 2.8vw, 40px); line-height: 1.08; min-height: 2.16em; letter-spacing: -.055em; font-weight: 700; margin-top: 22.4px; color: #18181b; }
+  .service-description { margin-top: 17.6px; min-height: 4.95em; font-size: 12.8px; line-height: 1.65; color: #686872; max-width: 54ch; }
+  dl { margin: 22px 0 0; }
+  dl > div { padding-block: 15px; border-top: 1px solid var(--color-line); }
+  dt { text-transform: uppercase; font-size: 9px; font-weight: 500; letter-spacing: .08em; }
+  dd { margin: 8px 0 0; font-size: 12px; color: var(--color-muted); line-height: 1.8; }
+  .service-details { display: grid; grid-template-columns: 1fr; grid-template-rows: repeat(2, 1fr); flex: 1; gap: 19.2px; margin: 22.4px 0 16px; border-top: 1px solid #dedde3; }
+  .service-details > div { border: 0; padding: 16px 0 0; }
+  .service-details dt { color: #55555e; }
+  .service-details dd { margin-top: 6.4px; font-size: 11px; color: #686872; }
+  .service-card a { margin-top: auto; padding-block: 9.6px 3.2px; padding-right: 16px; min-height: 44px; font-size: 11px; justify-content: space-between; }
+  .service-card a :global(svg) { width: 15.2px; height: 15.2px; }
+  .service-card:target { outline: 2px solid var(--card-accent); outline-offset: 4px; }
+  .service-card:is(:hover, :focus-within) .service-gradient { opacity: 1; }
+  .service-card:is(:hover, :focus-within) :is(h3, .service-description, .service-number, dt, dd, a) { color: white; }
+  .service-card:is(:hover, :focus-within) :is(.service-number, .service-details) { border-color: #ffffff80; }
+  .service-card:is(:hover, :focus-within) a { text-decoration-color: #ffffff99; }
+  .service-card:is(:hover, :focus-within)::after { background-image: linear-gradient(180deg, transparent 35%, #ffffff0a 42%, #ffffff26 48%, #ffffff38 50%, #ffffff0d 54%, transparent 63%); }
   .service-card a:focus-visible { outline-color: white; }
-  .service-card:focus-within::after { opacity: 1; background-position: 40% 0; }
-  @media (hover: hover) and (pointer: fine) {
-    .service-card:hover::after { opacity: 1; background-position: 40% 0; }
-  }
+  @media (hover: hover) and (pointer: fine) { .service-card { transition: box-shadow 180ms ease; } .service-card:hover { box-shadow: 0 12px 32px color-mix(in srgb, var(--card-accent) 12%, transparent); } }
   @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-    .service-card { transition: color 240ms ease, transform 500ms cubic-bezier(.22, 1, .36, 1); }
-    .service-card:hover { transform: translateY(-2px) scale(1.025); }
+    .service-card { transition: box-shadow 180ms ease, translate 500ms cubic-bezier(.22, 1, .36, 1), scale 500ms cubic-bezier(.22, 1, .36, 1), opacity 700ms cubic-bezier(.22, 1, .36, 1), transform 700ms cubic-bezier(.22, 1, .36, 1); }
+    .service-card:hover { translate: 0 -3px; scale: 1.02; }
   }
-  @media (max-width: 1100px) { .services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } h3 { min-height: 56px; max-width: 290px; } }
-  @media (max-width: 540px) { .services-grid { grid-template-columns: 1fr; } h3 { min-height: 0; } }
+
+  .service-card { display: grid; grid-template-rows: subgrid; grid-row: span 6; row-gap: 0; }
+  .service-number { justify-self: start; }
+  .service-card h3 { min-height: 0; overflow-wrap: anywhere; }
+  .proof-note { color: #686872; font-size: 10px; line-height: 1.65; border-top: 1px solid #dedde3; padding-top: 16px; margin-bottom: 14px; }
+  .service-actions { align-self: end; }
+  .service-enquiry { display: flex; align-items: center; gap: 8px; text-decoration: underline; text-underline-offset: 6px; text-decoration-color: #aaa; }
+  .service-card .booking-link { display: inline-flex; align-items: center; padding: 0; min-height: 32px; color: #686872; font-size: 10px; text-decoration: underline; text-underline-offset: 4px; }
+  .service-card:is(:hover, :focus-within) :is(.proof-note, .booking-link) { color: white; }
+  .service-card:is(:hover, :focus-within) .proof-note { border-color: #ffffff80; }
+  @media (max-width: 1100px) { .services-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+  @media (max-width: 767px) {
+    .services-grid { grid-template-columns: 1fr; gap: 16px; max-width: 400px; margin-inline: auto; }
+    .service-card { padding: 22.4px; }
+    .service-description { min-height: 0; }
+  }
+  @media (max-width: 479px) { .service-card { padding: 19.2px; } .service-card h3 { margin-top: 17.6px; } .service-details { gap: 0; } }
 </style>

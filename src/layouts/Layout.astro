@@ -29,7 +29,7 @@ const { title = site.title, lang = site.lang, description, noindex = false } = A
   <body>
     <a class="skip-link" href="#main" lang="en">{site.skipLink}</a>
     <IntroLoader label={site.homeLabel} />
-    <div lang={site.lang}><Header site={site} /></div>
+    <Header site={site} />
     <main id="main" tabindex="-1"><slot /></main>
     <div lang={site.lang}><Footer site={site} /></div>
     <script is:inline>
