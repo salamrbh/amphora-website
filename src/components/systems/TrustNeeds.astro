@@ -18,8 +18,8 @@ const { trust, needs } = Astro.props;
 </section>
 <section class="section shell" id="needs" aria-labelledby="needs-heading">
   <SectionHeading number="03" id="needs-heading" content={needs}>
-    <span slot="heading" class="sliding-gradient" data-gradient-heading>{needs.heading}</span>
-    <span slot="emphasis" class="sliding-gradient sliding-gradient-return">{needs.emphasis}</span>
+    <span slot="heading" class="fading-gradient">{needs.heading}</span>
+    <span slot="emphasis" class="fading-gradient fading-gradient-second">{needs.emphasis}</span>
   </SectionHeading>
   <div class="needs-grid">
     {needs.items.map((need) => <a class="need" href={`#service-${need.service}`}><span class="need-number">{need.number}</span><h3>{need.heading}</h3><p>{need.description}</p><span class="need-link">{need.linkLabel}<Icon /></span></a>)}
@@ -48,30 +48,25 @@ const { trust, needs } = Astro.props;
   .partner-group li { display: flex; align-items: center; justify-content: center; flex: 0 0 140px; width: 140px; height: 64px; }
   .partner-group img { width: auto; max-width: 120px; height: auto; max-height: 54px; object-fit: contain; filter: brightness(0) invert(.25); }
   @keyframes partner-scroll { to { transform: translateX(-50%); } }
-  .sliding-gradient { display: inline-block; }
-  .sliding-gradient-return { padding: .18em .08em; margin: -.18em -.08em; }
+  .fading-gradient { display: inline-block; padding: .18em .12em .24em; margin: -.18em -.12em -.24em; }
   @media (prefers-reduced-motion: no-preference) and (forced-colors: none) {
-    .sliding-gradient {
-      background-color: var(--color-ink);
-      background-image: var(--brand-gradient-interactive);
-      background-size: 200% 100%;
-      background-repeat: no-repeat;
-      background-position: -100% 0;
+    .fading-gradient {
+      background-image: var(--brand-gradient);
       -webkit-background-clip: text;
       background-clip: text;
-      color: transparent;
-      /* Two 7s sweeps, each followed by a 0.5s pause. */
-      animation: heading-gradient-slide 15s linear infinite paused;
+      color: var(--color-ink);
+      /* Each line: 2s fade in, 1s hold, 2s fade out; pauses: 0.5s then 3s. */
+      animation: heading-gradient-first 13.5s ease-in-out infinite paused;
     }
-    .sliding-gradient-return { background-position: 200% 0; animation-name: heading-gradient-return; }
-    :global(#needs-heading.is-visible) .sliding-gradient { animation-play-state: running; }
-    @keyframes heading-gradient-slide {
-      0% { background-position: -100% 0; }
-      46.666667%, 100% { background-position: 200% 0; }
+    .fading-gradient-second { animation-name: heading-gradient-second; }
+    :global(#needs-heading.is-visible) .fading-gradient { animation-play-state: running; }
+    @keyframes heading-gradient-first {
+      0%, 37.037037%, 100% { color: var(--color-ink); }
+      14.814815%, 22.222222% { color: transparent; }
     }
-    @keyframes heading-gradient-return {
-      0%, 50% { background-position: 200% 0; }
-      96.666667%, 100% { background-position: -100% 0; }
+    @keyframes heading-gradient-second {
+      0%, 40.740741%, 77.777778%, 100% { color: var(--color-ink); }
+      55.555556%, 62.962963% { color: transparent; }
     }
   }
   .needs-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; }
