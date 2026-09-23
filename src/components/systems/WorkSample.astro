@@ -15,7 +15,10 @@ const { content } = Astro.props;
   </div>
 </section>
 <style>
-  .sample-section { background: #f6f3ed; }
+  .sample-section {
+    --section-fade: clamp(64px, 8vw, 120px);
+    background: linear-gradient(to bottom, var(--color-paper), #f6f3ed var(--section-fade), #f6f3ed calc(100% - var(--section-fade)), var(--color-paper));
+  }
   .sample-grid { display: grid; grid-template-columns: 1.45fr 1fr; gap: 56px; align-items: center; }
   figure { margin: 0; min-width: 0; }
   .sample-screen { padding: 34px; background: #e8dfcf; border-radius: 14px; }

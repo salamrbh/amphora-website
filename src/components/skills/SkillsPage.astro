@@ -83,6 +83,7 @@ const enquiry = (service: string) => `${routes.skills}?service=${service}#contac
     <div class="partner-space"><span class="partner-mark" aria-hidden="true">+</span><h3>{c.partners.placeholder}</h3><p>{c.partners.note}</p></div>
   </section>
 
+  <div class="faq-stack">
   <section class="section shell about-section" id="about" aria-labelledby="about-heading">
     <div><p class="eyebrow"><span class="section-index">09 /</span>{c.about.eyebrow}</p><h2 class="section-heading" id="about-heading">{c.about.heading}<br /><span class="editorial">{c.about.emphasis}</span></h2><p class="body-copy">{c.about.description}</p><p class="body-copy connection">{c.about.connection}</p><a class="text-link" href="#contact">{c.about.cta}<Icon /></a></div>
     <div class="people"><figure class="marcel"><div class="portrait-frame"><div class="portrait"><Image src={marcel} alt={c.about.imageAlt} width={480} height={540} widths={[240,360,480]} sizes="(min-width: 768px) 340px, 85vw" format="webp" quality={82} loading="lazy" /></div></div><figcaption><h3>{c.about.name}</h3><p>{c.about.role}</p><p class="small-note">{c.about.bioNote}</p></figcaption></figure><a class="systems-person" href={`${routes.systems}#about`}><span class="portrait-frame portrait-frame-avatar"><LocalPicture src="/images/team/salam-192.webp" alt="" width={192} height={192} /></span><span><strong>{c.about.secondaryName}</strong><span>{c.about.secondaryRole}</span></span><Icon /></a></div>
@@ -94,8 +95,19 @@ const enquiry = (service: string) => `${routes.skills}?service=${service}#contac
     </SectionHeading>
     <div class="faq-list">{c.faq.items.map(item => <details><summary>{item.question}<Icon name="plus" /></summary><p>{item.answer}</p></details>)}</div>
   </div></section>
+  </div>
   <Contact content={c.contact} services={c.services.items} crossLink={c.crossLink} />
 </Layout>
+<script>
+  const about = document.querySelector<HTMLElement>('.faq-stack .about-section');
+  if (about && 'ResizeObserver' in window) {
+    const observer = new ResizeObserver(() => {
+      about.style.setProperty('--about-height', `${about.offsetHeight}px`);
+      about.classList.add('scroll-backdrop');
+    });
+    observer.observe(about);
+  }
+</script>
 <style>
   .skills-hero { padding-top: 38px; }
   .topline { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
@@ -444,7 +456,17 @@ const enquiry = (service: string) => `${routes.skills}?service=${service}#contac
   .systems-person strong { font-size: 13px; font-weight: 500; }
   .systems-person span span { display: block; margin-top: 5px; font-size: 10px; color: var(--color-muted); }
   .systems-person > :global(svg) { width: 17px; margin-left: auto; }
-  .faq-section { background: var(--color-paper); }
+  .faq-stack { position: relative; isolation: isolate; }
+  .faq-section { position: relative; z-index: 1; }
+  /* Cover the preceding section as the bottom of the black panel scrolls away. */
+  .faq-section::after { content: ''; position: absolute; z-index: -1; inset: 50% 0 0; background: var(--color-paper); pointer-events: none; }
+  @media (prefers-reduced-motion: no-preference) {
+    .about-section.scroll-backdrop {
+      position: sticky;
+      /* Let tall content finish scrolling before holding it behind the FAQ. */
+      top: min(calc(var(--header-top) + var(--header-height) + 16px), calc(100svh - var(--about-height) - 24px));
+    }
+  }
   .faq-panel {
     --color-ink: #fff;
     --color-muted: #fff;
@@ -463,6 +485,7 @@ const enquiry = (service: string) => `${routes.skills}?service=${service}#contac
     inset-inline: max(-5%, calc((100% - 100vw) / 2 + 20px));
     border-radius: inherit;
     background: #18181b;
+    box-shadow: 0 -12px 32px #2828260d;
     pointer-events: none;
   }
   .faq-list { margin-left: calc((100% + 40px)/3); }

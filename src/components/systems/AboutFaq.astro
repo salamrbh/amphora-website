@@ -4,7 +4,6 @@ import { Image } from 'astro:assets';
 import salam from '../../assets/team/salam-original.png';
 import Icon from '../Icon.astro';
 import LocalPicture from '../LocalPicture.astro';
-import SectionHeading from './SectionHeading.astro';
 import routes from '../../content/routes.json';
 interface Props { about: CollectionEntry<'systems'>['data']['about']; faq: CollectionEntry<'systems'>['data']['faq']; }
 const { about, faq } = Astro.props;
@@ -21,8 +20,11 @@ const headingWord = about.heading.split(' ')[0];
   </div>
 </section>
 <section class="section faq" id="faq" aria-labelledby="faq-heading"><div class="shell">
-  <SectionHeading number="10" id="faq-heading" content={faq} />
-  <div class="faq-list">{faq.items.map((item) => <details><summary>{item.question}<Icon name="plus" /></summary><p>{item.answer}</p></details>)}</div>
+  <div class="faq-intro">
+    <p class="eyebrow"><span class="section-index">10 /</span>{faq.eyebrow}</p>
+    <h2 class="section-heading" id="faq-heading">{faq.description}</h2>
+  </div>
+  <div class="faq-list">{faq.items.map((item) => <details><summary><span class="faq-question">{item.question}</span><Icon name="plus" /></summary><p>{item.answer}</p></details>)}</div>
 </div></section>
 <script>
   const aboutHeading = document.querySelector<HTMLElement>('.about-heading-gradient');
@@ -78,15 +80,19 @@ const headingWord = about.heading.split(' ')[0];
   .skills-person strong { font-size: 13px; font-weight: 500; }
   .skills-person span span { display: block; margin-top: 5px; font-size: 10px; color: var(--color-muted); }
   .skills-person > :global(svg) { width: 17px; margin-left: auto; flex: none; }
-  .faq { background: #f7f7f4; }
-  .faq-list { margin-left: calc((100% + 40px) / 3); }
+  .faq { background: var(--color-paper); }
+  .faq-intro { display: grid; grid-template-columns: 1fr; gap: 32px; margin-bottom: 48px; text-align: center; }
+  .faq-intro .eyebrow { justify-content: flex-start; text-align: left; }
+  .faq-intro h2 { max-width: 960px; margin-inline: auto; font-size: clamp(2.75rem, 4.7vw, 4.5rem); font-weight: 700; font-style: normal; line-height: 1.08; text-wrap: balance; }
+  .faq-list { max-width: 900px; margin-inline: auto; text-align: center; }
   details { border-top: 1px solid #ddddd5; }
   details:last-child { border-bottom: 1px solid #ddddd5; }
-  summary { display: flex; justify-content: space-between; align-items: center; gap: 24px; min-height: 76px; padding-block: 22px; list-style: none; cursor: pointer; font-size: 16px; letter-spacing: -.02em; }
+  summary { display: grid; grid-template-columns: minmax(0, 1fr) 20px; align-items: center; gap: 24px; min-height: 76px; padding-block: 22px; list-style: none; cursor: pointer; font-size: 16px; letter-spacing: -.02em; }
+  .faq-question { text-align: left; }
   summary::-webkit-details-marker { display: none; }
-  summary :global(svg) { flex: none; width: 20px; height: 20px; }
+  summary :global(svg) { grid-column: 2; width: 20px; height: 20px; }
   details[open] summary :global(svg) { transform: rotate(45deg); }
-  details p { font-size: 14px; color: var(--color-muted); line-height: 1.8; padding: 0 40px 25px 0; max-width: 650px; }
+  details p { font-size: 14px; color: var(--color-muted); line-height: 1.8; padding: 0 24px 25px; max-width: 650px; margin-inline: auto; }
   @media (max-width: 1100px) { .about { gap: 40px; } }
-  @media (max-width: 767px) { .about { grid-template-columns: 1fr; gap: 36px; } .people { justify-self: start; } .faq-list { margin-left: 0; } }
+  @media (max-width: 767px) { .about { grid-template-columns: 1fr; gap: 36px; } .people { justify-self: start; } .faq-intro { gap: 24px; margin-bottom: 32px; } .faq-intro h2 { font-size: clamp(2.6rem, 10vw, 3.6rem); } summary { gap: 12px; } }
 </style>
