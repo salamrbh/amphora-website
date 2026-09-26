@@ -7,11 +7,12 @@ interface Props { content: CollectionEntry<'systems'>['data']['services']; }
 const { content } = Astro.props;
 ---
 <section class="section shell" id="services" aria-labelledby="services-heading">
-  <SectionHeading number="05" id="services-heading" content={content} />
+  <SectionHeading id="services-heading" content={content}>
+    <Fragment slot="emphasis">{content.emphasis.split(/(\byour\b)/).map(part => part === 'your' ? <span class="services-heading-gradient">{part}</span> : part)}</Fragment>
+  </SectionHeading>
   <div class="services-grid">
     {content.items.map((service) => <article class:list={['service-card', service.accent]} id={`service-${service.id}`}>
       <span class="service-gradient" aria-hidden="true"></span>
-      <span class="service-number">{service.number}</span>
       <h3>{service.name}</h3>
       <p class="service-description">{service.useCase}</p>
       <dl class="service-details"><div><dt>What we build</dt><dd>{service.service}</dd></div><div><dt>What it’s for</dt><dd>{service.outcome}</dd></div></dl>
@@ -21,6 +22,25 @@ const { content } = Astro.props;
   </div>
 </section>
 <style>
+  .services-heading-gradient {
+    display: inline-block;
+    padding: .08em .08em .2em;
+    margin: -.08em -.08em -.2em;
+    background-image: var(--brand-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  @keyframes services-heading-fade {
+    0%, 100% { color: var(--color-ink); }
+    50% { color: transparent; }
+  }
+  @media (prefers-reduced-motion: no-preference) and (forced-colors: none) {
+    .services-heading-gradient { animation: services-heading-fade 6s ease-in-out infinite; }
+  }
+  @media (forced-colors: active) {
+    .services-heading-gradient { background: none; color: inherit; }
+  }
   .services-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 19.2px; }
   .service-card {
     --card-accent: var(--color-blue);
@@ -75,8 +95,7 @@ const { content } = Astro.props;
     .service-card::after { animation: service-metallic-slide 7s linear infinite; }
   }
   .red { --card-accent: var(--color-red); } .orange { --card-accent: var(--color-orange); } .purple { --card-accent: var(--color-purple); }
-  .service-number { align-self: flex-start; display: inline-flex; align-items: center; justify-content: center; min-width: 35.2px; min-height: 24px; padding: 4px 11.2px; border: 1px solid #dedde3; border-radius: 100px; color: #70707c; font-size: 9px; }
-  .service-card h3 { font-size: clamp(25.6px, 2.8vw, 40px); line-height: 1.08; min-height: 2.16em; letter-spacing: -.055em; font-weight: 700; margin-top: 22.4px; color: #18181b; }
+  .service-card h3 { font-size: clamp(25.6px, 2.8vw, 40px); line-height: 1.08; min-height: 2.16em; letter-spacing: -.055em; font-weight: 700; color: #18181b; }
   .service-description { margin-top: 17.6px; min-height: 4.95em; font-size: 12.8px; line-height: 1.65; color: #686872; max-width: 54ch; }
   dl { margin: 22px 0 0; }
   dl > div { padding-block: 15px; border-top: 1px solid var(--color-line); }
@@ -88,10 +107,9 @@ const { content } = Astro.props;
   .service-details dd { margin-top: 6.4px; font-size: 11px; color: #686872; }
   .service-card a { margin-top: auto; padding-block: 9.6px 3.2px; padding-right: 16px; min-height: 44px; font-size: 11px; justify-content: space-between; }
   .service-card a :global(svg) { width: 15.2px; height: 15.2px; }
-  .service-card:target { outline: 2px solid var(--card-accent); outline-offset: 4px; }
   .service-card:is(:hover, :focus-within) .service-gradient { opacity: 1; }
-  .service-card:is(:hover, :focus-within) :is(h3, .service-description, .service-number, dt, dd, a) { color: white; }
-  .service-card:is(:hover, :focus-within) :is(.service-number, .service-details) { border-color: #ffffff80; }
+  .service-card:is(:hover, :focus-within) :is(h3, .service-description, dt, dd, a) { color: white; }
+  .service-card:is(:hover, :focus-within) .service-details { border-color: #ffffff80; }
   .service-card:is(:hover, :focus-within) a { text-decoration-color: #ffffff99; }
   .service-card:is(:hover, :focus-within)::after { background-image: linear-gradient(180deg, transparent 35%, #ffffff0a 42%, #ffffff26 48%, #ffffff38 50%, #ffffff0d 54%, transparent 63%); }
   .service-card a:focus-visible { outline-color: white; }
@@ -101,8 +119,7 @@ const { content } = Astro.props;
     .service-card:hover { translate: 0 -3px; scale: 1.02; }
   }
 
-  .service-card { display: grid; grid-template-rows: subgrid; grid-row: span 6; row-gap: 0; }
-  .service-number { justify-self: start; }
+  .service-card { display: grid; grid-template-rows: subgrid; grid-row: span 5; row-gap: 0; }
   .service-card h3 { min-height: 0; overflow-wrap: anywhere; }
   .proof-note { color: #686872; font-size: 10px; line-height: 1.65; border-top: 1px solid #dedde3; padding-top: 16px; margin-bottom: 14px; }
   .service-actions { align-self: end; }
@@ -116,5 +133,5 @@ const { content } = Astro.props;
     .service-card { padding: 22.4px; }
     .service-description { min-height: 0; }
   }
-  @media (max-width: 479px) { .service-card { padding: 19.2px; } .service-card h3 { margin-top: 17.6px; } .service-details { gap: 0; } }
+  @media (max-width: 479px) { .service-card { padding: 19.2px; }  .service-details { gap: 0; } }
 </style>

@@ -1,13 +1,12 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import SectionHeading from './SectionHeading.astro';
-import Icon from '../Icon.astro';
 interface Props { trust: CollectionEntry<'systems'>['data']['trust']; needs: CollectionEntry<'systems'>['data']['needs']; }
 const { trust, needs } = Astro.props;
 ---
 <div class="needs-stack">
 <section class="trust shell" aria-labelledby="trust-heading">
-  <div class="trust-top"><h2 class="eyebrow" id="trust-heading"><span class="section-index">02 /</span>{trust.eyebrow}</h2><p class="draft-note">{trust.note}</p></div>
+  <div class="trust-top"><h2 class="eyebrow" id="trust-heading">{trust.eyebrow}</h2><p class="draft-note">{trust.note}</p></div>
   <div class="partner-carousel">
     <div class="partner-viewport">
       <div class="partner-track" id="systems-partner-track" style={`--partner-duration: ${trust.logos.length * 6}s`}>
@@ -19,12 +18,12 @@ const { trust, needs } = Astro.props;
 </section>
 <section class="section needs-section" id="needs" aria-labelledby="needs-heading">
   <div class="shell needs-panel">
-  <SectionHeading number="03" id="needs-heading" content={needs}>
+  <SectionHeading id="needs-heading" content={needs}>
     <span slot="heading" class="fading-gradient">{needs.heading}</span>
     <span slot="emphasis" class="fading-gradient fading-gradient-second">{needs.emphasis}</span>
   </SectionHeading>
   <div class="needs-grid">
-    {needs.items.map((need) => <a class="need" href={`#service-${need.service}`}><span class="need-number">{need.number}</span><h3>{need.heading}</h3><p>{need.description}</p><span class="need-link">{need.linkLabel}<Icon /></span></a>)}
+    {needs.items.map((need) => <article class="need"><h3>{need.heading}</h3><p>{need.description}</p></article>)}
   </div>
   </div>
 </section>
@@ -107,17 +106,14 @@ const { trust, needs } = Astro.props;
   .needs-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; }
   .need { position: relative; display: flex; flex-direction: column; border-top: 1px solid var(--color-line); padding-top: 22px; }
   .need::before { content: ''; position: absolute; top: -1px; inset-inline: 0; height: 1px; background: var(--brand-gradient-interactive); opacity: 0; pointer-events: none; transition: opacity 180ms ease; }
-  .need:is(:hover, :focus-visible)::before { opacity: 1; }
-  .need-number { font-size: 11px; color: var(--color-accent); margin-bottom: 26px; }
+  .need:hover::before { opacity: 1; }
   h3 { font-size: 23px; letter-spacing: -.035em; line-height: 1.25; max-width: 230px; background-image: var(--brand-gradient-interactive); -webkit-background-clip: text; background-clip: text; transition: color 180ms ease; }
-  .need:is(:hover, :focus-visible) h3 { color: transparent; }
-  .need > p { font-size: 13px; color: var(--color-muted); line-height: 1.75; margin: 18px 0 24px; }
-  .need-link { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 12px; margin-top: auto; min-height: 44px; }
-  .need-link :global(svg) { width: 18px; }
-  @media (forced-colors: active) { .need:is(:hover, :focus-visible) h3 { color: LinkText; } }
+  .need:hover h3 { color: transparent; }
+  .need > p { font-size: 13px; color: var(--color-muted); line-height: 1.75; margin-top: 18px; }
+  @media (forced-colors: active) { .need:hover h3 { color: CanvasText; } }
   @media (max-width: 1023px) { .needs-panel { padding-inline: 20px; } .needs-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; } }
   @media (max-width: 767px) { .needs-panel::before { inset-block: 0; } .partner-group { gap: 28px; padding-right: 28px; } .partner-group li { flex-basis: 120px; width: 120px; } .partner-group img { max-width: 102px; max-height: 48px; } }
-  @media (max-width: 540px) { .needs-grid { grid-template-columns: 1fr; } h3 { max-width: none; } .need-number { margin-bottom: 18px; } }
+  @media (max-width: 540px) { .needs-grid { grid-template-columns: 1fr; } h3 { max-width: none; }  }
   @media (prefers-reduced-motion: reduce) {
     .partner-viewport { overflow: visible; mask-image: none; }
     .partner-track { display: block; width: 100%; animation: none; }

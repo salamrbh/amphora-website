@@ -51,7 +51,6 @@
       "eyebrow": "A closer look",
       "heading": "Good work is in",
       "emphasis": "the details.",
-      "description": "One screen, a few considered choices. A look at the Cord’s Café webshop from the supplied portfolio.",
       "project": "Cord’s Café · Webshop",
       "image": { "src": "/images/work/cords-cafe-hero-700.webp", "width": 700, "height": 318, "alt": "Cord’s Café webshop with a warm colour palette and a grid of ceramic cups" },
       "note": "Design reading of the supplied screen · project rationale and results await client confirmation.",
@@ -65,7 +64,6 @@
       "eyebrow": "What we build",
       "heading": "The right tools.",
       "emphasis": "For your kind of work.",
-      "description": "Four ways we can help. We agree the scope around your business, your team, and the problem to solve.",
       "items": [
         { "id": "web", "number": "01", "name": "Websites, Webshops & Web Apps", "icon": "web", "accent": "blue", "useCase": "You need to be found, sell online, or offer a useful digital service.", "service": "Design and development shaped around your content, products, and users.", "outcome": "A clear, usable place for customers to discover, buy, or get things done.", "proof": "Website & webshop references below. Web apps: project example to come." },
         { "id": "workflows", "number": "02", "name": "Workflows & AI", "icon": "workflow", "accent": "red", "useCase": "Your team keeps copying information or repeating the same routine.", "service": "Tool integrations, practical automation, and AI where it adds value.", "outcome": "A connected process with fewer manual handovers and clear human checks.", "proof": "New to this portfolio · illustrative workflow below." },
@@ -77,7 +75,6 @@
       "eyebrow": "Selected projects",
       "heading": "Real businesses.",
       "emphasis": "Considered systems.",
-      "description": "Two project stories in focus, plus a little more from the website portfolio. Draft narratives are marked until the client details are confirmed.",
       "items": [
         { "id": "cords", "name": "Cord’s Café", "category": "A home for coffee & ceramics", "tag": "Webshop", "image": { "src": "/images/work/cords-cafe-hero-700.webp", "width": 700, "height": 318, "alt": "Cord’s Café webshop displaying ceramic cups" }, "situation": "A café and ceramics collection, presented together online. The starting brief and previous shop setup still need client confirmation.", "work": "The supplied webshop brings product photography into a consistent grid, framed by a quiet white background and restrained typography.", "outcome": "The screen shows a dedicated online product collection. Launch details and business impact are awaiting client verification.", "status": "Draft story · client approval pending" },
         { "id": "nordostsee", "name": "Nord-Ostsee Logistik", "category": "A clearer route to an enquiry", "tag": "Website", "image": { "src": "/images/work/nord-ostsee-logistik-hero-700.webp", "width": 700, "height": 365, "alt": "Nord-Ostsee Logistik website with warehouse photography and a transport enquiry interface" }, "situation": "A logistics business presenting its transport services online. The original challenge and requirements are awaiting client confirmation.", "work": "The supplied website pairs warehouse photography with transport information and a prominent enquiry interface.", "outcome": "Visitors can see an enquiry entry point in the design. Enquiry volumes and operational results have not been verified.", "status": "Draft story · client approval pending" }
@@ -101,7 +98,6 @@
       "eyebrow": "Working together",
       "heading": "A clear process.",
       "emphasis": "A shared direction.",
-      "description": "You speak directly with the people building your system. We keep decisions visible and agree what we need from each other.",
       "items": [
         { "number": "01", "name": "Tell us your idea", "description": "We talk through the problem, the people using the system, and what needs to work better.", "effort": "You bring: context, priorities, and a look at your current tools." },
         { "number": "02", "name": "We propose a direction", "description": "We outline an approach, define the scope, and agree the next steps before the build starts.", "effort": "You help: choose priorities and approve the agreed scope." },
@@ -113,7 +109,6 @@
       "eyebrow": "After launch",
       "heading": "Live is a beginning.",
       "emphasis": "Let’s keep it useful.",
-      "description": "A system needs a plan for the everyday. We’ll agree what you look after, where we can help, and how to approach the next improvement.",
       "items": [
         { "name": "Care & maintenance", "description": "Agree responsibility for updates, checks, and the things that keep your system working." },
         { "name": "Hosting & ownership", "description": "Choose a suitable home for the system and make access and responsibilities clear." },
@@ -138,7 +133,7 @@
       "eyebrow": "Before we start",
       "heading": "Good questions.",
       "emphasis": "Clear starting points.",
-      "description": "A few things you might want to know before we talk.",
+      "description": "A few things you might want to know.",
       "items": [
         { "question": "How does a project start?", "answer": "With a conversation about your goals, users, and current setup. We then propose a direction and agree the scope before starting the build. You do not need a finished technical brief." },
         { "question": "What will my project cost?", "answer": "That depends on the scope, the integrations, and the content or functionality you need. We discuss these together and set out the proposed work and costs before you decide to proceed." },

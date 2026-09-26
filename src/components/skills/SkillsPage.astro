@@ -3,10 +3,11 @@ import { getEntry } from 'astro:content';
 import { Image } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
 import Icon from '../Icon.astro';
+import FaqToggleIcon from '../FaqToggleIcon.astro';
 import LocalPicture from '../LocalPicture.astro';
 import SectionHeading from '../systems/SectionHeading.astro';
 import Contact from './Contact.astro';
-import LearningNeedCard from './LearningNeedCard.astro';
+import LearningNeedRow from './LearningNeedRow.astro';
 import marcel from '../../assets/team/marcel-original.png';
 import routes from '../../content/routes.json';
 const entry = await getEntry('skills', 'en');
@@ -17,7 +18,7 @@ const enquiry = (service: string) => `${routes.skills}?service=${service}#contac
 ---
 <Layout title={c.title} description={c.description}>
   <section class="skills-hero shell" aria-labelledby="skills-heading">
-    <div class="topline"><p class="eyebrow"><span class="section-index">01 /</span>{c.hero.eyebrow}</p><p class="draft-note">{c.draftLabel}</p></div>
+    <div class="topline"><p class="draft-note">{c.draftLabel}</p></div>
     <div class="hero-grid">
       <div class="hero-copy">
         <h1 id="skills-heading">{c.hero.heading}<br /><span class="editorial">{c.hero.emphasis}</span></h1>
@@ -26,36 +27,36 @@ const enquiry = (service: string) => `${routes.skills}?service=${service}#contac
         <p class="hero-note">{c.hero.note}</p>
       </div>
       <div class="hero-visual">
-        <figure class="hero-photo"><LocalPicture src="/images/team/consultation-1280.webp" alt={c.hero.imageAlt} width={1280} height={853} eager responsive sizes="(min-width: 768px) 44vw, calc(100vw - 40px)" /><figcaption>{c.hero.imageCaption}</figcaption></figure>
-        <div class="learning-card"><div class="learning-symbol" aria-hidden="true"><span></span><span></span><span></span></div><p class="eyebrow">{c.hero.cardLabel}</p><p class="learning-title">{c.hero.cardHeading}</p><p class="learning-note">{c.hero.cardNote}</p></div>
+        <figure class="hero-photo"><LocalPicture src="/images/team/consultation-1280.webp" alt={c.hero.imageAlt} width={1280} height={724} eager responsive sizes="(min-width: 1024px) 42vw, (min-width: 768px) 44vw, calc(100vw - 40px)" /></figure>
       </div>
     </div>
     <nav class="page-nav" aria-label="Skills sections">{c.navigation.map(item => <a href={item.href}><span class="page-nav-label">{item.label}</span><span aria-hidden="true">↘</span></a>)}</nav>
   </section>
 
   <section class="trust shell" aria-labelledby="trust-heading" data-content-slot="trust">
-    <div><p class="eyebrow"><span class="section-index">02 /</span>{c.trust.eyebrow}</p><h2 id="trust-heading">{c.trust.heading}</h2></div>
+    <div><h2 id="trust-heading">{c.trust.heading}</h2></div>
     <div class="trust-space"><span class="quote-mark editorial" aria-hidden="true">“</span><div><p>{c.trust.placeholder}</p><p class="small-note">{c.trust.note}</p></div></div>
   </section>
 
-  <section class="section shell" id="needs" aria-labelledby="needs-heading">
-    <SectionHeading number="03" id="needs-heading" content={c.needs} />
-    <div class="needs-grid">{c.needs.items.map(item => <LearningNeedCard content={item} />)}</div>
-  </section>
+  <section class="section needs-section" id="needs" aria-labelledby="needs-heading"><div class="shell">
+    <SectionHeading id="needs-heading" content={c.needs}>
+      <span slot="emphasis" class="needs-heading-gradient">{c.needs.emphasis}</span>
+    </SectionHeading>
+    <div class="needs-list">{c.needs.items.map(item => <LearningNeedRow content={item} />)}</div>
+  </div></section>
 
   <section class="section sample-section" id="sample" aria-labelledby="sample-heading" data-content-slot="course-sample"><div class="shell">
-    <SectionHeading number="04" id="sample-heading" content={c.sample} />
-    <div class="sample-grid"><div class="sample-space"><span class="tag">{c.sample.status}</span><div class="sample-art" aria-hidden="true"><span></span><span></span><span></span></div><div><h3>{c.sample.placeholder}</h3><p>{c.sample.note}</p></div></div><ol class="sample-steps">{c.sample.steps.map((step, i) => <li><span class="step-index">0{i + 1}</span><div><h3>{step.name}</h3><p>{step.description}</p></div></li>)}</ol></div>
+    <SectionHeading id="sample-heading" content={c.sample} />
+    <div class="sample-grid"><div class="sample-space"><span class="tag">{c.sample.status}</span><div class="sample-art" aria-hidden="true"><span></span><span></span><span></span></div><div><h3>{c.sample.placeholder}</h3><p>{c.sample.note}</p></div></div><ol class="sample-steps">{c.sample.steps.map((step) => <li><div><h3>{step.name}</h3><p>{step.description}</p></div></li>)}</ol></div>
   </div></section>
 
   <section class="section shell" id="services" aria-labelledby="services-heading">
-    <SectionHeading number="05" id="services-heading" content={c.services}>
-      <Fragment slot="heading"><span class="services-heading-metallic">{servicesHeadingWord}</span>{c.services.heading.slice(servicesHeadingWord.length)}</Fragment>
+    <SectionHeading id="services-heading" content={{ heading: c.services.heading, emphasis: c.services.emphasis }}>
+      <span slot="heading" class="services-heading-main"><span class="services-heading-metallic">{servicesHeadingWord}</span>{c.services.heading.slice(servicesHeadingWord.length)}</span>
     </SectionHeading>
     <div class="services-grid">
       {c.services.items.map(item => <article class:list={['service-card', item.accent, 'reveal-on-scroll']} id={`service-${item.id}`}>
         <span class="service-gradient" aria-hidden="true"></span>
-        <span class="service-number">{item.number}</span>
         <h3>{item.name}</h3>
         <p class="service-description">{item.useCase}</p>
         <dl class="service-details">{[item.service, item.outcome].map((text, i) => <div><dt>{c.services.labels[i + 1]}</dt><dd>{text}</dd></div>)}</dl>
@@ -65,40 +66,50 @@ const enquiry = (service: string) => `${routes.skills}?service=${service}#contac
   </section>
 
   <section class="section projects-section" id="projects" aria-labelledby="projects-heading"><div class="shell">
-    <SectionHeading number="06" id="projects-heading" content={c.projects}>
+    <SectionHeading id="projects-heading" content={c.projects}>
       <Fragment slot="emphasis">{c.projects.emphasis.split(/(\buseful\b)/).map(part => part === 'useful' ? <span class="projects-heading-metallic">{part}</span> : part)}</Fragment>
     </SectionHeading>
-    <div class="project-grid">{c.projects.items.map(item => <article class="project-card"><div class="project-title"><span class="editorial">{item.number}</span><p class="small-note">{c.projects.status}</p></div><h3>{item.heading}</h3><dl>{[item.situation, item.service, item.outcome].map((text, i) => <div><dt>{c.projects.labels[i]}</dt><dd>{text}</dd></div>)}</dl></article>)}</div>
+    <div class="project-grid">{c.projects.items.map(item => <article class="project-card"><div class="project-title"><p class="small-note">{c.projects.status}</p></div><h3>{item.heading}</h3><dl>{[item.situation, item.service, item.outcome].map((text, i) => <div><dt>{c.projects.labels[i]}</dt><dd>{text}</dd></div>)}</dl></article>)}</div>
   </div></section>
 
   <section class="section shell" id="process" aria-labelledby="process-heading">
-    <SectionHeading number="07" id="process-heading" content={c.process}>
+    <SectionHeading id="process-heading" content={{ heading: c.process.heading, emphasis: c.process.emphasis }}>
       <Fragment slot="emphasis">{c.process.emphasis.split(/(\btogether\b\.?)/).map(part => /^together\.?$/.test(part) ? <span class="process-heading-outline" data-text={part}>{part}</span> : part)}</Fragment>
     </SectionHeading>
-    <div class="process-grid">{c.process.items.map(item => <article class="process-card reveal-on-scroll"><span class="service-number">{item.number}</span><h3>{item.name}</h3><p>{item.description}</p><div class="your-part"><span>{c.process.effortLabel}</span><p>{item.effort}</p></div></article>)}</div>
+    <div class="process-grid" data-process-journey>
+      {c.process.items.map((item, index) => <article class="process-card"><span class="process-number">{index + 1}</span><h3>{item.name}</h3><p>{item.description}</p><div class="your-part"><span>{c.process.effortLabel}</span><p>{item.effort}</p></div></article>)}
+      <svg class="process-connections" aria-hidden="true" focusable="false">
+        <defs>{c.process.items.slice(1).map((_, index) => <linearGradient id={`skills-process-gradient-${index}`} gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#27cfd0" /><stop offset="30%" stop-color="#5965e8" /><stop offset="44%" stop-color="#9656dc" /><stop offset="59%" stop-color="#e94f87" /><stop offset="78%" stop-color="#f47a45" /><stop offset="100%" stop-color="#f7bd2f" />
+        </linearGradient>)}</defs>
+        {c.process.items.slice(1).map((_, index) => <path class="process-connection" stroke={`url(#skills-process-gradient-${index})`} pathLength="1" />)}
+      </svg>
+    </div>
   </section>
 
   <section class="partners-section shell" id="partners" aria-labelledby="partners-heading" data-content-slot="education-partners">
-    <div class="partners-copy"><p class="eyebrow"><span class="section-index">08 /</span>{c.partners.eyebrow}</p><h2 class="section-heading" id="partners-heading">{c.partners.heading}<br /><span class="editorial">{c.partners.emphasis}</span></h2><p class="body-copy">{c.partners.description}</p><div class="partner-tags">{c.partners.tags.map(tag => <span class="tag">{tag}</span>)}</div><a class="button button-dark button-metallic" href={enquiry('partnership')} data-enquiry-service="partnership">{c.partners.cta}<Icon /></a></div>
+    <div class="partners-copy"><h2 class="section-heading" id="partners-heading">{c.partners.heading}<br /><span class="editorial">{c.partners.emphasis}</span></h2><div class="partner-tags">{c.partners.tags.map(tag => <span class="tag">{tag}</span>)}</div><a class="button button-dark button-metallic" href={enquiry('partnership')} data-enquiry-service="partnership">{c.partners.cta}<Icon /></a></div>
     <div class="partner-space"><span class="partner-mark" aria-hidden="true">+</span><h3>{c.partners.placeholder}</h3><p>{c.partners.note}</p></div>
   </section>
 
   <div class="faq-stack">
   <section class="section shell about-section" id="about" aria-labelledby="about-heading">
-    <div><p class="eyebrow"><span class="section-index">09 /</span>{c.about.eyebrow}</p><h2 class="section-heading" id="about-heading">{c.about.heading}<br /><span class="editorial">{c.about.emphasis}</span></h2><p class="body-copy">{c.about.description}</p><p class="body-copy connection">{c.about.connection}</p><a class="text-link" href="#contact">{c.about.cta}<Icon /></a></div>
+    <div><h2 class="section-heading" id="about-heading">{c.about.heading.split(/(\bpersonal\b)/).map(part => part === 'personal' ? <span class="about-heading-gradient">{part}</span> : part)}<br /><span class="editorial">{c.about.emphasis}</span></h2></div>
     <div class="people"><figure class="marcel"><div class="portrait-frame"><div class="portrait"><Image src={marcel} alt={c.about.imageAlt} width={480} height={540} widths={[240,360,480]} sizes="(min-width: 768px) 340px, 85vw" format="webp" quality={82} loading="lazy" /></div></div><figcaption><h3>{c.about.name}</h3><p>{c.about.role}</p><p class="small-note">{c.about.bioNote}</p></figcaption></figure><a class="systems-person" href={`${routes.systems}#about`}><span class="portrait-frame portrait-frame-avatar"><LocalPicture src="/images/team/salam-192.webp" alt="" width={192} height={192} /></span><span><strong>{c.about.secondaryName}</strong><span>{c.about.secondaryRole}</span></span><Icon /></a></div>
   </section>
 
   <section class="section faq-section" id="faq" aria-labelledby="faq-heading"><div class="shell faq-panel">
-    <SectionHeading number="10" id="faq-heading" content={c.faq}>
+    <SectionHeading id="faq-heading" content={c.faq}>
       <span slot="heading" class="faq-heading-first">{c.faq.heading}</span>
+      <Fragment slot="emphasis">{c.faq.emphasis.split(/(\bclear\b)/).map(part => part === 'clear' ? <span class="faq-heading-gradient">{part}</span> : part)}</Fragment>
     </SectionHeading>
-    <div class="faq-list">{c.faq.items.map(item => <details><summary>{item.question}<Icon name="plus" /></summary><p>{item.answer}</p></details>)}</div>
+    <div class="faq-list">{c.faq.items.map(item => <details><summary><span class="faq-question">{item.question}</span><FaqToggleIcon /></summary><p>{item.answer}</p></details>)}</div>
   </div></section>
   </div>
   <Contact content={c.contact} services={c.services.items} crossLink={c.crossLink} />
 </Layout>
 <script>
+  import '../../scripts/skills-process';
   const about = document.querySelector<HTMLElement>('.faq-stack .about-section');
   if (about && 'ResizeObserver' in window) {
     const observer = new ResizeObserver(() => {
@@ -107,12 +118,23 @@ const enquiry = (service: string) => `${routes.skills}?service=${service}#contac
     });
     observer.observe(about);
   }
+  const aboutHeading = document.querySelector<HTMLElement>('.about-heading-gradient');
+  if (aboutHeading) {
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(([entry]) => {
+        aboutHeading.classList.toggle('is-visible', entry.isIntersecting);
+      }, { threshold: .25 });
+      observer.observe(aboutHeading);
+    } else {
+      aboutHeading.classList.add('is-visible');
+    }
+  }
 </script>
 <style>
   .skills-hero { padding-top: 38px; }
-  .topline { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
-  .topline .section-index { flex: none; white-space: nowrap; }
-  .hero-grid { display: grid; grid-template-columns: 1.2fr 1fr; align-items: center; gap: 52px; padding-block: 64px 60px; }
+  .topline { display: flex; justify-content: flex-end; align-items: center; gap: 20px; }
+
+  .hero-grid { display: grid; grid-template-columns: 1.18fr 1fr; align-items: center; gap: 50px; padding-block: 64px 60px; }
   h1 { font-size: clamp(3.4rem, 6.3vw, 6rem); line-height: 1.04; letter-spacing: -.065em; }
   h1 .editorial {
     display: inline-block;
@@ -128,71 +150,42 @@ const enquiry = (service: string) => `${routes.skills}?service=${service}#contac
   .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 22px; margin-top: 30px; }
   .hero-actions .text-link { font-size: 12px; min-height: 44px; }
   .hero-note { font-size: 11px; color: var(--color-muted); margin-top: 26px; }
-  .hero-visual { padding: 0 0 30px 14px; position: relative; }
+  .hero-visual { min-width: 0; }
   figure { margin: 0; }
   .hero-photo { position: relative; border-radius: 18px; overflow: hidden; background: var(--color-surface); }
-  .hero-photo :global(img) { width: 100%; height: auto; aspect-ratio: 1.04; object-fit: cover; object-position: 57% center; }
-  .hero-photo figcaption { position: absolute; top: 18px; left: 18px; right: 18px; width: fit-content; padding: 10px 14px; border-radius: 6px; background: #fffffff2; font-size: 11px; line-height: 1.5; }
-  .learning-card { position: relative; width: 88%; margin: -45px 0 0 -20px; padding: 25px; border: 1px solid #e1e4f3; border-radius: 12px; background: #f4f5ff; box-shadow: 0 12px 30px #2828260a; }
-  .learning-card .eyebrow { font-size: 9px; color: #525878; }
-  .learning-title { font-size: 21px; letter-spacing: -.035em; margin-top: 13px; }
-  .learning-note { font-size: 11px; color: var(--color-muted); line-height: 1.6; margin-top: 8px; max-width: 250px; }
-  .learning-symbol { float: right; display: flex; align-items: end; gap: 5px; margin-left: 12px; height: 36px; }
-  .learning-symbol span { width: 9px; height: 18px; border-radius: 3px; background: var(--color-blue); }
-  .learning-symbol span:nth-child(2) { height: 27px; background: var(--color-purple); }
-  .learning-symbol span:nth-child(3) { height: 36px; background: var(--color-red); }
+  .hero-photo :global(img) { display: block; width: 100%; height: auto; aspect-ratio: 1.21; object-fit: cover; object-position: 57% center; }
   .page-nav {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 12px;
+    gap: 28px;
   }
   .page-nav a {
     position: relative;
-    isolation: isolate;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
     min-width: 0;
-    overflow: hidden;
-    padding: 21px 24px;
-    border: 1px solid transparent;
-    border-radius: 16px;
-    background:
-      radial-gradient(circle at 7% 0%, #39c9cb18 0%, transparent 38%) padding-box,
-      radial-gradient(circle at 93% 100%, #ec6f8b12 0%, transparent 40%) padding-box,
-      linear-gradient(110deg, #ffffff9e 0%, #f8f7fa61 52%, #ffffff82 100%) padding-box;
-    box-shadow:
-      inset 0 1px 1px #fff,
-      inset 0 -1px 2px #28282612,
-      0 10px 24px #2828260f,
-      0 0 0 1px #28282608;
-    -webkit-backdrop-filter: blur(18px) saturate(1.25);
-    backdrop-filter: blur(18px) saturate(1.25);
+    min-height: 60px;
+    padding: 21px 0;
+    border-top: 1px solid var(--color-line);
     color: var(--color-ink);
     font-size: 12px;
-    text-shadow: 0 1px 0 #fff;
-    transition: background-color 220ms ease, box-shadow 220ms ease, color 220ms ease;
   }
   .page-nav a::after {
     content: '';
     position: absolute;
-    inset: 0;
-    z-index: 2;
-    padding: 1px;
-    border-radius: inherit;
+    top: -1px;
+    left: 0;
+    right: 0;
+    height: 1px;
     background: var(--brand-gradient);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask-composite: exclude;
-    opacity: .2;
+    opacity: 0;
+    transition: opacity 220ms ease;
     pointer-events: none;
   }
-  .page-nav a:hover, .page-nav a:focus-visible {
-    background-color: #ffffff80;
-    box-shadow: inset 0 1px 1px #fff, inset 0 -1px 2px #28282612, 0 12px 26px #28282617, 0 0 0 1px #28282608;
-    color: var(--color-ink);
+  .page-nav a:is(:hover, :focus-visible)::after {
+    opacity: 1;
   }
   .page-nav-label { display: inline-block; }
   .page-nav a:is(:hover, :focus-visible) .page-nav-label {
@@ -205,16 +198,39 @@ const enquiry = (service: string) => `${routes.skills}?service=${service}#contac
     text-shadow: none;
   }
   @media (forced-colors: active) {
-    .page-nav a:is(:hover, :focus-visible) .page-nav-label { background: none; color: LinkText; }
+    .page-nav a:is(:hover, :focus-visible) .page-nav-label { background: none; color: LinkText; -webkit-text-fill-color: LinkText; }
   }
   .trust { display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; align-items: center; padding-block: 44px; border-bottom: 1px solid var(--color-line); }
-  .trust h2 { margin-top: 15px; font-size: 19px; letter-spacing: -.025em; }
+  .trust h2 { font-size: 19px; letter-spacing: -.025em; }
   .trust-space { min-height: 110px; display: flex; align-items: center; gap: 24px; border: 1px dashed #cbcbc4; border-radius: 12px; padding: 20px 28px; }
   .quote-mark { font-size: 64px; line-height: 1; color: #9299be; }
   .trust-space p { font-size: 14px; }
   .small-note { font-size: 11px !important; line-height: 1.65; color: var(--color-muted); }
   .trust-space .small-note { margin-top: 6px; }
-  .needs-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 19.2px; }
+  .needs-section { background: var(--color-paper); }
+  .needs-section :global(.section-heading) { font-size: clamp(2.85rem, 5.2vw, 5rem); }
+  .needs-heading-gradient {
+    display: inline-block;
+    padding: .08em .08em .2em;
+    margin: -.08em -.08em -.2em;
+    background-image: var(--brand-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  @keyframes needs-gradient-fade {
+    0%, 100% { color: var(--color-ink); }
+    50% { color: transparent; }
+  }
+  @media (prefers-reduced-motion: no-preference) and (forced-colors: none) {
+    .needs-heading-gradient { animation: needs-gradient-fade 6s ease-in-out infinite; }
+  }
+  @media (forced-colors: active) {
+    .needs-heading-gradient { background: none; color: inherit; }
+  }
+  @media (max-width: 767px) {
+    .needs-section :global(.section-heading) { font-size: clamp(2.65rem, 10vw, 3.65rem); }
+  }
   .process-card {
     --card-accent: var(--color-blue);
     position: relative;
@@ -244,7 +260,10 @@ const enquiry = (service: string) => `${routes.skills}?service=${service}#contac
   h3 { font-size: 24px; line-height: 1.2; letter-spacing: -.035em; }
   .process-card > p { font-size: 14px; line-height: 1.8; color: var(--color-muted); margin-top: 18px; }
   .text-link :global(svg) { width: 16px; height: 16px; }
-  .sample-section { background: var(--color-surface); }
+  .sample-section {
+    --section-fade: clamp(64px, 8vw, 120px);
+    background: linear-gradient(to bottom, var(--color-paper), var(--color-surface) var(--section-fade), var(--color-surface) calc(100% - var(--section-fade)), var(--color-paper));
+  }
   .sample-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 64px; align-items: center; }
   .sample-space { min-height: 400px; background: #eef0fa; border: 1px dashed #bfc6e2; border-radius: 16px; padding: 28px 32px; display: flex; flex-direction: column; justify-content: space-between; align-items: start; }
   .sample-space .tag { border-color: #c7cbe0; color: #525878; }
@@ -256,9 +275,10 @@ const enquiry = (service: string) => `${routes.skills}?service=${service}#contac
   .sample-steps { list-style: none; padding: 0; margin: 0; }
   .sample-steps li { display: flex; gap: 24px; padding: 23px 0; border-bottom: 1px solid #ddddd5; }
   .sample-steps li:first-child { padding-top: 0; }
-  .step-index { font-size: 11px; color: #4651bd; padding-top: 4px; }
   .sample-steps h3 { font-size: 20px; }
   .sample-steps p { color: var(--color-muted); font-size: 13px; line-height: 1.8; margin-top: 8px; }
+  #services :global(.section-intro) { text-align: center; }
+  .services-heading-main { font-size: 1.15em; font-weight: 700; line-height: 1.12; }
   .services-heading-metallic, .projects-heading-metallic {
     display: inline-block;
     background-image: linear-gradient(165deg, transparent 20%, #ffffff14 37%, #ffffff70 46%, #ffffff12 50%, #17172c24 55%, transparent 68%), var(--brand-gradient-interactive);
@@ -322,8 +342,7 @@ const enquiry = (service: string) => `${routes.skills}?service=${service}#contac
     .service-card::after { animation: service-metallic-slide 7s linear infinite; }
   }
   .red { --card-accent: var(--color-red); } .orange { --card-accent: var(--color-orange); } .purple { --card-accent: var(--color-purple); }
-  .service-number { align-self: flex-start; display: inline-flex; align-items: center; justify-content: center; min-width: 35.2px; min-height: 24px; padding: 4px 11.2px; border: 1px solid #dedde3; border-radius: 100px; color: #70707c; font-size: 9px; }
-  .service-card h3 { font-size: clamp(25.6px, 2.8vw, 40px); line-height: 1.08; min-height: 2.16em; letter-spacing: -.055em; font-weight: 700; margin-top: 22.4px; color: #18181b; }
+  .service-card h3 { font-size: clamp(25.6px, 2.8vw, 40px); line-height: 1.08; min-height: 2.16em; letter-spacing: -.055em; font-weight: 700; color: #18181b; }
   .service-description { margin-top: 17.6px; min-height: 4.95em; font-size: 12.8px; line-height: 1.65; color: #686872; max-width: 54ch; }
   dl { margin: 22px 0 0; }
   dl > div { padding-block: 15px; border-top: 1px solid var(--color-line); }
@@ -337,12 +356,11 @@ const enquiry = (service: string) => `${routes.skills}?service=${service}#contac
   .service-card a :global(svg) { width: 15.2px; height: 15.2px; }
   .service-card:target { outline: 2px solid var(--card-accent); outline-offset: 4px; }
   .service-card:is(:hover, :focus-within) .service-gradient { opacity: 1; }
-  .service-card:is(:hover, :focus-within) :is(h3, .service-description, .service-number, dt, dd, a) { color: white; }
-  .service-card:is(:hover, :focus-within) :is(.service-number, .service-details) { border-color: #ffffff80; }
+  .service-card:is(:hover, :focus-within) :is(h3, .service-description, dt, dd, a) { color: white; }
+  .service-card:is(:hover, :focus-within) .service-details { border-color: #ffffff80; }
   .service-card:is(:hover, :focus-within) a { text-decoration-color: #ffffff99; }
   .service-card:is(:hover, :focus-within)::after { background-image: linear-gradient(180deg, transparent 35%, #ffffff0a 42%, #ffffff26 48%, #ffffff38 50%, #ffffff0d 54%, transparent 63%); }
   .service-card a:focus-visible { outline-color: white; }
-  .projects-section { border-block: 1px solid var(--color-line); }
   .project-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 28px; }
   .project-card {
     position: relative;
@@ -372,11 +390,17 @@ const enquiry = (service: string) => `${routes.skills}?service=${service}#contac
     pointer-events: none;
     background: var(--box-surface, var(--color-surface));
   }
-  .project-title { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 25px; }
-  .project-title .editorial { font-size: 42px; color: var(--color-muted); }
+  .project-title { margin-bottom: 25px; }
+
   .project-card dl > div { display: grid; grid-template-columns: 135px 1fr; gap: 20px; }
   .project-card dt { padding-top: 3px; } .project-card dd { margin: 0; }
   #process { --process-card-fill: linear-gradient(125deg, #fcfcff, #fffaf8); }
+  #process :global(.section-intro) { text-align: center; margin-bottom: 32px; transform: translateY(-38px); }
+  #process :global(.section-heading) { font-size: calc(clamp(2.65rem, 4.8vw, 4.6rem) + 2px); text-wrap: balance; }
+  @media (max-width: 767px) {
+    #process :global(.section-intro) { margin-bottom: 24px; }
+    #process :global(.section-heading) { font-size: calc(clamp(2.5rem, 9.5vw, 3.6rem) + 2px); }
+  }
   .process-heading-outline {
     display: inline-block;
     position: relative;
@@ -411,24 +435,28 @@ const enquiry = (service: string) => `${routes.skills}?service=${service}#contac
     .process-heading-outline { background: none; color: inherit; -webkit-text-stroke: 0; }
     .process-heading-outline::after { content: none; }
   }
-  .process-grid { --step-offset: 32px; display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); grid-auto-rows: 1fr; gap: 19.2px; padding-bottom: var(--step-offset); }
-  .process-card { align-items: stretch; }
+  .process-grid { --step-offset: 32px; position: relative; isolation: isolate; display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); grid-auto-rows: 1fr; gap: 104px 96px; padding-bottom: var(--step-offset); }
+  .process-card { align-items: stretch; z-index: 1; width: 100%; max-width: 320px; justify-self: center; padding: 20px; }
   .process-card:nth-child(even) { top: var(--step-offset); }
-  @keyframes process-card-float {
-    0%, 100% { translate: 0 0; }
-    50% { translate: 0 -7px; }
-  }
+  .process-connections { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; z-index: 0; }
+  .process-connection { fill: none; stroke-width: 3; stroke-linecap: round; }
   @media (prefers-reduced-motion: no-preference) {
-    .process-card { animation: process-card-float 6s ease-in-out infinite; }
-    .process-card:nth-child(even) { animation-delay: -3s; }
+    .process-grid.is-sequenced .process-card { opacity: 0; transform: translateY(16px); }
+    .process-grid.is-sequenced .process-card.is-revealed { opacity: 1; transform: none; }
+    .process-grid.is-sequenced .process-connection { stroke-dasharray: 1; stroke-dashoffset: 1; opacity: 0; }
+    .process-grid.is-sequenced .process-connection.is-drawn { stroke-dashoffset: 0; opacity: 1; }
   }
-  .process-card h3 { font-size: 21px; margin-top: 24px; }
-  .process-card > p { margin-bottom: 26px; }
+  @media (forced-colors: active) {
+    .process-connection { stroke: CanvasText; }
+  }
+  .process-card h3 { font-size: 20px; }
+  .process-number { align-self: flex-start; display: grid; place-items: center; width: 28px; height: 28px; margin-bottom: 14px; border: 1px solid color-mix(in srgb, var(--card-accent) 35%, white); border-radius: 50%; color: var(--color-ink); font-size: 13px; font-weight: 500; }
+  .process-card > p { font-size: 13px; line-height: 1.7; margin-top: 14px; margin-bottom: 20px; }
   .your-part { margin-top: auto; padding-top: 18px; border-top: 1px solid var(--color-line); }
   .your-part span { font-size: 10px; text-transform: uppercase; letter-spacing: .08em; }
   .your-part p { font-size: 12px; line-height: 1.8; color: var(--color-muted); margin-top: 8px; }
   .partners-section { --box-surface: var(--color-accent-soft); position: relative; isolation: isolate; display: grid; grid-template-columns: 1.3fr 1fr; gap: 56px; padding: 56px; border: 1px solid transparent; border-radius: 18px; background: linear-gradient(var(--box-surface), var(--box-surface)) padding-box, linear-gradient(110deg, #a5aaff, #e8dcff 30%, #f8dce9 68%, #f9e5db) border-box; }
-  .partners-copy h2, .about-section h2 { margin-top: 30px; }
+
   .partners-copy h2 { font-size: clamp(2.5rem,3.6vw,3.6rem); }
   .body-copy { font-size: 15px; line-height: 1.8; color: var(--color-muted); margin-top: 24px; max-width: 530px; }
   .partner-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-block: 24px; }
@@ -438,8 +466,22 @@ const enquiry = (service: string) => `${routes.skills}?service=${service}#contac
   .partner-space h3 { font-size: 23px; max-width: 240px; }
   .partner-space p { margin-top: 14px; font-size: 12px; color: #62677b; line-height: 1.8; max-width: 230px; }
   .about-section { display: grid; grid-template-columns: 1.3fr 1fr; gap: 90px; align-items: center; }
-  .connection { font-size: 14px; }
-  .about-section .text-link { margin-top: 26px; min-height: 44px; }
+  .about-heading-gradient { display: inline-block; background-image: var(--brand-gradient-interactive); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  @media (prefers-reduced-motion: no-preference) and (forced-colors: none) {
+    .about-heading-gradient {
+      background-image: linear-gradient(115deg, transparent 18%, #ffffff24 34%, #ffffff70 44%, #ffffff70 48%, #ffffff24 58%, transparent 70%), var(--brand-gradient-interactive);
+      background-size: 200% 100%, 100% 100%;
+      background-repeat: no-repeat;
+      background-position: -100% 0, 0 0;
+      animation: about-metallic-slide 7s linear infinite paused;
+    }
+    .about-heading-gradient.is-visible { animation-play-state: running; }
+    @keyframes about-metallic-slide {
+      0%, 10% { background-position: -100% 0, 0 0; }
+      90%, 100% { background-position: 200% 0, 0 0; }
+    }
+  }
+  @media (forced-colors: active) { .about-heading-gradient { background: none; color: inherit; } }
   .people { width: min(100%,340px); justify-self: center; }
   .portrait { border-radius: 14px; overflow: hidden; background: var(--color-surface); }
   .portrait :global(img) { width: 100%; height: auto; }
@@ -488,7 +530,7 @@ const enquiry = (service: string) => `${routes.skills}?service=${service}#contac
     box-shadow: 0 -12px 32px #2828260d;
     pointer-events: none;
   }
-  .faq-list { margin-left: calc((100% + 40px)/3); }
+  .faq-list { max-width: 800px; margin-inline: auto; }
   .faq-panel :global(#faq-heading) {
     font-size: clamp(2.75rem, 5.2vw, 5.25rem);
     font-weight: 700;
@@ -499,6 +541,8 @@ const enquiry = (service: string) => `${routes.skills}?service=${service}#contac
     display: inline-block;
     margin-inline-start: calc(-1 * clamp(16px, 3vw, 48px));
   }
+  .faq-heading-gradient { display: inline-block; padding: .06em .08em .2em; margin: -.06em -.08em -.2em; background-image: var(--brand-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  @media (forced-colors: active) { .faq-heading-gradient { background: none; color: inherit; } }
   .faq-panel :global(#faq-heading .editorial) {
     display: inline-block;
     margin-top: .14em;
@@ -507,12 +551,18 @@ const enquiry = (service: string) => `${routes.skills}?service=${service}#contac
     font-weight: 600;
     letter-spacing: -.035em;
   }
-  .faq-panel :global(.section-description) { font-size: 18px; font-weight: 700; }
   details { border-top: 1px solid var(--color-line); } details:last-child { border-bottom: 1px solid var(--color-line); }
   summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 23px; font-size: 18px; font-weight: 700; line-height: 1.5; }
   summary::-webkit-details-marker { display: none; }
-  summary :global(svg) { width: 20px; height: 20px; flex: none; }
-  details[open] summary :global(svg) { transform: rotate(45deg); }
+  details[open] .faq-question {
+    background-image: var(--brand-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  @media (forced-colors: active) {
+    details[open] .faq-question { background: none; color: CanvasText; }
+  }
   details > p { padding: 0 35px 25px 0; font-size: 14px; font-weight: 400; color: var(--color-muted); line-height: 1.8; }
   @media (hover: hover) and (pointer: fine) { .service-card { transition: box-shadow 180ms ease; } .service-card:hover { box-shadow: 0 12px 32px color-mix(in srgb, var(--card-accent) 12%, transparent); } }
   @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
@@ -522,26 +572,23 @@ const enquiry = (service: string) => `${routes.skills}?service=${service}#contac
     }
     .service-card:hover { translate: 0 -3px; }
   }
-  @media (max-width: 1100px) { .hero-grid { gap: 24px; } h1 { font-size: clamp(3.1rem,6.2vw,5rem); } .services-grid, .process-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } .service-card h3 { min-height: auto; } .partners-section { padding: 36px; gap: 32px; } .about-section { gap: 40px; } .sample-grid { gap: 32px; } }
+  @media (max-width: 1100px) { .hero-grid { gap: 32px; } h1 { font-size: clamp(3.1rem,6.2vw,5rem); } .services-grid, .process-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } .service-card h3 { min-height: auto; } .partners-section { padding: 36px; gap: 32px; } .about-section { gap: 40px; } .sample-grid { gap: 32px; } }
   @media (max-width: 767px) {
     .services-grid { grid-template-columns: 1fr; gap: 16px; max-width: 400px; margin-inline: auto; }
     .service-card { padding: 22.4px; }
     .service-card h3, .service-description { min-height: 0; }
-    .skills-hero { padding-top: 25px; } .topline { align-items: start; } .topline .eyebrow { font-size: 9px; max-width: 195px; line-height: 1.6; } .topline .draft-note { font-size: 9px; text-align: right; }
+    .skills-hero { padding-top: 25px; } .topline { align-items: start; } .topline .draft-note { font-size: 9px; text-align: right; }
     .hero-grid { grid-template-columns: 1fr; padding-block: 44px 20px; gap: 40px; } h1 { font-size: clamp(3.1rem,11vw,5.5rem); } .hero-description { font-size: 16px; }
-    .hero-visual { padding-left: 12px; padding-bottom: 12px; } .hero-photo :global(img) { aspect-ratio: 1.3; } .learning-card { margin-left: -12px; padding: 22px; }
-    .page-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-    .page-nav a { padding: 17px 18px; font-size: 11px; }
+    .hero-photo :global(img) { aspect-ratio: 1.45; }
+    .page-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 24px; }
+    .page-nav a { padding: 17px 0; font-size: 11px; }
     .trust { grid-template-columns: 1fr; gap: 22px; padding-block: 32px; } .trust-space { padding: 20px; }
-    .needs-grid, .sample-grid, .project-grid, .partners-section, .about-section { grid-template-columns: 1fr; }
-    .needs-grid { gap: 16px; }
+    .sample-grid, .project-grid, .partners-section, .about-section { grid-template-columns: 1fr; }
     .sample-space { min-height: 350px; padding: 24px; } .sample-art { height: 140px; } .sample-steps li:first-child { padding-top: 10px; }
     .project-card { padding: 24px; } .project-card dl > div { grid-template-columns: 1fr; gap: 8px; }
     .partners-section { padding: 32px 24px; gap: 32px; } .partner-space { min-height: 250px; } .about-section { gap: 36px; } .people { justify-self: start; }
-    .faq-list { margin-left: 0; }
     .faq-heading-first { margin-inline-start: -4px; }
-    .process-grid { --step-offset: 0px; grid-template-columns: 1fr; grid-auto-rows: auto; gap: 16px; max-width: 400px; margin-inline: auto; }
-    .process-card { padding: 22.4px; }
+    .process-grid { --step-offset: 0px; grid-template-columns: 1fr; grid-auto-rows: auto; gap: 96px; max-width: 320px; margin-inline: auto; }
   }
-  @media (max-width: 479px) { .services-grid, .process-grid { grid-template-columns: 1fr; } .service-card { padding: 19.2px; } .service-card h3 { margin-top: 17.6px; } .service-details { gap: 0; } .process-card h3 { margin-top: 15px; } .process-card > p { margin-bottom: 18px; } }
+  @media (max-width: 479px) { .services-grid, .process-grid { grid-template-columns: 1fr; } .service-card { padding: 19.2px; }  .service-details { gap: 0; }  .process-card > p { margin-bottom: 18px; } }
 </style>

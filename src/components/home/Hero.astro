@@ -6,7 +6,7 @@ interface Props { content: CollectionEntry<'homepage'>['data']['hero']; draftLab
 const { content, draftLabel } = Astro.props;
 ---
 <section class="hero shell" aria-labelledby="hero-heading">
-  <div class="hero-topline"><p class="eyebrow"><span class="section-index">01 /</span>{content.eyebrow}</p><p class="draft-note">{draftLabel}</p></div>
+  <div class="hero-topline"><p class="draft-note">{draftLabel}</p></div>
   <div class="hero-grid">
     <div class="hero-copy">
       <h1 id="hero-heading">{content.heading}<br /><span class="editorial">{content.emphasis}</span></h1>
@@ -23,7 +23,7 @@ const { content, draftLabel } = Astro.props;
 </section>
 <style>
   .hero { padding-top: 38px; }
-  .hero-topline { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+  .hero-topline { display: flex; align-items: center; justify-content: flex-end; gap: 20px; }
   .hero-grid { display: grid; grid-template-columns: 1.18fr 1fr; gap: 50px; align-items: center; padding-block: 66px 72px; }
   h1 { font-size: clamp(3.8rem, 6.7vw, 6.5rem); line-height: 1.02; letter-spacing: -0.065em; }
   h1 .editorial {
@@ -55,7 +55,7 @@ const { content, draftLabel } = Astro.props;
   @media (max-width: 767px) {
     .hero { padding-top: 25px; }
     .hero-topline .draft-note { font-size: 9px; }
-    .hero-topline .eyebrow { font-size: 9px; letter-spacing: .09em; }
+
     .hero-grid { grid-template-columns: 1fr; padding-block: 48px 30px; gap: 40px; }
     h1 { font-size: clamp(3.4rem, 12.8vw, 5.8rem); }
     .hero-subline { font-size: 16px; margin-top: 24px; }

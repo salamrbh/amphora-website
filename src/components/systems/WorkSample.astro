@@ -7,10 +7,10 @@ const { content } = Astro.props;
 ---
 <section class="sample-section section" id="sample" aria-labelledby="sample-heading">
   <div class="shell">
-    <SectionHeading number="04" id="sample-heading" content={content} />
+    <SectionHeading id="sample-heading" content={content} />
     <div class="sample-grid">
       <figure><div class="sample-screen"><div class="browser-top" aria-hidden="true"><i></i><i></i><i></i><span>Cord’s Café</span></div><LocalPicture {...content.image} /></div><figcaption><span>{content.project}</span><span>Design in focus</span></figcaption></figure>
-      <div class="sample-reading">{content.items.map((item, index) => <div><span class="reading-number">0{index + 1}</span><div><h3>{item.label}</h3><p>{item.text}</p></div></div>)}<p class="draft-note">{content.note}</p></div>
+      <div class="sample-reading">{content.items.map((item) => <div><div><h3>{item.label}</h3><p>{item.text}</p></div></div>)}<p class="draft-note">{content.note}</p></div>
     </div>
   </div>
 </section>
@@ -29,7 +29,6 @@ const { content } = Astro.props;
   figcaption { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-size: 11px; margin-top: 18px; }
   figcaption span:last-child { color: var(--color-muted); }
   .sample-reading > div { display: flex; gap: 20px; padding: 21px 0; border-top: 1px solid #ded8ce; }
-  .reading-number { color: #766c5c; font-size: 10px; padding-top: 5px; }
   h3 { font-size: 16px; letter-spacing: -.02em; }
   .sample-reading p:not(.draft-note) { font-size: 13px; color: var(--color-muted); line-height: 1.75; margin-top: 9px; }
   .draft-note { padding-top: 8px; }

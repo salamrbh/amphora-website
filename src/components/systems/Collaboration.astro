@@ -7,15 +7,15 @@ const { process, support } = Astro.props;
 const directionStart = process.emphasis.lastIndexOf(' ') + 1;
 ---
 <section class="collaboration section" id="process" aria-labelledby="process-heading">
-  <div class="shell collaboration-panel"><SectionHeading number="07" id="process-heading" content={process}>
+  <div class="shell collaboration-panel"><SectionHeading id="process-heading" content={process}>
       <span slot="heading" class="process-heading-first">{process.heading}</span>
       <span slot="emphasis" class="process-heading-second">{process.emphasis.slice(0, directionStart)}<span class="direction-gradient">{process.emphasis.slice(directionStart)}</span></span>
     </SectionHeading>
-    <ol class="process-list">{process.items.map((step) => <li><div class="process-card"><span class="step-number">{step.number}</span><h3>{step.name}</h3><p>{step.description}</p><p class="client-effort">{step.effort}</p></div></li>)}</ol>
+    <ol class="process-list">{process.items.map((step) => <li><div class="process-card"><h3>{step.name}</h3><p>{step.description}</p><p class="client-effort">{step.effort}</p></div></li>)}</ol>
   </div>
 </section>
 <section class="section shell support" id="support" aria-labelledby="support-heading">
-  <SectionHeading number="08" id="support-heading" content={support}>
+  <SectionHeading id="support-heading" content={support}>
     <span slot="emphasis" class="support-gradient" data-support-gradient>{support.emphasis}</span>
   </SectionHeading>
   <div class="support-grid">{support.items.map((item) => <div><h3>{item.name}</h3><p>{item.description}</p></div>)}</div>
@@ -95,7 +95,6 @@ const directionStart = process.emphasis.lastIndexOf(' ') + 1;
   @media (hover: hover) and (pointer: fine) {
     .process-list li:hover .process-card::before { opacity: 1; background-position: 40% 0; }
   }
-  .step-number { font-size: 11px; color: #aab4ff; margin-bottom: 28px; }
   h3 { font-size: 22px; letter-spacing: -.035em; line-height: 1.3; }
   .process-list p { font-size: 13px; color: #bcbcb4; line-height: 1.75; margin: 18px 0 24px; }
   .process-list .client-effort { color: #e2e2da; font-size: 11px; padding-top: 18px; border-top: 1px solid #ffffff24; margin: auto 0 0; }
@@ -128,5 +127,5 @@ const directionStart = process.emphasis.lastIndexOf(' ') + 1;
   @media (forced-colors: active) { .process-card { border-color: CanvasText; } }
   @media (max-width: 1100px) { .process-list { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 767px) { .process-heading-first { margin-inline-start: -4px; } .support-grid { grid-template-columns: 1fr; gap: 24px; } .support-grid p { max-width: 480px; } }
-  @media (max-width: 600px) { .process-list { grid-template-columns: 1fr; gap: 20px; } .step-number { margin-bottom: 20px; } }
+  @media (max-width: 600px) { .process-list { grid-template-columns: 1fr; gap: 20px; }  }
 </style>
